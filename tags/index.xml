@@ -4,7 +4,14 @@
         <link>http://example.org/tags/</link>
         <description>Tags - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Dec 2020 15:38:46 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>算法</title>
+    <link>http://example.org/tags/%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Sat, 26 Dec 2020 15:38:46 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Mysql</title>
     <link>http://example.org/tags/mysql/</link>
     <pubDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</pubDate>
