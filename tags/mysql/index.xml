@@ -1,12 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>氕氘氚</title>
-        <link>http://example.org/</link>
-        <description>氕氘氚</description>
+        <title>Mysql - 标签 - 氕氘氚</title>
+        <link>http://example.org/tags/mysql/</link>
+        <description>Mysql - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</lastBuildDate>
-            <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/mysql/" rel="self" type="application/rss+xml" /><item>
     <title>事务</title>
     <link>http://example.org/posts/%E4%BA%8B%E5%8A%A1/</link>
     <pubDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</pubDate>
@@ -27,12 +25,5 @@
     <author>作者</author>
     <guid>http://example.org/posts/%E7%BA%A2%E9%BB%91%E6%A0%91b%E6%A0%91b&#43;%E6%A0%91/</guid>
     <description><![CDATA[红黑树，B树，B+树 红黑树 二叉排序树的左边比跟节点小，右边比根结点大，并且左右子树都是二叉排序树 每个节点或者是黑色，或者是红色。 （2）根节点]]></description>
-</item><item>
-    <title>Hello Hugo</title>
-    <link>http://example.org/posts/first_post/</link>
-    <pubDate>Fri, 25 Dec 2020 01:08:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/posts/first_post/</guid>
-    <description><![CDATA[Hello Hugo！ :wave:hello everyone!]]></description>
 </item></channel>
 </rss>
