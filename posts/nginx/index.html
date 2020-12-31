@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Nginx - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Nginx" />
+<meta property="og:description" content="Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/nginx/" />
+<meta property="og:image" content="http://example.org/logo.png"/>
+<meta property="article:published_time" content="2020-12-31T16:19:02+08:00" />
+<meta property="article:modified_time" content="2020-12-31T16:19:02+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="Nginx"/>
+<meta name="twitter:description" content="Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/nginx/" /><link rel="prev" href="http://example.org/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Nginx",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/nginx\/"
+        },"genre": "posts","keywords": "部署","wordcount":  2997 ,
+        "url": "http:\/\/example.org\/posts\/nginx\/","datePublished": "2020-12-31T16:19:02+08:00","dateModified": "2020-12-31T16:19:02+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Nginx</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-31">2020-12-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2997 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-引言">1 引言</a></li>
+    <li><a href="#nginx介绍">Nginx介绍</a></li>
+    <li><a href="#二nginx的安装">二、Nginx的安装</a>
+      <ul>
+        <li><a href="#docker-compose的yml版文件">Docker compose的yml版文件</a></li>
+        <li><a href="#nginx的配置文件">nginx的配置文件</a></li>
+        <li><a href="#23修改docker-compose文件">2.3修改docker-compose文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#三nginx的反向代理">三、Nginx的反向代理</a>
+      <ul>
+        <li><a href="#正向代理和反向代理">正向代理和反向代理</a></li>
+        <li><a href="#32-机遇nginx实现反向代理">3.2 机遇nginx实现反向代理</a></li>
+        <li><a href="#33关于nginx的location路径映射">3.3关于nginx的location路径映射</a></li>
+      </ul>
+    </li>
+    <li><a href="#四负载均衡">四、负载均衡</a>
+      <ul>
+        <li><a href="#41轮询">4.1轮询</a></li>
+        <li><a href="#42-权重">4.2 权重</a></li>
+        <li><a href="#43-ip_hash">4.3 ip_hash</a></li>
+      </ul>
+    </li>
+    <li><a href="#五-动静分离">五 动静分离</a>
+      <ul>
+        <li><a href="#51-动态资源代理">5.1 动态资源代理</a></li>
+        <li><a href="#52-静态资源代理">5.2 静态资源代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#六-nginx集群">六 nginx集群</a>
+      <ul>
+        <li><a href="#nginx集群搭建">nginx集群搭建</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="nginx">Nginx</h1>
+<h2 id="1-引言">1 引言</h2>
+<blockquote>
+<p>为什么学习nginx？</p>
+<p>问题1:客户端到底要讲请求发给哪台服务器</p>
+<p>问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力会很大</p>
+<p>问题3:客户端发送的请求可能是申请动态资源的，也有可能申请静态资源,最好是做一个动静分离</p>
+</blockquote>
+<p>![image-20201127205157787](/Users/cjp/Library/Application Support/typora-user-images/image-20201127205157787.png)</p>
+<p>nginx可以根据一定的算法来选择服务器，同时对于一些静态资源如图片，css文件，html文件等资源，nginx自己就可以处理（nginx本身也是一个服务器，）</p>
+<h2 id="nginx介绍">Nginx介绍</h2>
+<blockquote>
+<p>nginx是由一个俄罗斯人研发，应对Rambler网站，并且在2004年发行了第一个版本（这是作者）</p>
+</blockquote>
+<p>![image-20201127205745570](/Users/cjp/Library/Application Support/typora-user-images/image-20201127205745570.png)</p>
+<blockquote>
+<p>nginx的特点：</p>
+<ul>
+<li>稳定性极强。7*24小时不间断运行。</li>
+<li>Nginx提供了非常丰富的配置实例</li>
+<li>占用内存小，并发能力强</li>
+</ul>
+</blockquote>
+<p>tomcat仅仅支持150个（线程池只有150个）</p>
+<p>也就是说tomcat最多就支持150个并发，nginx最多支5 w以上的并发</p>
+<h2 id="二nginx的安装">二、Nginx的安装</h2>
+<h3 id="docker-compose的yml版文件">Docker compose的yml版文件</h3>
+<div class="highlight"><pre class="chroma"><code class="language-yml" data-lang="yml"><span class="l">version:&#39;3.1&#39;</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">nginx</span><span class="p">:</span><span class="w">
+</span><span class="w">		</span><span class="l">restart:always</span><span class="w">
+</span><span class="w">		</span><span class="l">image:daoclould.io/library/nginx:latest</span><span class="w">
+</span><span class="w">		</span><span class="l">container_name:nginx</span><span class="w">
+</span><span class="w">		</span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">			</span>-<span class="m">80</span><span class="p">:</span><span class="m">80</span><span class="w">
+</span><span class="w">      
+</span></code></pre></div><p>这里直接用狂神的安装方法其实也一样</p>
+<p>执行</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker-compose up -d <span class="c1">#运行docker compose</span>
+</code></pre></div><h4 id="常见的docker-compose命令">常见的docker compose命令</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#重新构建容器</span>
+docker-compose bulid
+<span class="c1">#重新启动容器</span>
+docker-compose up -d
+<span class="c1">#退出容器</span>
+<span class="nb">exit</span>
+<span class="c1">#关闭容器</span>
+docker-compose down
+</code></pre></div><h3 id="nginx的配置文件">nginx的配置文件</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先用docker ps找到nginx的容器id</span>
+cjp@bogon ~ % docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
+608fa11e8d00        tomcat              <span class="s2">&#34;catalina.sh run&#34;</span>        About an hour ago   Up About an hour    0.0.0.0:32768-&gt;8080/tcp   tomcat-net-01
+8a22ec7081a5        nginx               <span class="s2">&#34;/docker-entrypoint.…&#34;</span>   <span class="m">10</span> days ago         Up <span class="m">7</span> minutes        0.0.0.0:3344-&gt;80/tcp      nginx01
+<span class="c1"># 然后进入到nginx</span>
+docker <span class="nb">exec</span> -it 8a22ec7081a5 bash
+<span class="c1"># 然后找到nginx.conf文件</span>
+root@8a22ec7081a5:/# <span class="nb">cd</span> etc/nginx
+root@8a22ec7081a5:/etc/nginx# ls
+root@8a22ec7081a5:/etc/nginx# cat nginx.conf 
+
+<span class="c1">#然后找到了nginx的核心配置文件</span>
+user  nginx<span class="p">;</span>
+worker_processes  1<span class="p">;</span>
+error_log  /var/log/nginx/error.log warn<span class="p">;</span>
+pid        /var/run/nginx.pid<span class="p">;</span>
+<span class="c1"># 以上统称为全局快，worker——process的数值越大，nginx的并发能力越强</span>
+<span class="c1"># error——log代表nginx的错误日志存放的位置</span>
+events <span class="o">{</span>
+    worker_connections  1024<span class="p">;</span>
+<span class="o">}</span>
+<span class="c1"># events块</span>
+<span class="c1"># worker——connections他的数值越大，nginx的并发能力越强</span>
+<span class="c1"># http块</span>
+http <span class="o">{</span>
+    include       /etc/nginx/mime.types<span class="p">;</span>		<span class="c1"># 代表引入外部文件-&gt; mime.type存放着大量的媒体类型</span>
+    default_type  application/octet-stream<span class="p">;</span>
+    keepalive_timeout  65<span class="p">;</span>
+    include /etc/nginx/conf.d/*.conf<span class="p">;</span>				<span class="c1"># 引入了/etc/nginx/conf.d/目录下以.conf结尾的配置文件</span>
+<span class="o">}</span>
+
+<span class="c1"># 下面查看/etc/nginx/conf.d/目录</span>
+root@8a22ec7081a5:/etc/nginx# <span class="nb">cd</span>
+root@8a22ec7081a5:~# bash
+root@8a22ec7081a5:~# <span class="nb">cd</span> /etc/nginx/conf.d/
+root@8a22ec7081a5:/etc/nginx/conf.d# ls
+default.conf
+<span class="c1"># 在这里发现了default.conf文件，下面查看default.conf</span>
+root@8a22ec7081a5:/etc/nginx/conf.d# cat default.conf
+  server <span class="o">{</span>
+      listen       80<span class="p">;</span>											<span class="c1"># nginx监听的端口号</span>
+      listen  <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+      server_name  localhost<span class="p">;</span>								<span class="c1"># nginx接受请求的ip</span>
+
+      location / <span class="o">{</span>
+          root   /usr/share/nginx/html<span class="p">;</span>			<span class="c1"># 将接收到的请求根据/usr/share/nginx/html;去抄着静态资源</span>
+          index  index.html index.htm<span class="p">;</span>			<span class="c1"># 默认从上述的路径中找到index.html或者index.html</span>
+      <span class="o">}</span>
+      <span class="c1"># server块</span>
+      
+  <span class="o">}</span>
+
+
+</code></pre></div><p>其实后期主要就是修改server块的文件</p>
+<h3 id="23修改docker-compose文件">2.3修改docker-compose文件</h3>
+<p>修改成这样</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">version:<span class="s1">&#39;3.1&#39;</span>
+services:
+	nginx:
+		restart:always
+		image:daoclould.io/library/nginx:latest
+		container_name:nginx
+		ports:
+			-80:80
+		volumes:
+			- /Users/cjp/Desktop/docker/nginx_test/conf/:/etc/nginx/conf.d
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 然后重新构建一下</span>
+docker-compose build
+<span class="c1">#重新启动容器</span>
+docker-compose up -d
+</code></pre></div><p>这个还是不能运行的，现在编写config文件</p>
+<p>在/Users/cjp/Desktop/docker/nginx_test/conf/下新建default.conf并插入如下内容</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    listen       80<span class="p">;</span>
+    listen  <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+    server_name  localhost<span class="p">;</span>
+
+    location / <span class="o">{</span>
+        root   /usr/share/nginx/html<span class="p">;</span>
+        index  index.html index.htm<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#重启nginx</span>
+docker-compose restart
+</code></pre></div><h2 id="三nginx的反向代理">三、Nginx的反向代理</h2>
+<h3 id="正向代理和反向代理">正向代理和反向代理</h3>
+<blockquote>
+<p>正向代理</p>
+<ul>
+<li>正向代理服务器由客户端设立的</li>
+<li>客户端了解代理服务器和目标服务器都是谁</li>
+<li>帮助用户突破访问权限，提高访问速度，对目标服务器隐藏客户端的ip地址</li>
+</ul>
+</blockquote>
+<p>国内直接访问谷歌是访问不到的，需要使用正向代理服务器，由正向代理服务器代替你访问谷歌</p>
+<p>![image-20201128163121597](/Users/cjp/Library/Application Support/typora-user-images/image-20201128163121597.png)</p>
+<blockquote>
+<p>反向代理</p>
+<ul>
+<li>反向代理服务器配置在服务端</li>
+<li>客户端是不知道访问的是哪一台服务器</li>
+<li>使用反向代理可以实现负载均衡，并且可以隐藏服务器真正的ip都做</li>
+</ul>
+</blockquote>
+<p>![image-20201128163425579](/Users/cjp/Library/Application Support/typora-user-images/image-20201128163425579.png)</p>
+<h3 id="32-机遇nginx实现反向代理">3.2 机遇nginx实现反向代理</h3>
+<blockquote>
+<p>准备一个目标服务器</p>
+</blockquote>
+<p>运行此命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run -d -p 8080:8080 --name tomcat_nginx -v /Users/cjp/Desktop/docker/docker_compose/tomcat/webapps:/usr/local/tomcat/webapps -v /Users/cjp/Desktop/docker/docker_compose/tomcat/logs:/usr/local/tomcat/logs tomcat
+</code></pre></div><p>tomcat运行成功，然后在webapps目录下面，创建一个初始页面</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> webapps
+mkdir ROOT
+<span class="nb">cd</span> ROOT
+vi index.html
+</code></pre></div><p>然后随便在html里面添加内容，就可以访问到页面了</p>
+<p>![image-20201128164634388](/Users/cjp/Library/Application Support/typora-user-images/image-20201128164634388.png)</p>
+<p>下面让nginx负责转发</p>
+<p>编写nginx配置文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+   listen       80<span class="p">;</span>
+   listen  <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+   server_name  localhost<span class="p">;</span>
+  <span class="c1">#基于反向代理访问Tomcat服务器</span>
+  location / <span class="o">{</span>
+       proxy_pass http://localhost:8080/<span class="p">;</span>
+<span class="o">}</span>
+  <span class="c1"># location / {</span>
+  <span class="c1">#     root   /usr/share/nginx/html;</span>
+  <span class="c1">#     index  index.html index.htm;</span>
+  <span class="c1"># }</span>
+<span class="o">}</span>
+</code></pre></div><p>proxy_pass是动态资源转发</p>
+<p>然后重新启动nginx</p>
+<h3 id="33关于nginx的location路径映射">3.3关于nginx的location路径映射</h3>
+<blockquote>
+<p>优先级关系</p>
+<p>（location =）&gt; (location /xx/yy/zz) &gt; (location ^~) &gt; (location ～,location ~*) &gt; (location /启始路径) &gt; (location /)</p>
+<p>匹配到上面就不会匹配到下面的了</p>
+</blockquote>
+<p>1 精准匹配</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1、 = 匹配</span>
+<span class="nv">localton</span> <span class="o">=</span> / <span class="o">{</span>
+		<span class="c1"># 精准匹配：主机名后面不带任何字符串</span>
+<span class="o">}</span>
+</code></pre></div><p>2 通用匹配</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 2、 通用匹配</span>
+location /xx 
+	<span class="c1"># 匹配所有以/xx开头的路径</span>
+<span class="o">}</span>
+</code></pre></div><p>3 正则匹配</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#3、 正则匹配</span>
+location ～/xx <span class="o">{</span>
+	<span class="c1"># 匹配所有以/xxx开头的路径</span>
+<span class="o">}</span>
+</code></pre></div><p>4 匹配开头路径</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">location ^~ /xxx/xx <span class="o">{</span>
+	<span class="c1">#匹配所有以/xxx/xx开头的路径</span>
+<span class="o">}</span>
+</code></pre></div><p>5</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">location ~* <span class="se">\.</span><span class="o">(</span>gif/jpg/png<span class="o">)</span>$ <span class="o">{</span>
+	<span class="c1">#匹配以.gif、.jpg或者.png结尾的路径</span>
+<span class="o">}</span>
+</code></pre></div><p>![image-20201128172727826](/Users/cjp/Library/Application Support/typora-user-images/image-20201128172727826.png)</p>
+<h2 id="四负载均衡">四、负载均衡</h2>
+<blockquote>
+<p>nginx默认提供了3种负载均衡策略</p>
+<p>轮询：把请求顺着分配，平均分配给每一台服务器</p>
+<p>权重：根据处理请求速度的比例来分配</p>
+<p>ip_hash:请求的时候肯定会带着客户端的ip地址，如果ip不变，默认的会一直交给某一台服务器</p>
+</blockquote>
+<p>编辑nginx</p>
+<h3 id="41轮询">4.1轮询</h3>
+<p>把default.conf文件改为</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">upstream my-server<span class="o">{</span>
+    server 192.168.0.5:8080<span class="p">;</span>
+    server 192.168.0.7:8080<span class="p">;</span>
+<span class="o">}</span>
+server <span class="o">{</span>
+    listen       80<span class="p">;</span>
+    listen  <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+    server_name  localhost<span class="p">;</span>
+
+    location / <span class="o">{</span>
+        proxy_pass http://my-server/<span class="p">;</span>    <span class="c1">#tomcat首页</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>就会发现每次访问localhost会出现不同的页面</p>
+<p>格式</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">upstream 名字<span class="o">{</span>
+	server ip:port<span class="p">;</span>
+	server ip:port<span class="p">;</span>
+<span class="o">}</span>
+server <span class="o">{</span>
+	listen 80<span class="p">;</span>
+	server_name localhost<span class="p">;</span>
+<span class="o">}</span>
+location / <span class="o">{</span>
+	proxy_pass http://upstream的名字/；
+<span class="o">}</span>
+</code></pre></div><h3 id="42-权重">4.2 权重</h3>
+<blockquote>
+<p>只需要在upstream里面加点东西就可以了</p>
+</blockquote>
+<p>这样改动的话每6个请求里面有一个会到192.168.0.7中</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="err">upstream</span> <span class="err">my-server</span><span class="p">{</span>
+   <span class="err">server</span> <span class="err">192.168.0.5:8080</span> <span class="err">weight=10;</span>
+   <span class="err">server</span> <span class="err">192.168.0.7:8080</span> <span class="err">weight=2;</span>
+<span class="p">}</span>
+<span class="err">server</span> <span class="p">{</span>
+   <span class="err">listen</span>       <span class="err">80;</span>
+   <span class="err">listen</span>  <span class="err">[::]:80;</span>
+   <span class="err">server_name</span>  <span class="err">localhost;</span>
+
+   <span class="err">location</span> <span class="err">/</span> <span class="err">{</span>
+       <span class="err">proxy_pass</span> <span class="err">http://my-server/;</span>    <span class="err">#tomcat首页</span>
+   <span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><h3 id="43-ip_hash">4.3 ip_hash</h3>
+<p>在upstream下面加ip_hash</p>
+<p>只要客户端不变，就会一直是请求到的地址</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="err">upstream</span> <span class="err">my-server</span><span class="p">{</span>
+		<span class="err">ip_hash;</span>
+    <span class="err">server</span> <span class="err">192.168.0.5:8080</span> <span class="err">weight=10;</span>
+    <span class="err">server</span> <span class="err">192.168.0.7:8080</span> <span class="err">weight=2;</span>
+<span class="p">}</span>
+<span class="err">server</span> <span class="p">{</span>
+    <span class="err">listen</span>       <span class="err">80;</span>
+    <span class="err">listen</span>  <span class="err">[::]:80;</span>
+    <span class="err">server_name</span>  <span class="err">localhost;</span>
+
+    <span class="err">location</span> <span class="err">/</span> <span class="err">{</span>
+        <span class="err">proxy_pass</span> <span class="err">http://my-server/;</span>    <span class="err">#tomcat首页</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><h2 id="五-动静分离">五 动静分离</h2>
+<blockquote>
+<p>nginx的并发能力公式</p>
+<p>worker_processes * worker_connections / 4|2 = nginx最终的并发能力</p>
+<p>动态资源需要除以4，静态资源需要除以2</p>
+<p>Nginx通过动静分离，来提升Nginx的并发能力</p>
+<p>也可以更快的给用户响应</p>
+</blockquote>
+<p>这是动态资源的请求链路</p>
+<p>![image-20201128200520029](/Users/cjp/Library/Application Support/typora-user-images/image-20201128200520029.png)</p>
+<p>这是静态资源的请求链路</p>
+<p>![image-20201128200653794](/Users/cjp/Library/Application Support/typora-user-images/image-20201128200653794.png)</p>
+<h3 id="51-动态资源代理">5.1 动态资源代理</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 配置如下</span>
+location / <span class="o">{</span>
+	proxy_pass 路径<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="52-静态资源代理">5.2 静态资源代理</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 配置如下</span>
+location / <span class="o">{</span>
+	root 静态资源路径<span class="p">;</span>
+	index 默认访问路径下的什么资源<span class="p">;</span>
+	autoindex on<span class="p">;</span> <span class="c1">#代表展示静态资源的全部内容，以列表形式展开 </span>
+<span class="o">}</span>
+</code></pre></div><p>静态资源其实就是在nginx里面，因此docker需要挂载一个数据卷，映射到nginx服务器的一个目录</p>
+<p>修改compose</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">version: <span class="s1">&#39;3.1&#39;</span>
+services:
+  nginx:
+    restart: always
+    image: daocloud.io/library/nginx:latest
+    container_name: nginx_compose_yml01
+    ports:
+      - 80:80
+    volumes:
+    - /Users/cjp/Desktop/docker/nginx_test/conf/:/etc/nginx/conf.d
+    - /Users/cjp/Desktop/docker/nginx_test/image/:/data/image
+    - /Users/cjp/Desktop/docker/nginx_test/html/:/data/html
+
+</code></pre></div><p>修改配置文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">upstream my-server<span class="o">{</span>
+    server 192.168.0.5:8080 <span class="nv">weight</span><span class="o">=</span>10<span class="p">;</span>
+    server 192.168.0.7:8080 <span class="nv">weight</span><span class="o">=</span>2<span class="p">;</span>
+<span class="o">}</span>
+server <span class="o">{</span>
+    listen       80<span class="p">;</span>
+    listen  <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+    server_name  localhost<span class="p">;</span>
+    <span class="c1">#代理到html静态资源</span>
+    location /html <span class="o">{</span>
+        root /data<span class="p">;</span>
+        index index.html<span class="p">;</span>
+    <span class="o">}</span>
+    <span class="c1">#代理到img静态资源</span>
+    location /image<span class="o">{</span>
+        root /data<span class="p">;</span>
+        autoindex on<span class="p">;</span>
+    <span class="o">}</span>
+    <span class="c1">#location / {</span>
+    <span class="c1">#  proxy_pass http://my-server/;    #tomcat首页</span>
+    <span class="c1">#}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="六-nginx集群">六 nginx集群</h2>
+<blockquote>
+<p>使用集群可以防止服务器单点故障的问题</p>
+<p>同时分散压力</p>
+</blockquote>
+<p>如果担心nginx出现单点故障，可以搭建nginx集群</p>
+<p>keepalived程序可以监听nginx运行是否运行正常</p>
+<p>haproxy可以帮助客户端选择使用哪个nginx服务中</p>
+<p>haproxy会提供一个虚拟端口路径</p>
+<p>![image-20201128210333388](/Users/cjp/Library/Application Support/typora-user-images/image-20201128210333388.png)</p>
+<h3 id="nginx集群搭建">nginx集群搭建</h3>
+<blockquote>
+<p>准备多台Nginx</p>
+<p>准备keepalived，监听nginx的健康情况</p>
+<p>准备haproxy，提供一个虚拟的路径，统一的去接受用户的请求</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-12-31</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E9%83%A8%E7%BD%B2/">部署</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="prev" rel="prev" title="动态规划"><i class="fas fa-angle-left fa-fw"></i>动态规划</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>部署 - 标签 - 氕氘氚</title>
+        <link>http://example.org/tags/%E9%83%A8%E7%BD%B2/</link>
+        <description>部署 - 标签 - 氕氘氚</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E9%83%A8%E7%BD%B2/" rel="self" type="application/rss+xml" /><item>
+    <title>Nginx</title>
+    <link>http://example.org/posts/nginx/</link>
+    <pubDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/nginx/</guid>
+    <description><![CDATA[Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力]]></description>
+</item></channel>
+</rss>
