@@ -4,7 +4,14 @@
         <link>http://example.org/tags/</link>
         <description>Tags - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang</title>
+    <link>http://example.org/tags/golang/</link>
+    <pubDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/golang/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Daily</title>
     <link>http://example.org/tags/daily/</link>
     <pubDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</pubDate>
@@ -24,13 +31,6 @@
     <pubDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/tags/mysql/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Golang</title>
-    <link>http://example.org/tags/golang/</link>
-    <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/tags/golang/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Redis</title>

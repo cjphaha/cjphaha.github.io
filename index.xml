@@ -4,9 +4,16 @@
         <link>http://example.org/</link>
         <description>氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</lastBuildDate>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang GMP原理</title>
+    <link>http://example.org/posts/golang-gmp%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/golang-gmp%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[GPM 多进程和多线程解决了阻塞的问题 但是面临着很多新的问题 多个线程之间切换会浪费很多的切换成本 进程/线程数量越多，切换成本也就越大，也就越浪费 多]]></description>
+</item><item>
     <title>关于堆内存和栈内存</title>
     <link>http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</link>
     <pubDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</pubDate>
@@ -69,12 +76,5 @@
     <author>作者</author>
     <guid>http://example.org/posts/%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[事务 什么是事务？ 要么都成功，要么都失败 1、sql执行 A给B转账 A100 &ndash;&gt;200 B 200 2、sql执行 B收到A的钱 A 800 &ndash;&gt;400 将一组SQL放在同一个批次中执行，要么]]></description>
-</item><item>
-    <title>红黑树、B树、B&#43;树</title>
-    <link>http://example.org/posts/%E7%BA%A2%E9%BB%91%E6%A0%91b%E6%A0%91b&#43;%E6%A0%91/</link>
-    <pubDate>Sat, 26 Dec 2020 10:43:44 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/posts/%E7%BA%A2%E9%BB%91%E6%A0%91b%E6%A0%91b&#43;%E6%A0%91/</guid>
-    <description><![CDATA[红黑树，B树，B+树 红黑树 二叉排序树的左边比跟节点小，右边比根结点大，并且左右子树都是二叉排序树 每个节点或者是黑色，或者是红色。 （2）根节点]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Golang GMP原理 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Golang GMP原理" />
+<meta property="og:description" content="GPM 多进程和多线程解决了阻塞的问题 但是面临着很多新的问题 多个线程之间切换会浪费很多的切换成本 进程/线程数量越多，切换成本也就越大，也就越浪费 多" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/golang-gmp%E5%8E%9F%E7%90%86/" />
+<meta property="og:image" content="http://example.org/logo.png"/>
+<meta property="article:published_time" content="2021-01-04T00:39:53+08:00" />
+<meta property="article:modified_time" content="2021-01-04T00:39:53+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="Golang GMP原理"/>
+<meta name="twitter:description" content="GPM 多进程和多线程解决了阻塞的问题 但是面临着很多新的问题 多个线程之间切换会浪费很多的切换成本 进程/线程数量越多，切换成本也就越大，也就越浪费 多"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/golang-gmp%E5%8E%9F%E7%90%86/" /><link rel="prev" href="http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang GMP原理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/golang-gmp%E5%8E%9F%E7%90%86\/"
+        },"genre": "posts","keywords": "Golang","wordcount":  3172 ,
+        "url": "http:\/\/example.org\/posts\/golang-gmp%E5%8E%9F%E7%90%86\/","datePublished": "2021-01-04T00:39:53+08:00","dateModified": "2021-01-04T00:39:53+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Golang GMP原理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AF%AD%E8%A8%80/"><i class="far fa-folder fa-fw"></i>语言</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-04">2021-01-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3172 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#协程调度器由编程语言自己开发">协程调度器由编程语言自己开发</a></li>
+    <li><a href="#golang对协程的处理">golang对协程的处理</a>
+      <ul>
+        <li><a href="#golang对早期调度器的处理">golang对早期调度器的处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#goroutine调度器的gmp模型的设计思想">Goroutine调度器的GMP模型的设计思想</a>
+      <ul>
+        <li><a href="#gmp模型简介">GMP模型简介</a></li>
+        <li><a href="#调度器的设计策略">调度器的设计策略</a></li>
+        <li><a href="#go-func经历了什么过程">go func经历了什么过程</a></li>
+        <li><a href="#调度器的生命周期">调度器的生命周期</a></li>
+        <li><a href="#调度器的生命周期-1">调度器的生命周期</a></li>
+        <li><a href="#可视化的gmp编程">可视化的GMP编程</a></li>
+      </ul>
+    </li>
+    <li><a href="#场景1-创建g">场景1 创建G</a></li>
+    <li><a href="#场景2-g1执行完毕">场景2 G1执行完毕</a></li>
+    <li><a href="#场景3-g2开辟过多g">场景3 G2开辟过多G</a></li>
+    <li><a href="#场景-唤醒正在休眠的m">场景 唤醒正在休眠的M</a></li>
+    <li><a href="#场景7-被唤醒的m2从全局队列获取g">场景7 被唤醒的M2从全局队列获取G</a></li>
+    <li><a href="#场景8-m2从m1中偷取g">场景8 M2从M1中偷取G</a></li>
+    <li><a href="#场景9-自旋线程的最大限制">场景9 自旋线程的最大限制</a></li>
+    <li><a href="#场景10--g发生系统调用阻塞">场景10 : G发生系统调用/阻塞</a></li>
+    <li><a href="#场景11g发生阻塞非阻塞">场景11G发生阻塞/非阻塞</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="gpm">GPM</h1>
+<p>多进程和多线程解决了阻塞的问题</p>
+<p>但是面临着很多新的问题</p>
+<ul>
+<li>
+<p>多个线程之间切换会浪费很多的切换成本</p>
+</li>
+<li>
+<p>进程/线程数量越多，切换成本也就越大，也就越浪费</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115043898.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115043898.png, http://cdn.cjpa.top/cdnimages/image-20201220115043898.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115043898.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115043898.png"
+        title="image-20201220115043898" /></p>
+</li>
+</ul>
+<p>多线程开发也变得越来越复杂，并且高度消耗cpu</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115217839.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115217839.png, http://cdn.cjpa.top/cdnimages/image-20201220115217839.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115217839.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115217839.png"
+        title="image-20201220115217839" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115247189.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115247189.png, http://cdn.cjpa.top/cdnimages/image-20201220115247189.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115247189.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115247189.png"
+        title="image-20201220115247189" /></p>
+<p>内核态是系统底层</p>
+<p>如果将用户和内核分离开，那么会更好一些</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115312556.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115312556.png, http://cdn.cjpa.top/cdnimages/image-20201220115312556.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115312556.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115312556.png"
+        title="image-20201220115312556" /></p>
+<p>操作系统层面是不用改的</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115338417.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115338417.png, http://cdn.cjpa.top/cdnimages/image-20201220115338417.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115338417.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115338417.png"
+        title="image-20201220115338417" /></p>
+<p>在go语言里面用户线程给它起名叫协程</p>
+<p>如果一个线程通过协程调度器，绑定多个协程，这样效率会很高</p>
+<p>弊端：如果绑定的几个协程中有一个阻塞了，其他的也会受到影响</p>
+<h2 id="协程调度器由编程语言自己开发">协程调度器由编程语言自己开发</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115446963.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115446963.png, http://cdn.cjpa.top/cdnimages/image-20201220115446963.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115446963.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115446963.png"
+        title="image-20201220115446963" /></p>
+<p>如果变成1:1的关系那么不会因为阻塞而产生额外的代价，但是所有的协程创建、删除和切换都由CPU完成，有点略显昂贵</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115834984.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115834984.png, http://cdn.cjpa.top/cdnimages/image-20201220115834984.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115834984.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115834984.png"
+        title="image-20201220115834984" /></p>
+<p><strong>协程调度器是语言层级的</strong>所以把任务交给协程调度器会更好，<strong>尽量减少cpu的消耗，才能提高速度</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220115848500.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220115848500.png, http://cdn.cjpa.top/cdnimages/image-20201220115848500.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220115848500.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220115848500.png"
+        title="image-20201220115848500" /></p>
+<h2 id="golang对协程的处理">golang对协程的处理</h2>
+<p>1、把co-routine改名，并且减少资源量</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220120026357.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220120026357.png, http://cdn.cjpa.top/cdnimages/image-20201220120026357.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220120026357.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220120026357.png"
+        title="image-20201220120026357" /></p>
+<p>灵活调度！</p>
+<h3 id="golang对早期调度器的处理">golang对早期调度器的处理</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220120121442.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220120121442.png, http://cdn.cjpa.top/cdnimages/image-20201220120121442.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220120121442.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220120121442.png"
+        title="image-20201220120121442" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220120216525.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220120216525.png, http://cdn.cjpa.top/cdnimages/image-20201220120216525.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220120216525.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220120216525.png"
+        title="image-20201220120216525" /></p>
+<p>老调度器的缺点</p>
+<ul>
+<li>创建、销毁、调度G都需要每个M获取锁，这就形成了激烈的锁竞争</li>
+<li>M转移G会造成延迟和额外的系统负载</li>
+<li>系统调用（CPU在M之间的切换）导致频繁的线程阻塞和取消其阻塞操作增加了系统开销</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220121114118.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220121114118.png, http://cdn.cjpa.top/cdnimages/image-20201220121114118.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220121114118.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220121114118.png"
+        title="image-20201220121114118" /></p>
+<h2 id="goroutine调度器的gmp模型的设计思想">Goroutine调度器的GMP模型的设计思想</h2>
+<h3 id="gmp模型简介">GMP模型简介</h3>
+<p><!-- raw HTML omitted --></p>
+<p>goroutine：用户线程</p>
+<p>process是用来处理协程的，processor包含了goroutine的所有资源，保存了所有的数据，可以通过GOMAXPROOCS来设置数量</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220121913610.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220121913610.png, http://cdn.cjpa.top/cdnimages/image-20201220121913610.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220121913610.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220121913610.png"
+        title="image-20201220121913610" /></p>
+<h4 id="p">P</h4>
+<blockquote>
+<p>一个p同一时刻只能执行一个g。程序可以运行的go的数量就是GOMAXPROCS的数量</p>
+</blockquote>
+<ul>
+<li>p的全局队列</li>
+</ul>
+<p>全局队列 存放等待运行的G</p>
+<ul>
+<li>p的本地队列</li>
+</ul>
+<p>本地队列存放即将执行的，有数量限制，一半不超过256g</p>
+<p>优先将新创建的G放在P的本地队列中，如果满了会放在全局队列中</p>
+<ul>
+<li>p列表
+<ul>
+<li>程序启动时创建</li>
+<li>最多有GOMAXPROCS个</li>
+</ul>
+</li>
+</ul>
+<h4 id="m">m</h4>
+<p>物理线程（内核级别）</p>
+<ul>
+<li>m列表，当前操作系统分配到当前go程序的内核线程数</li>
+</ul>
+<h4 id="p和m的数量">P和M的数量</h4>
+<ul>
+<li>
+<p>P的数量：</p>
+<ul>
+<li>环境变量$GOMAXPROCS</li>
+<li>在程序中通过runtime.GOMAXPROCS()</li>
+</ul>
+</li>
+<li>
+<p>M的数量</p>
+<ul>
+<li>Go语言本身时限定了M的最大量是10000个（其实很少有电脑的线程超过10000个）</li>
+<li>可以通过runtime/debu包中的setmaxthreads函数来设置</li>
+<li>有一个m阻塞，就会创建一个新的m</li>
+<li>如果m空闲，那么就会回收或者睡眠</li>
+</ul>
+</li>
+</ul>
+<h3 id="调度器的设计策略">调度器的设计策略</h3>
+<h4 id="利用线程">利用线程</h4>
+<p>work stealing机制</p>
+<p>​	始终保证每个p里面都有g</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140043865.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140043865.png, http://cdn.cjpa.top/cdnimages/image-20201220140043865.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140043865.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140043865.png"
+        title="image-20201220140043865" /></p>
+<p>m1和p绑定。g1正在执行。</p>
+<p>要把m2给利用上，因此要从m1里面偷取一个g3</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140152283.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140152283.png, http://cdn.cjpa.top/cdnimages/image-20201220140152283.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140152283.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140152283.png"
+        title="image-20201220140152283" /></p>
+<p>hand off机制</p>
+<p>假设g1阻塞</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140220541.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140220541.png, http://cdn.cjpa.top/cdnimages/image-20201220140220541.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140220541.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140220541.png"
+        title="image-20201220140220541" /></p>
+<p>这个时候m1是等待状态，这个时候创建/唤醒一个thread m3，把p1移动到这个thread中，然后g1还是留在m1，这个时候m2和m3正常执行</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140336982.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140336982.png, http://cdn.cjpa.top/cdnimages/image-20201220140336982.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140336982.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140336982.png"
+        title="image-20201220140336982" /></p>
+<p>为了不耽搁g2，会把p和m做一个分离，m1这个时候是一个睡眠或者销毁机制</p>
+<h4 id="利用并行">利用并行</h4>
+<p>通过GOMAXPROCS限定P的个数</p>
+<p>假设：</p>
+<p>​	=CPU核心数/2</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140525451.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140525451.png, http://cdn.cjpa.top/cdnimages/image-20201220140525451.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140525451.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140525451.png"
+        title="image-20201220140525451" /></p>
+<h4 id="抢占">抢占</h4>
+<p>以前的co-routine：</p>
+<p>只有c主动释放资源，另外一个c才能获取资源</p>
+<p>go-routine</p>
+<p>g最多占用10ms。另外的g可以抢占</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140646982.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140646982.png, http://cdn.cjpa.top/cdnimages/image-20201220140646982.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140646982.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140646982.png"
+        title="image-20201220140646982" /></p>
+<h4 id="全局g队列">全局G队列</h4>
+<p>每个gmp里面提供了一个全局队列，</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220140846611.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220140846611.png, http://cdn.cjpa.top/cdnimages/image-20201220140846611.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220140846611.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220140846611.png"
+        title="image-20201220140846611" /></p>
+<p>这个m2这边会先看旁边的队列里面有没有g可以拿到，如果没有的话就从全局队列里面取，取的时候要加锁和解锁</p>
+<h3 id="go-func经历了什么过程">go func经历了什么过程</h3>
+<h3 id="调度器的生命周期">调度器的生命周期</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220141319573.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220141319573.png, http://cdn.cjpa.top/cdnimages/image-20201220141319573.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220141319573.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220141319573.png"
+        title="image-20201220141319573" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220141333810.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220141333810.png, http://cdn.cjpa.top/cdnimages/image-20201220141333810.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220141333810.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220141333810.png"
+        title="image-20201220141333810" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220141403218.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220141403218.png, http://cdn.cjpa.top/cdnimages/image-20201220141403218.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220141403218.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220141403218.png"
+        title="image-20201220141403218" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220141434824.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220141434824.png, http://cdn.cjpa.top/cdnimages/image-20201220141434824.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220141434824.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220141434824.png"
+        title="image-20201220141434824" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220141620856.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220141620856.png, http://cdn.cjpa.top/cdnimages/image-20201220141620856.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220141620856.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220141620856.png"
+        title="image-20201220141620856" /></p>
+<p>如果阻塞了</p>
+<p>流程</p>
+<p>1、通过go func来创建一个goroutine</p>
+<p>2、有两个存储g的队列一个是局部调度器p的本地队列，一个是全局g队列，新创建的g会先保存在p的本地队列中，如果p的本地队列已经满了，就会保存在全局队列中</p>
+<p>3、g只能运行在m中，一个m必须持有一个p，m与p是1:1的关系，m会从p的本地队列中弹出一个可执行状态的g来执行，如果p的本地队列为空，就会向其他的mP组合中偷取一个可执行的g来执行</p>
+<p>4、一个m调度g的执行过程是一个执行机制，执行一段时间，超时之后再放回到队列，然后再执行</p>
+<p>5、当m执行某个g的时候如果发生了syscall或者其他的阻塞操作，m会阻塞，如果当前有一些g再执行，runtime会把这个线程m从p中摘除（detach），然后创建一个新的操作系统的线程（如果有空闲的线程可以用，就复用这个线程）来服务于这个p</p>
+<p>6、当m系统调用结束的时候，这个g会超时获取一个空闲的p来执行，并放到这个p的本地队列，如果获取不到p，那么这个线程m就会变成休眠状态，加入到空闲线程中，然后这个g就会被放入全局队列中</p>
+<h3 id="调度器的生命周期-1">调度器的生命周期</h3>
+<h4 id="m0">M0</h4>
+<p>启动程序后编号为0的主线程</p>
+<p>在全局变量runtime.m0中，不需要在heap上分配</p>
+<p>负责执行初始化操作和启动第一个g</p>
+<p>启动第一个g之后，m0就喝其他的m一样了</p>
+<h4 id="g0">G0</h4>
+<p>每次启动一个，，都会第一个创建的gourtine，就是g0</p>
+<p>g0仅用于负责调度g</p>
+<p>g0不指向任何可执行的函数</p>
+<p>每个m都会有一个自己的g0</p>
+<p>在调度或者系统调用时会使用m切换到g0，来调度</p>
+<p>m0的g0会放在全局空间</p>
+<p>以下面的代码为例</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+  <span class="nx">fmt</span><span class="p">.</span><span class="nb">println</span><span class="p">(</span><span class="s">&#34;Hello World&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220152828108.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220152828108.png, http://cdn.cjpa.top/cdnimages/image-20201220152828108.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220152828108.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220152828108.png"
+        title="image-20201220152828108" /></p>
+<p>main也是通过G0来调度</p>
+<h3 id="可视化的gmp编程">可视化的GMP编程</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+	<span class="s">&#34;runtime/trace&#34;</span>
+<span class="p">)</span>
+
+<span class="c1">//trace编程过程
+</span><span class="c1">//1、创建文件
+</span><span class="c1">//2、启动
+</span><span class="c1">//3、停止
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="c1">//1、创建一个trace文件
+</span><span class="c1"></span>	<span class="nx">f</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">&#34;trace.out&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">//2、启动trace
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="p">=</span> <span class="nx">trace</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">//正常的业务
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello GMP&#34;</span><span class="p">)</span>
+	<span class="c1">//3、停止trace
+</span><span class="c1"></span>	<span class="nx">trace</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span>
+	<span class="c1">//通过go tool trace trace.out分析
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><p>运行go tool trace之后</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220154127944.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220154127944.png, http://cdn.cjpa.top/cdnimages/image-20201220154127944.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220154127944.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220154127944.png"
+        title="image-20201220154127944" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220154255489.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220154255489.png, http://cdn.cjpa.top/cdnimages/image-20201220154255489.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220154255489.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220154255489.png"
+        title="image-20201220154255489" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220154725104.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220154725104.png, http://cdn.cjpa.top/cdnimages/image-20201220154725104.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220154725104.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220154725104.png"
+        title="image-20201220154725104" /></p>
+<p>浏览器会随机生成一个接口</p>
+<h4 id="通过debuge-trace查看gmp信息">通过Debuge trace查看GMP信息</h4>
+<p>GODEBUG</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GODEBUG</span><span class="o">=</span><span class="nv">schedtrace</span><span class="o">=</span><span class="m">1000</span> ./trace2
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">cjp@bogon debug_trace % <span class="nv">GODEBUG</span><span class="o">=</span><span class="nv">schedtrace</span><span class="o">=</span><span class="m">1000</span> ./debug_trace 
+SCHED 0ms: <span class="nv">gomaxprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">idleprocs</span><span class="o">=</span><span class="m">1</span> <span class="nv">threads</span><span class="o">=</span><span class="m">4</span> <span class="nv">spinningthreads</span><span class="o">=</span><span class="m">1</span> <span class="nv">idlethreads</span><span class="o">=</span><span class="m">0</span> <span class="nv">runqueue</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span><span class="m">1</span> <span class="m">0</span> <span class="m">0</span> 0<span class="o">]</span>
+Hello GMP
+SCHED 1006ms: <span class="nv">gomaxprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">idleprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">threads</span><span class="o">=</span><span class="m">5</span> <span class="nv">spinningthreads</span><span class="o">=</span><span class="m">0</span> <span class="nv">idlethreads</span><span class="o">=</span><span class="m">3</span> <span class="nv">runqueue</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> 0<span class="o">]</span>
+Hello GMP
+SCHED 2015ms: <span class="nv">gomaxprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">idleprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">threads</span><span class="o">=</span><span class="m">5</span> <span class="nv">spinningthreads</span><span class="o">=</span><span class="m">0</span> <span class="nv">idlethreads</span><span class="o">=</span><span class="m">3</span> <span class="nv">runqueue</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> 0<span class="o">]</span>
+Hello GMP
+SCHED 3015ms: <span class="nv">gomaxprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">idleprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">threads</span><span class="o">=</span><span class="m">5</span> <span class="nv">spinningthreads</span><span class="o">=</span><span class="m">0</span> <span class="nv">idlethreads</span><span class="o">=</span><span class="m">3</span> <span class="nv">runqueue</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> 0<span class="o">]</span>
+Hello GMP
+SCHED 4024ms: <span class="nv">gomaxprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">idleprocs</span><span class="o">=</span><span class="m">4</span> <span class="nv">threads</span><span class="o">=</span><span class="m">5</span> <span class="nv">spinningthreads</span><span class="o">=</span><span class="m">0</span> <span class="nv">idlethreads</span><span class="o">=</span><span class="m">3</span> <span class="nv">runqueue</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> 0<span class="o">]</span>
+Hello GMP
+<span class="c1"># SCHED 调试的信息</span>
+<span class="c1"># 0ms 从程序启动到输出经历的时间</span>
+<span class="c1"># gomaxproces P的数量	一般默认是和CPU的核心数量是一致的</span>
+<span class="c1"># idleprocs 处于idle状态的p的数量gomaxprocess-idleprocess = 目前正在执行的p的数量</span>
+<span class="c1"># threads 线程数量（包括MD，包括GODEBUG调试的数量）</span>
+<span class="c1"># spinningthreads	处于自旋状态的thread数量</span>
+<span class="c1"># idlethreads 处于idle状态的thread</span>
+<span class="c1"># runqueue	全局G队列中的G的数量</span>
+<span class="c1"># [0,0]	每个P的local queue本地队列中，目前存在的G的数量</span>
+</code></pre></div><h2 id="场景1-创建g">场景1 创建G</h2>
+<p>这个地方在第九讲</p>
+<p><!-- raw HTML omitted --></p>
+<p>正常来说我们希望G1和G3能够在同一个m中，G3应该优先加入G1所在的本地队列</p>
+<h2 id="场景2-g1执行完毕">场景2 G1执行完毕</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220165915424.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220165915424.png, http://cdn.cjpa.top/cdnimages/image-20201220165915424.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220165915424.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220165915424.png"
+        title="image-20201220165915424" /></p>
+<p>当G1执行完毕之后会调用goexit</p>
+<p>通过g0把g2调过来</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170012775.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170012775.png, http://cdn.cjpa.top/cdnimages/image-20201220170012775.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170012775.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170012775.png"
+        title="image-20201220170012775" /></p>
+<p>m1在执行完g1之后，会优先从本地取G2，通过G0来调度</p>
+<h2 id="场景3-g2开辟过多g">场景3 G2开辟过多G</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170226506.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170226506.png, http://cdn.cjpa.top/cdnimages/image-20201220170226506.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170226506.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170226506.png"
+        title="image-20201220170226506" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170246218.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170246218.png, http://cdn.cjpa.top/cdnimages/image-20201220170246218.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170246218.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170246218.png"
+        title="image-20201220170246218" /></p>
+<p>会把当前队列进行分割，然后把队伍头部的打乱和G7放到全局队列中</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170425448.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170425448.png, http://cdn.cjpa.top/cdnimages/image-20201220170425448.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170425448.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170425448.png"
+        title="image-20201220170425448" /></p>
+<h2 id="场景-唤醒正在休眠的m">场景 唤醒正在休眠的M</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170621506.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170621506.png, http://cdn.cjpa.top/cdnimages/image-20201220170621506.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170621506.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170621506.png"
+        title="image-20201220170621506" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170746475.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170746475.png, http://cdn.cjpa.top/cdnimages/image-20201220170746475.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170746475.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170746475.png"
+        title="image-20201220170746475" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170752331.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170752331.png, http://cdn.cjpa.top/cdnimages/image-20201220170752331.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170752331.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170752331.png"
+        title="image-20201220170752331" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220170822031.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220170822031.png, http://cdn.cjpa.top/cdnimages/image-20201220170822031.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220170822031.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220170822031.png"
+        title="image-20201220170822031" /></p>
+<p>假设G2唤醒了M2，M2绑定了P2，并且开始运行G0，但是P2本地队列没有G，M2此时为自旋线程（没有G但为运行状态的线程，不断寻找G）</p>
+<h2 id="场景7-被唤醒的m2从全局队列获取g">场景7 被唤醒的M2从全局队列获取G</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220171147089.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220171147089.png, http://cdn.cjpa.top/cdnimages/image-20201220171147089.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220171147089.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220171147089.png"
+        title="image-20201220171147089" /></p>
+<p>min是最小值，GQ是全局队列的长度</p>
+<h2 id="场景8-m2从m1中偷取g">场景8 M2从M1中偷取G</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220171447757.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220171447757.png, http://cdn.cjpa.top/cdnimages/image-20201220171447757.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220171447757.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220171447757.png"
+        title="image-20201220171447757" /></p>
+<p>G7和G4执行逻辑都比较快，很快就被销毁了，G7执行完了之后M2会继续去G4，如果全部都取完了之后，M2会使用G0来找G（自旋进程）</p>
+<p>P2会从P1的尾部偷一个G8</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220171603385.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220171603385.png, http://cdn.cjpa.top/cdnimages/image-20201220171603385.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220171603385.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220171603385.png"
+        title="image-20201220171603385" /></p>
+<h2 id="场景9-自旋线程的最大限制">场景9 自旋线程的最大限制</h2>
+<p>GOMAXPROCS</p>
+<p>自旋线程 + 执行线程 &lt;= GOMAXPROCS</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220171821092.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220171821092.png, http://cdn.cjpa.top/cdnimages/image-20201220171821092.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220171821092.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220171821092.png"
+        title="image-20201220171821092" /></p>
+<h2 id="场景10--g发生系统调用阻塞">场景10 : G发生系统调用/阻塞</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220171939214.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220171939214.png, http://cdn.cjpa.top/cdnimages/image-20201220171939214.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220171939214.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220171939214.png"
+        title="image-20201220171939214" /></p>
+<p>目前是M1和M2正在执行，M3M4自旋</p>
+<p>突然G8发生syscall阻塞，这个时候会让G8停留在M2中，然后执行G9</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220172023187.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220172023187.png, http://cdn.cjpa.top/cdnimages/image-20201220172023187.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220172023187.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220172023187.png"
+        title="image-20201220172023187" /></p>
+<p>这个时候就会把p2移动到M5</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20201220172133733.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220172133733.png, http://cdn.cjpa.top/cdnimages/image-20201220172133733.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220172133733.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20201220172133733.png"
+        title="image-20201220172133733" /></p>
+<p>为什么不会加到自旋进程M3和M4？</p>
+<p>因为自旋线程只会抢占g并不会抢占p（他们已经有了P3和P4），如果此时休眠队列中没有M，那么就会把P2放到空闲P队列中</p>
+<h2 id="场景11g发生阻塞非阻塞">场景11G发生阻塞/非阻塞</h2>
+<p>G8这个时候已经不阻塞了</p>
+<p>此时P2已经和M5绑定了</p>
+<p>M2会记录下来原配是谁，看看能不能抢占，根据场景10的情况，P2已经和M5组合到了一起，所以抢占失败</p>
+<p>抢占原来的P失败之后M2会继续去找空闲P队列，结果发现有没有</p>
+<p>M2就会放弃寻找，这个时候就会把G8放到全局队列中，然后M2进入到休眠队列</p>
+<p>休眠队列里面的M如果长期不被执行，就会被GC回收</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/" class="prev" rel="prev" title="关于堆内存和栈内存"><i class="fas fa-angle-left fa-fw"></i>关于堆内存和栈内存</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
