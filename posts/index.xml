@@ -4,20 +4,62 @@
         <link>http://example.org/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</lastBuildDate><atom:link href="http://example.org/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</lastBuildDate><atom:link href="http://example.org/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>关于堆内存和栈内存</title>
+    <link>http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</link>
+    <pubDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</guid>
+    <description><![CDATA[栈内存和堆内存 栈内存:栈内存首先是一片内存区域，存储的都是局部变量，凡是定义在方法中的都是局部变量（方法外的是全局变量），for循环内部定义]]></description>
+</item><item>
+    <title>常见的sql语句用法</title>
+    <link>http://example.org/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</link>
+    <pubDate>Sun, 03 Jan 2021 13:33:59 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</guid>
+    <description><![CDATA[SQL SQL分为两个部分，一个是操作语言（DML）。一个是数据定义语言（DDL） 查询和更新指令构成了SQL的DML部分 SELECT——从数据库表]]></description>
+</item><item>
+    <title>MyISAM和InnoDB的区别</title>
+    <link>http://example.org/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <pubDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <description><![CDATA[MyISAM和InnoDB的区别 关于数据库引擎： mysql现在默认使用innodb mysql5.5之前使用myisam myisam innodb 事务支持 不支持 支持]]></description>
+</item><item>
+    <title>Golang Make和new的区别</title>
+    <link>http://example.org/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <description><![CDATA[new和make new和make都是内置函数，主要用来创建分配内存类型 new new（T）可以创建一个没有任何数据的T类型的指针，并且返回该实例的]]></description>
+</item><item>
+    <title>Redis</title>
+    <link>http://example.org/posts/redis/</link>
+    <pubDate>Sun, 03 Jan 2021 13:26:49 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/redis/</guid>
+    <description><![CDATA[Redis Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。 Redis 与其他 key - value 缓存产品有以下三个特点： Redis支持数据的持久化，可以将内存中的数据保]]></description>
+</item><item>
+    <title>Mysql存储过程</title>
+    <link>http://example.org/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
+    <pubDate>Sun, 03 Jan 2021 13:25:50 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
+    <description><![CDATA[MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完]]></description>
+</item><item>
+    <title>牛客mysql题解</title>
+    <link>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</link>
+    <pubDate>Sun, 03 Jan 2021 13:22:33 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
+    <description><![CDATA[链接： https://www.nowcoder.com/ta/sql SQL1 SELECT * from employees Order BY hire_date DESC LIMIT 1; SQL2 -- OFFSET要在limit后面，这样可以选出倒数第三个 SELECT * from employees Order BY hire_date DESC LIMIT 1 OFFSET 2; SQL3 SELECT salaries.*,dept_manager.dept_no FROM salaries LEFT JOIN dept_manager ON salaries.emp_no = dept_manager.emp_no WHERE salaries.to_date=&#39;9999-01-01&#39;]]></description>
+</item><item>
     <title>Nginx</title>
     <link>http://example.org/posts/nginx/</link>
     <pubDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/posts/nginx/</guid>
     <description><![CDATA[Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力]]></description>
-</item><item>
-    <title>动态规划</title>
-    <link>http://example.org/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
-    <pubDate>Sat, 26 Dec 2020 15:38:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
-    <description><![CDATA[动态规划 今天看到leetcode上有个求斐波那契数列的题目 （剑指offer 10-I） 刚开始使用了递归，发现超时 func fib(n int) int { if n == 0{ return 0 }else if n ==]]></description>
 </item><item>
     <title>事务</title>
     <link>http://example.org/posts/%E4%BA%8B%E5%8A%A1/</link>
@@ -26,25 +68,11 @@
     <guid>http://example.org/posts/%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[事务 什么是事务？ 要么都成功，要么都失败 1、sql执行 A给B转账 A100 &ndash;&gt;200 B 200 2、sql执行 B收到A的钱 A 800 &ndash;&gt;400 将一组SQL放在同一个批次中执行，要么]]></description>
 </item><item>
-    <title>MVCC</title>
-    <link>http://example.org/posts/mvcc/</link>
-    <pubDate>Sat, 26 Dec 2020 10:45:10 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/posts/mvcc/</guid>
-    <description><![CDATA[MVCC 什么是锁 当多个用户线程修改共享变量时，可以给修改操作上锁 什么是MVCC MVCC全称是Multi-version Concurrency Control，即多版本并]]></description>
-</item><item>
     <title>红黑树、B树、B&#43;树</title>
     <link>http://example.org/posts/%E7%BA%A2%E9%BB%91%E6%A0%91b%E6%A0%91b&#43;%E6%A0%91/</link>
     <pubDate>Sat, 26 Dec 2020 10:43:44 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/posts/%E7%BA%A2%E9%BB%91%E6%A0%91b%E6%A0%91b&#43;%E6%A0%91/</guid>
     <description><![CDATA[红黑树，B树，B+树 红黑树 二叉排序树的左边比跟节点小，右边比根结点大，并且左右子树都是二叉排序树 每个节点或者是黑色，或者是红色。 （2）根节点]]></description>
-</item><item>
-    <title>Hello Hugo</title>
-    <link>http://example.org/posts/first_post/</link>
-    <pubDate>Fri, 25 Dec 2020 01:08:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/posts/first_post/</guid>
-    <description><![CDATA[Hello Hugo！ :wave:hello everyone!]]></description>
 </item></channel>
 </rss>

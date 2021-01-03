@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Golang - 标签 - 氕氘氚</title>
+        <link>http://example.org/tags/golang/</link>
+        <description>Golang - 标签 - 氕氘氚</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Make和new的区别</title>
+    <link>http://example.org/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <description><![CDATA[new和make new和make都是内置函数，主要用来创建分配内存类型 new new（T）可以创建一个没有任何数据的T类型的指针，并且返回该实例的]]></description>
+</item></channel>
+</rss>

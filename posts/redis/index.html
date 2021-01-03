@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Redis" />
+<meta property="og:description" content="Redis Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。 Redis 与其他 key - value 缓存产品有以下三个特点： Redis支持数据的持久化，可以将内存中的数据保" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/redis/" />
+<meta property="og:image" content="http://example.org/logo.png"/>
+<meta property="article:published_time" content="2021-01-03T13:26:49+08:00" />
+<meta property="article:modified_time" content="2021-01-03T13:26:49+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="Redis"/>
+<meta name="twitter:description" content="Redis Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。 Redis 与其他 key - value 缓存产品有以下三个特点： Redis支持数据的持久化，可以将内存中的数据保"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/redis/" /><link rel="prev" href="http://example.org/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" /><link rel="next" href="http://example.org/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/redis\/"
+        },"genre": "posts","keywords": "Redis","wordcount":  6643 ,
+        "url": "http:\/\/example.org\/posts\/redis\/","datePublished": "2021-01-03T13:26:49+08:00","dateModified": "2021-01-03T13:26:49+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-03">2021-01-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6643 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#nosql概述">Nosql概述</a>
+      <ul>
+        <li><a href="#为什么要用nosql">为什么要用nosql</a></li>
+      </ul>
+    </li>
+    <li><a href="#当今企业架构演变">当今企业架构演变</a>
+      <ul>
+        <li><a href="#数据库引擎">数据库引擎</a></li>
+      </ul>
+    </li>
+    <li><a href="#阿里巴巴的演进分析">阿里巴巴的演进分析</a></li>
+    <li><a href="#nosql的四大分类">NoSQL的四大分类</a>
+      <ul>
+        <li><a href="#kv键值对">KV键值对</a></li>
+        <li><a href="#文档型数据库">文档型数据库</a></li>
+        <li><a href="#列存储数据库">列存储数据库</a></li>
+        <li><a href="#图关系数据库">图关系数据库</a></li>
+      </ul>
+    </li>
+    <li><a href="#redis入门">Redis入门</a></li>
+    <li><a href="#安装redis">安装redis</a></li>
+    <li><a href="#redis-benchmark性能测试工具">Redis-benchmark性能测试工具</a></li>
+    <li><a href="#redis基础知识">Redis基础知识</a></li>
+    <li><a href="#redis-key基本命令">Redis Key基本命令</a>
+      <ul>
+        <li><a href="#redis-key">Redis-Key</a></li>
+        <li><a href="#string字符串">String（字符串）</a></li>
+      </ul>
+    </li>
+    <li><a href="#list">List</a></li>
+    <li><a href="#set">set</a></li>
+    <li><a href="#hash">Hash</a></li>
+    <li><a href="#zset有序集合">Zset（有序集合）</a></li>
+    <li><a href="#三种特殊数据类型">三种特殊数据类型</a>
+      <ul>
+        <li><a href="#goospatial">goospatial</a></li>
+      </ul>
+    </li>
+    <li><a href="#hyperloglog">Hyperloglog</a></li>
+    <li><a href="#bitmaps">Bitmaps</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis">Redis</h1>
+<p>Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。</p>
+<p>Redis 与其他 key - value 缓存产品有以下三个特点：</p>
+<ul>
+<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
+<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
+<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
+</ul>
+<h2 id="nosql概述">Nosql概述</h2>
+<h3 id="为什么要用nosql">为什么要用nosql</h3>
+<blockquote>
+<p>单机mysql的年代</p>
+</blockquote>
+<p>一般情况下一个基本网站的访问量不会太大，单个数据库完全足够，那个时候更多的是去使用静态网页，服务器根本没有太大压力</p>
+<p>思考一下，这种情况下：整个网站的瓶颈是什么？</p>
+<ul>
+<li>数据量太大一个机器放不下</li>
+<li>数据的索引（mysql一般是B+树），如果索引太大，也放不下</li>
+<li>访问量（读写结合），一个服务器根本承受不了</li>
+</ul>
+<p>只要开始出现以上的情况之一，就必须晋级</p>
+<blockquote>
+<p>缓存</p>
+</blockquote>
+<p>memcached缓存（比较早期）+ MySql + 垂直拆分（读写分离）</p>
+<p>网站80%的情况都是在读</p>
+<p>有时候会出现多个用户读取同一个数据的情况，因此需要缓存来保存数据，用来减少服务器的压力</p>
+<p>![image-20201201204307916](/Users/cjp/Library/Application Support/typora-user-images/image-20201201204307916.png)</p>
+<p>缓存主要解决读的问题</p>
+<p>发展过程</p>
+<p>优化数据结构和索引 &ndash;&gt;文件缓存（IO）&ndash;&gt; Memcached（当时最热门的技术）&ndash;&gt;</p>
+<h2 id="当今企业架构演变">当今企业架构演变</h2>
+<p>读写分离</p>
+<blockquote>
+<p>分库分表 + 水平拆分 + MySQL集群</p>
+</blockquote>
+<p>![image-20201201205313273](/Users/cjp/Library/Application Support/typora-user-images/image-20201201205313273.png)</p>
+<p>技术在发展的时候对人的要求也越来越高</p>
+<p><strong>本质：数据库（读，写）</strong></p>
+<h3 id="数据库引擎">数据库引擎</h3>
+<p>早些年MylSAM 表锁（）</p>
+<p>myisam：表锁（100w数据，查询张三的密码，会把整个表锁起来，高并发下会出现严重的问题）</p>
+<p>早些年innodb 行锁</p>
+<p>每次只锁一行</p>
+<p>满满的就开始使用分库，分表来解决写的压力，MySql在那个年代提出了表分区！这个并没有多少公司使用，MySql的集群，很好的满足了那个年代的所有需求</p>
+<blockquote>
+<p>如今最近的年代</p>
+</blockquote>
+<p>技术爆炸：2010年-2020年，世界已经发生了翻天覆地的变化。（定位也是一种数据，一些音乐，一些热榜）</p>
+<p>MySql的关系型数据库已经不够用了，数据量很多，变化很快！</p>
+<ul>
+<li>
+<p>现在有一些新的数据库</p>
+<p>​	图型数据库</p>
+<p>​	json也可以用来存到数据库里面BSON（mongodb使用这个）</p>
+</li>
+</ul>
+<p>​</p>
+<p>MySQL有的人还用来存放一些比较大的文件，博客、图片！数据库表很大，效率就很低，如果有一种专门的数据库用来处理这种数据，mysql压力就会十分小（研究如何处理这些问题）大数据IO下，表几乎没法更改，假设有1亿条数据</p>
+<blockquote>
+<p>目前一个基本的互联网项目！</p>
+</blockquote>
+<h2 id="阿里巴巴的演进分析">阿里巴巴的演进分析</h2>
+<p>案例：阿里巴巴批发网</p>
+<p>点击一个页面会出现很多图片，评论，视频等各种信息，这么多的东西不可能全部都用tomcat，也不可能都用一个数据库</p>
+<p>![image-20201208233731886](/Users/cjp/Library/Application Support/typora-user-images/image-20201208233731886.png)</p>
+<p>![image-20201208234126966](/Users/cjp/Library/Application Support/typora-user-images/image-20201208234126966.png)</p>
+<p>公司有敏捷开发、极限编程</p>
+<p>大量的公司都是做的相同的业务，因此要好好学习</p>
+<p>数据层</p>
+<ul>
+<li>挑战</li>
+<li>解决方案，统一数据服务平台</li>
+</ul>
+<p>![image-20201208235246088](/Users/cjp/Library/Application Support/typora-user-images/image-20201208235246088.png)</p>
+<p>如果未来想当一个架构师：<strong>没有什么事加一层解决不了的</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1、商品的基本信息，</span>
+  名称、价格、商家信息；
+  关系型数据库可以解决了：MySQL/Oracle（淘宝早年去IOE了 —— 王坚）
+	淘宝的MySQL不是大家用的MySQL
+<span class="c1"># 商品的描述、评论（文字比较多）</span>
+	mongodb
+<span class="c1"># 图片</span>
+	分布式文件系统FastDFS
+	- 淘宝自己的TFS
+	- google的GFS
+	- Hadoop HDFS
+	- 阿里云 oss云存储
+<span class="c1"># 商品的关键字（搜索）</span>
+	- 搜索引擎 solr elasticsearch
+	- Isearch: 淘宝用的 多隆 开发的
+<span class="c1"># 商品的热门波段信息</span>
+	- 内存数据库
+	- Redis Tair Memache
+<span class="c1"># 商品交易、外部交易接口</span>
+	- 三方应用
+</code></pre></div><p>一个简单的网页技术的背后一定不是大家所想的那么简单，大型互联网公司应用问题</p>
+<ul>
+<li>数据类型太多了</li>
+<li>数据源太多了，经常重构</li>
+<li>数据要改造，大面积改造</li>
+</ul>
+<p>解决方案：统一的数据服务层UDSL</p>
+<p>在应用集群和底层数据源之间建立一个中间件</p>
+<p>![image-20201209000627929](/Users/cjp/Library/Application Support/typora-user-images/image-20201209000627929.png)</p>
+<p>类似于jdbc屏蔽了数据库之间的差异</p>
+<p>![image-20201209000808255](/Users/cjp/Library/Application Support/typora-user-images/image-20201209000808255.png)</p>
+<p>![image-20201209000910759](/Users/cjp/Library/Application Support/typora-user-images/image-20201209000910759.png)</p>
+<p>这里以上都是nosql概述，不仅能够提高大家的知识，还能够帮助大家了解大厂的工作内容</p>
+<h2 id="nosql的四大分类">NoSQL的四大分类</h2>
+<h3 id="kv键值对">KV键值对</h3>
+<ul>
+<li>新浪：Redis</li>
+<li>美团：Redis+Tair</li>
+<li>阿里、百度：Redis + memecache</li>
+</ul>
+<h3 id="文档型数据库">文档型数据库</h3>
+<blockquote>
+<p>bson格式和json一样</p>
+</blockquote>
+<ul>
+<li>MongoDB（一般必须掌握）
+<ul>
+<li>MongoDB是一个基于分布式文件存储的数据库，C++编写，主要用来处理大量的文档！</li>
+<li>MongoDB是一个基于关型数据库和非关系型数据库中中间的产品，MongoDB是非关系型数据库中功能最丰富，最像关系型数据库的！</li>
+</ul>
+</li>
+</ul>
+<h3 id="列存储数据库">列存储数据库</h3>
+<ul>
+<li>HBase</li>
+<li>分布式文件系统</li>
+</ul>
+<h3 id="图关系数据库">图关系数据库</h3>
+<p>它不是存图型的，它是放的关系，比如朋友圈社交网络，广告推荐，专注于构建关系图</p>
+<ul>
+<li>Neo4J</li>
+<li>InfoGrid</li>
+</ul>
+<p>![image-20201209001709784](/Users/cjp/Library/Application Support/typora-user-images/image-20201209001709784.png)</p>
+<p>敬畏之心可以使人进步！</p>
+<h2 id="redis入门">Redis入门</h2>
+<blockquote>
+<p>Redis（Remote Dictionary Server），即远程字典服务，</p>
+</blockquote>
+<p>用c语言编写，支持网络，基于内存亦可持久化的日志型，Key-Value数据库，并且提供多种语言的API</p>
+<p>免费喝开源，是当下最热门的NoSQL技术之一，也被人们称为结构化数据库</p>
+<blockquote>
+<p>Redis能干嘛</p>
+</blockquote>
+<p>![image-20201209004320302](/Users/cjp/Library/Application Support/typora-user-images/image-20201209004320302.png)</p>
+<p>1、内存存储、持久化、内存是断电即失去，所以说持久化很重要（rdb，aof）</p>
+<p>2、效率高，可以用于高速缓存</p>
+<p>3、发布订阅系统</p>
+<p>4、地图信息分析</p>
+<p>5、计数器、计数器（浏览量！访问量）</p>
+<p>6、&hellip;&hellip;</p>
+<blockquote>
+<p>特性</p>
+</blockquote>
+<p>1、多样的数据类型</p>
+<p>2、持久化</p>
+<p>3、集群</p>
+<p>4、事务</p>
+<p>&hellip;&hellip;</p>
+<blockquote>
+<p>学习中需要的东西</p>
+</blockquote>
+<p>1、redis官网</p>
+<p>2、中文网 <a href="http://redis.cn">http://redis.cn</a></p>
+<p>注意：windows在Github上下载（停更很久了）</p>
+<p>redis推荐在linux服务器上搭建，不建议使用windows</p>
+<h2 id="安装redis">安装redis</h2>
+<blockquote>
+<p>docker安装</p>
+<p>docker pull redis</p>
+</blockquote>
+<p>linux安装</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">yum install gcc-c++
+
+make
+
+make install
+</code></pre></div><p>redis的安装路径 usr/local/bin</p>
+<ol start="6">
+<li>将redis配置文件复制到当前目录</li>
+</ol>
+<p>7、redis默认不是后台启动的</p>
+<p>8、在配置文件里运行</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">redis-server kconfig/redis.conf
+</code></pre></div><p>查看redis进程</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ps -ef<span class="p">|</span>grep redis
+</code></pre></div><h2 id="redis-benchmark性能测试工具">Redis-benchmark性能测试工具</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 测试100个并发请求,1000个请求</span>
+redis-benchmark -h localhost -p <span class="m">6379</span> -c <span class="m">100</span> -n <span class="m">1000</span>
+</code></pre></div><p>![image-20201209151513359](/Users/cjp/Library/Application Support/typora-user-images/image-20201209151513359.png)</p>
+<h2 id="redis基础知识">Redis基础知识</h2>
+<p>redis默认有16个数据库（0-15），默认的是第0个。用select切换数据库</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@d1f23439dd59:/data# redis-cli
+127.0.0.1:6379&gt; <span class="k">select</span> <span class="m">3</span> <span class="c1"># 选择第三个数据库</span>
+OK
+127.0.0.1:6379<span class="o">[</span>3<span class="o">]</span>&gt; DBSIZE# 查看大小
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379<span class="o">[</span>3<span class="o">]</span>&gt; keys * <span class="c1"># 查看所有的key</span>
+1<span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+127.0.0.1:6379<span class="o">[</span>3<span class="o">]</span>&gt; flushdb <span class="c1"># 清空数据库</span>
+OK
+127.0.0.1:6379<span class="o">[</span>3<span class="o">]</span>&gt; keys *
+<span class="o">(</span>empty array<span class="o">)</span>
+127.0.0.1:6379<span class="o">[</span>3<span class="o">]</span>&gt; FLUSHALL <span class="c1">#清空全部数据库的内容</span>
+</code></pre></div><blockquote>
+<p>Redis是单线程的</p>
+</blockquote>
+<p>Redis是基于内存操作的，cpu不是Redis的性能瓶颈，Redis的性能瓶颈是根据机器的内存和网络带宽，既然可以使用单线程来实现，就使用了单线程，6.0版本之后有了多线程</p>
+<p>Redis是C语言写的，官方提供的数据是没秒10w+ 的QPS，这个不比Memecache差</p>
+<p><strong>单线程为什么还这么快？</strong></p>
+<p>1、误区1：高性能的服务器一定是多线程的？</p>
+<p>2、误区2：多小城一定比单线程效率高？</p>
+<p>CPU、内存、硬盘速度要有所理解！</p>
+<p><strong>核心</strong></p>
+<p>Redis是将所有的数据全部放在内存中的，所以说使用单线程去操作，效率就是最高的，多线程会发生cpu上下文切换，耗时的操作，对于内存系统来说，如果没有上下文切换，效率就是最高的，多次读写都是在一个CPU中的</p>
+<h2 id="redis-key基本命令">Redis Key基本命令</h2>
+<blockquote>
+<p>redis可以做缓存，消息中间件MQ，数据库</p>
+</blockquote>
+<blockquote>
+<p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 <a href="http://redis.cn/topics/data-types-intro.html#strings" target="_blank" rel="noopener noreffer">字符串（strings）</a>， <a href="http://redis.cn/topics/data-types-intro.html#hashes" target="_blank" rel="noopener noreffer">散列（hashes）</a>， <a href="http://redis.cn/topics/data-types-intro.html#lists" target="_blank" rel="noopener noreffer">列表（lists）</a>， <a href="http://redis.cn/topics/data-types-intro.html#sets" target="_blank" rel="noopener noreffer">集合（sets）</a>， <a href="http://redis.cn/topics/data-types-intro.html#sorted-sets" target="_blank" rel="noopener noreffer">有序集合（sorted sets）</a> 与范围查询， <a href="http://redis.cn/topics/data-types-intro.html#bitmaps" target="_blank" rel="noopener noreffer">bitmaps</a>， <a href="http://redis.cn/topics/data-types-intro.html#hyperloglogs" target="_blank" rel="noopener noreffer">hyperloglogs</a> 和 <a href="http://redis.cn/commands/geoadd.html" target="_blank" rel="noopener noreffer">地理空间（geospatial）</a> 索引半径查询。 Redis 内置了 <a href="http://redis.cn/topics/replication.html" target="_blank" rel="noopener noreffer">复制（replication）</a>，<a href="http://redis.cn/commands/eval.html" target="_blank" rel="noopener noreffer">LUA脚本（Lua scripting）</a>， <a href="http://redis.cn/topics/lru-cache.html" target="_blank" rel="noopener noreffer">LRU驱动事件（LRU eviction）</a>，<a href="http://redis.cn/topics/transactions.html" target="_blank" rel="noopener noreffer">事务（transactions）</a> 和不同级别的 <a href="http://redis.cn/topics/persistence.html" target="_blank" rel="noopener noreffer">磁盘持久化（persistence）</a>， 并通过 <a href="http://redis.cn/topics/sentinel.html" target="_blank" rel="noopener noreffer">Redis哨兵（Sentinel）</a>和自动 <a href="http://redis.cn/topics/cluster-tutorial.html" target="_blank" rel="noopener noreffer">分区（Cluster）</a>提供高可用性（high availability）。</p>
+</blockquote>
+<p>redis的五大数据类型</p>
+<p>String</p>
+<p>List</p>
+<p>Set</p>
+<p>Hash</p>
+<p>Zset</p>
+<h3 id="redis-key">Redis-Key</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">move name 1		<span class="c1"># 从1数据库中移除name</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> name cjp 		<span class="c1"># 设置name为cjp</span>
+OK
+127.0.0.1:6379&gt; EXPIRE name 10	<span class="c1"># 设置name的过期时间为10秒</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; ttl name				<span class="c1"># 查看过期时间</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+</code></pre></div><p>key的一些常用的命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">EXISTS name	<span class="c1"># 判断当前的key是否存在</span>
+EXPIRE key <span class="nb">time</span>	<span class="c1"># 设置过期时间</span>
+ttl name				<span class="c1"># 查看name的剩余时间</span>
+<span class="nb">type</span> name				<span class="c1"># 查看name的类型</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> name cjp
+OK
+127.0.0.1:6379&gt; <span class="nb">type</span> name
+string
+</code></pre></div><p>EXPIRE可以用来做单点登陆</p>
+<h3 id="string字符串">String（字符串）</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; <span class="nb">set</span> key2 v1						<span class="c1"># 设置值</span>
+OK
+127.0.0.1:6379&gt; get key2							<span class="c1"># 获取值</span>
+<span class="s2">&#34;v1&#34;</span>
+127.0.0.1:6379&gt; APPEND key2 <span class="s2">&#34;hahah&#34;</span>		<span class="c1"># 追加字符串</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">7</span>
+127.0.0.1:6379&gt; STRLEN key1						<span class="c1"># 获取长度</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+<span class="c1"># 加一操作，可以用来统计访问量</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> views <span class="m">0</span>
+OK
+127.0.0.1:6379&gt; get views
+<span class="s2">&#34;0&#34;</span>
+127.0.0.1:6379&gt; incr views		<span class="c1"># views加一</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; incr views
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; get views			<span class="c1"># 获取views</span>
+<span class="s2">&#34;2&#34;</span>
+127.0.0.1:6379&gt; decr views		<span class="c1"># 减一</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+
+<span class="c1"># 设置步长</span>
+127.0.0.1:6379&gt; INCRBY views 10	<span class="c1"># 增加十</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">12</span>
+127.0.0.1:6379&gt; DECRBY views <span class="m">12</span> <span class="c1"># 减十二</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+
+<span class="c1"># 字符串的范围</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> key <span class="s2">&#34;hello,cjp&#34;</span>	<span class="c1">#设置值</span>
+OK
+127.0.0.1:6379&gt; GETRANGE key <span class="m">0</span> 3		<span class="c1">#设置区间 0，1，2，3</span>
+<span class="s2">&#34;hell&#34;</span>
+127.0.0.1:6379&gt; GETRANGE key <span class="m">0</span> -1		<span class="c1"># 获取全部字符串</span>
+<span class="s2">&#34;hello,cjp&#34;</span>
+
+<span class="c1">#  替换字符串</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> key2 abcdefg
+OK
+127.0.0.1:6379&gt; get key2
+<span class="s2">&#34;abcdefg&#34;</span>
+127.0.0.1:6379&gt; SETRANGE  key2 <span class="m">1</span> xx
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">7</span>
+127.0.0.1:6379&gt; get key2
+<span class="s2">&#34;axxdefg&#34;</span>
+<span class="c1"># setex	设置过期时间</span>
+127.0.0.1:6379&gt; setex key3 <span class="m">30</span> <span class="s2">&#34;hello&#34;</span>
+OK
+127.0.0.1:6379&gt; get key3
+<span class="s2">&#34;hello&#34;</span>
+<span class="c1"># setnx	不存在再设置,如果存在就不设置</span>
+127.0.0.1:6379&gt; setnx mykey <span class="s2">&#34;redis&#34;</span>	<span class="c1"># 这个时候mykey不存在，所以可以设置</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get mykey
+<span class="s2">&#34;redis&#34;</span>
+127.0.0.1:6379&gt; setnx mykey <span class="s2">&#34;rediss&#34;</span>	<span class="c1"># 这个时候mykey已经设置好了，再设置的话就会出错了</span>
+<span class="o">(</span>integer<span class="o">)</span> 
+
+<span class="c1"># mget mset 这两个是原子操作，要么成功，要么失败</span>
+127.0.0.1:6379&gt; msetnx k1 v1 k2 v2
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; mget k2 k2
+1<span class="o">)</span> <span class="s2">&#34;v2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;v2&#34;</span>
+
+<span class="c1"># 对象</span>
+<span class="nb">set</span> user:1 <span class="o">{</span>name:cjp,age:2<span class="o">}</span> <span class="c1"># 设置一个user：1对象，值为json字符来保存一个对象</span>
+<span class="c1"># 这里的key是一个巧妙的设计 user:{id}:{filed}</span>
+mset user:1:name zhangsan user:1:age <span class="m">2</span>
+
+127.0.0.1:6379&gt; mset user:1:name zhangsan user:1:age <span class="m">2</span>
+OK
+127.0.0.1:6379&gt; mget user:1:name user:1:age
+1<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;2&#34;</span>
+127.0.0.1:6379&gt; 
+
+
+<span class="c1"># getset 先get再set</span>
+127.0.0.1:6379&gt; getset db redis	<span class="c1"># 这个时候数据库中还没有db</span>
+<span class="o">(</span>nil<span class="o">)</span>
+127.0.0.1:6379&gt; get db					<span class="c1"># getset组合命令把db的值设置为了db</span>
+<span class="s2">&#34;redis&#34;</span>
+</code></pre></div><p>jedis是java中用来操作redis的一个工具</p>
+<ul>
+<li>计数器</li>
+<li>统计单位数量 uid:cjphah:follow 0 incr</li>
+<li>粉丝数量</li>
+<li>对象存储</li>
+</ul>
+<h2 id="list">List</h2>
+<p>基本数据类型，列表</p>
+<p>![image-20201209182428581](/Users/cjp/Library/Application Support/typora-user-images/image-20201209182428581.png)</p>
+<p>十分强大，可以吧list玩成栈，队列</p>
+<p>所有的list相关的都是用l开头的</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; LPUSH list one	<span class="c1"># 将一个值或者多个值放在列表头部</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; LPUSH list two
+integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; LPUSH list three
+integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; LRANGE list <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;three&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+127.0.0.1:6379&gt; LRANGE list <span class="m">0</span> <span class="m">1</span>
+1<span class="o">)</span> <span class="s2">&#34;three&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+
+<span class="c1"># RPUSH 向尾部添加</span>
+127.0.0.1:6379&gt; RPUSH list four
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+127.0.0.1:6379&gt; LRANGE list <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;three&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;four&#34;</span>
+<span class="c1"># LPOP左移除</span>
+127.0.0.1:6379&gt; LPOP list	<span class="c1"># 移除第一个</span>
+<span class="s2">&#34;three&#34;</span>
+127.0.0.1:6379&gt; RPOP list	<span class="c1"># 移除最后一个</span>
+<span class="s2">&#34;four&#34;</span>
+127.0.0.1:6379&gt; LRANGE list <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+
+<span class="c1"># 通过下标获取某一个值</span>
+127.0.0.1:6379&gt; lindex list <span class="m">0</span>
+<span class="s2">&#34;two&#34;</span>
+
+<span class="c1"># 获取长度</span>
+127.0.0.1:6379&gt; llen list
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+
+
+<span class="c1"># 移除指定的值(下面这个把one给移除了)</span>
+
+127.0.0.1:6379&gt; lrem list <span class="m">1</span> two
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; lrange list <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+
+<span class="c1"># trim修剪</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;d&#34;</span>
+127.0.0.1:6379&gt; ltrim mylist <span class="m">0</span> 2	<span class="c1"># 这个时候mylist已经被修剪了</span>
+OK
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+
+
+<span class="c1"># 组合命令</span>
+127.0.0.1:6379&gt; rpush mylist <span class="s2">&#34;a&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; rpush mylist <span class="s2">&#34;b&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; rpush mylist <span class="s2">&#34;c&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+127.0.0.1:6379&gt; rpoplpush mylist myotherlist
+<span class="s2">&#34;c&#34;</span>
+127.0.0.1:6379&gt; lrange myotherlist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+
+
+<span class="c1"># lset 将列表中的指定值替换为掉</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+127.0.0.1:6379&gt; lset mylist <span class="m">0</span> d	<span class="c1"># 把0下标的换成d，如果下面不存在，就会报错</span>
+OK
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;d&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+
+<span class="c1"># linsert 插入</span>
+<span class="c1"># 下面这个例子在指定的值前面插入一个</span>
+127.0.0.1:6379&gt; rpush mylist a
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; rpush mylist b
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; rpush mylist c
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; linsert mylist before a other
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;other&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+<span class="c1">#  在后面插入</span>
+127.0.0.1:6379&gt; linsert mylist after a other1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+127.0.0.1:6379&gt; lrange mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;other&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;other1&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;c&#34;</span>
+</code></pre></div><blockquote>
+<p>小结</p>
+</blockquote>
+<ul>
+<li>它其实是一个链表，before node after，left，right都可以插入值</li>
+<li>如果key不窜爱，创建新的链表</li>
+<li>如果key存在，新增内容</li>
+<li>如果移除的所有值，空链表，也代表不存在</li>
+<li>在两边插入或者改动值，效率最高，中间元素，相对效率会低一些</li>
+</ul>
+<p>可以做消息排队，消息队列，在用MQ的时候很有用。</p>
+<p>既可以作为队列，又可以作为栈</p>
+<h2 id="set">set</h2>
+<p>set是一种集合类型。set中的值不能重复</p>
+<p><strong>set是一个无序集合</strong></p>
+<p>set里面的基本命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sadd myset <span class="s2">&#34;hello&#34;</span>
+asdd myset <span class="s2">&#34;cjp&#34;</span>
+sadd myset <span class="s2">&#34;love&#34;</span>
+127.0.0.1:6379&gt; SMEMBERS myset	<span class="c1"># 查看set中所有的值</span>
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;love&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+127.0.0.1:6379&gt; SISMEMBER myset hello	<span class="c1"># 判断这个值是否在一个set中</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; scard myset			<span class="c1"># 查看集合中的元素个数</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset <span class="c1"># 抽取一个随机的</span>
+<span class="s2">&#34;cjp&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset
+<span class="s2">&#34;love&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset <span class="m">2</span> <span class="c1">#抽选两个随机的</span>
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+127.0.0.1:6379&gt; SRANDMEMBER myset <span class="m">2</span>
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;love&#34;</span>
+
+<span class="c1"># 将一个指定的值移动到另外一个set中</span>
+127.0.0.1:6379&gt; sadd myset2 <span class="s2">&#34;set2&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; smove myset myset2 <span class="s2">&#34;hello&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; SMEMBERS myset2
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;set2&#34;</span>
+
+<span class="c1"># 微博，B站，共同关注！（并集）</span>
+<span class="c1"># 数字集合</span>
+127.0.0.1:6379&gt; SDIFF myset myset2	<span class="c1"># 以第一个为参照，找差集</span>
+1<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;love&#34;</span>
+127.0.0.1:6379&gt; SINTER myset myset2	<span class="c1"># 找交集</span>
+1<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+127.0.0.1:6379&gt; SUNION myset myset2	<span class="c1"># 找并集</span>
+1<span class="o">)</span> <span class="s2">&#34;set2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;love&#34;</span>
+
+</code></pre></div><p>共同关注，共同爱好，二度好友，推荐好友（六度分割理论）</p>
+<h2 id="hash">Hash</h2>
+<p>Map集合，key-map集合，这个时候值是一个map集合</p>
+<p>Hash本质和string没有太大区别还是一个简单的key-value</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先上例子</span>
+127.0.0.1:6379&gt; hset myhash dield1 cjp
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hget myhash dield1			<span class="c1"># 获取一个字段值</span>
+<span class="s2">&#34;cjp&#34;</span>
+
+127.0.0.1:6379&gt; hmset myhash filed1 hello field2 world	<span class="c1"># 同时设置多个key-value </span>
+OK
+127.0.0.1:6379&gt; hmget myhash field1 field2 <span class="c1"># 同时获取</span>
+1<span class="o">)</span> <span class="o">(</span>nil<span class="o">)</span>
+2<span class="o">)</span> <span class="s2">&#34;world&#34;</span>
+127.0.0.1:6379&gt; hgetall myhash			<span class="c1"># 获取全部值</span>
+1<span class="o">)</span> <span class="s2">&#34;dield1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;filed1&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;field2&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;world&#34;</span>
+127.0.0.1:6379&gt; hdel myhash field2	<span class="c1"># 删除指定的字段，删除之后对应的value也没有了</span>
+
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hgetall myhash
+1<span class="o">)</span> <span class="s2">&#34;dield1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;filed1&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+
+
+<span class="c1"># 查看hash的长度</span>
+127.0.0.1:6379&gt; hlen myhash
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+<span class="c1"># 判读hash中某个field存不存在</span>
+127.0.0.1:6379&gt; hexists myhash dield1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+
+127.0.0.1:6379&gt; hkeys myhash	<span class="c1"># 只获得所有的field</span>
+1<span class="o">)</span> <span class="s2">&#34;dield1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;filed1&#34;</span>
+127.0.0.1:6379&gt; hvals myhash	<span class="c1"># 只获得所有的value</span>
+1<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+
+<span class="c1"># incr decr</span>
+
+127.0.0.1:6379&gt; hset myhash f3 5		<span class="c1"># 设置f3</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; HINCRBY myhash f3 2	<span class="c1"># 让f3增加2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">7</span>
+
+127.0.0.1:6379&gt; hsetnx myhash f3 4	<span class="c1"># 如果不存在才会被创建</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379&gt; hsetnx myhash f4 4	<span class="c1"># 如果存在就会被创建</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</code></pre></div><p>hash的应用，可以存一些变更的数据user，name age</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; hset user:1 name chenjiapeng
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hget user:1 name
+<span class="s2">&#34;chenjiapeng&#34;</span>
+</code></pre></div><p>可以存一些用户信息，经常变动的信息，hash更加适合对象的存储，string更加适合字符串存储。</p>
+<h2 id="zset有序集合">Zset（有序集合）</h2>
+<p>在set的基础上增加了一个值，set k1 v1 k2</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; zadd myset <span class="m">1</span> one				<span class="c1"># 添加多个值</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd myset <span class="m">2</span> two <span class="m">3</span> three
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; zrange myset <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;one&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;two&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;three&#34;</span>
+
+<span class="c1"># 排序如何实现</span>
+<span class="c1"># 从小到大排序</span>
+127.0.0.1:6379&gt; zadd salary <span class="m">2500</span> xiaoming
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd salary <span class="m">3000</span> zhangsan
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd salary <span class="m">300000</span> cjp
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="c1"># -inf +inf 是最小和最大的意思</span>
+127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf +inf <span class="c1"># 按照从小到大排序输出名字</span>
+1<span class="o">)</span> <span class="s2">&#34;xiaoming&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+<span class="c1"># 输出名字和score</span>
+127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf +inf withscores 
+1<span class="o">)</span> <span class="s2">&#34;xiaoming&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;2500&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;3000&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;300000&#34;</span>
+<span class="c1"># 移除元素</span>
+127.0.0.1:6379&gt; zrange salary <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;xiaoming&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+127.0.0.1:6379&gt; zrem salary xiaoming
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zrange salary <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+<span class="c1"># 获取有序集合中的个数</span>
+127.0.0.1:6379&gt; zcard salary
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+<span class="c1"># 计算区间变量</span>
+127.0.0.1:6379&gt; ZREVRANGE salary <span class="m">0</span> -1	<span class="c1"># 从高到低</span>
+1<span class="o">)</span> <span class="s2">&#34;cjp&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;zhangsan&#34;</span>
+<span class="c1"># 获取指定区间的成员数量</span>
+127.0.0.1:6379&gt; zadd myset <span class="m">1</span> hello <span class="m">2</span> world <span class="m">3</span> cjp
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; ZCOUNT myset <span class="m">1</span> <span class="m">3</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; ZCOUNT myset <span class="m">1</span> <span class="m">2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</code></pre></div><p>set中有的，zset都可以</p>
+<p>应用</p>
+<ul>
+<li>班级表成绩</li>
+<li>工资表排序</li>
+<li>普通消息</li>
+<li>重要消息</li>
+<li>排行榜应用实现</li>
+</ul>
+<h2 id="三种特殊数据类型">三种特殊数据类型</h2>
+<h3 id="goospatial">goospatial</h3>
+<p>地理位置</p>
+<p>朋友定位，附近的人，打车距离计算？</p>
+<p>都是通过Refis的Geo来实现的，在redis 3.2版本推出了，两地之间的距离，房源几公里之内的人</p>
+<p>可以查询一些地理数据</p>
+<blockquote>
+<p>getadd</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># getadd 添加地理位置</span>
+<span class="c1"># 规则：两级无法直接添加，一般会下载城市数据，直接通过程序直接倒入</span>
+<span class="c1"># 参数 key 值（纬度、精度、名称）</span>
+geoadd china:city 116.40 39.90 beijing
+geoadd china:city 121.47 31.23 shanghai
+geoadd china:city 106.50 29.53 chongqing
+geoadd china:city 114.01 22.52 shenzhen
+geoadd china:city 12.16 30.24 hangzhou 108.69 34.26 xian
+</code></pre></div><blockquote>
+<p>从key里返回所有给定位置元素的位置geopos</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; GEOPOS china:city beijing# 获取指定的城市的经度和纬度
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;116.39999896287918091&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;39.90000009167092543&#34;</span>
+127.0.0.1:6379&gt; GEOPOS china:city beijing chongqing
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;116.39999896287918091&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;39.90000009167092543&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+</code></pre></div><blockquote>
+<p>GEODIST</p>
+</blockquote>
+<p>两人之间的距离</p>
+<p>单位</p>
+<ul>
+<li>m表示单位为米</li>
+<li>km表示单位为千米</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 计算北京到上海的直线距离</span>
+127.0.0.1:6379&gt; GEODIST china:city beijing shanghai km
+<span class="s2">&#34;1067.3788&#34;</span>
+</code></pre></div><blockquote>
+<p>georadius以给定的经度为中心，找出某一半径内的元素</p>
+</blockquote>
+<p>我附近的人？</p>
+<ul>
+<li>第一步：获取所有附近的人的地址，定位！！ 通过半径来查询</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 以经度110，纬度30为中心，1000km为半径，找坐标</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">1000</span> km
+1<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;shenzhen&#34;</span>
+<span class="c1"># 找到城市坐标之后再算出距离</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">1000</span> km withdist
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;341.9374&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;489.6110&#34;</span>
+3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;shenzhen&#34;</span>
+   2<span class="o">)</span> <span class="s2">&#34;922.9093&#34;</span>
+<span class="c1"># 再展示经纬度</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">1000</span> km withcoord
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;108.68999987840652466&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;34.25999964418929977&#34;</span>
+3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;shenzhen&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;114.01000052690505981&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;22.5200000879503861&#34;</span>
+<span class="c1"># 获取指定数量的人</span>
+127.0.0.1:6379&gt; GEORADIUS china:city <span class="m">110</span> <span class="m">30</span> <span class="m">1000</span> km withcoord count <span class="m">1</span>
+1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;106.49999767541885376&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;29.52999957900659211&#34;</span>
+<span class="c1"># 中心点由指定元素(找出指定元素周围的元素)</span>
+127.0.0.1:6379&gt; GEORADIUSBYMEMBER china:city beijing <span class="m">1000</span> km
+1<span class="o">)</span> <span class="s2">&#34;beijing&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+</code></pre></div><blockquote>
+<p>GEOHASH 返回一个或多个位置元素的Geohash表示</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将二维的经纬度转换为一维的字符串，如果两个长得信的话，代表这两个狠相近</span>
+127.0.0.1:6379&gt; GEOHASH china:city beijing chongqing
+1<span class="o">)</span> <span class="s2">&#34;wx4fbxxfke0&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;wm5xzrybty0&#34;</span>
+</code></pre></div><blockquote>
+<p>GEO底层的实现原理其实就是Zset！我们可以使用zset命令来操作deo</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 用zrange可以查看所有的元素</span>
+127.0.0.1:6379&gt; zrange china:city <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;shenzhen&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;shanghai&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;beijing&#34;</span>
+<span class="c1"># zrem可以删除元素</span>
+127.0.0.1:6379&gt; zrem china:city beijing
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zrange china:city <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;hangzhou&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;chongqing&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;xian&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;shenzhen&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;shanghai&#34;</span>
+</code></pre></div><h2 id="hyperloglog">Hyperloglog</h2>
+<blockquote>
+<p>什么是基数？</p>
+</blockquote>
+<p>A{1,3,5,7,8,9}	B{1,3,5,7,8}</p>
+<p>基数：不重复的元素 = 5，可以接受误差</p>
+<blockquote>
+<p>简介</p>
+</blockquote>
+<p>Redis 2.8.9版本更新了Hyperloglog数据结构</p>
+<p>Redis Hyperlogog基数统计的算法</p>
+<p>网页的UV（访问量，一个人访问多次但是还是算作一个人）</p>
+<p>传统的方式，set保存用户的id，然后就可以统计set中的元素数量，作为标准判断。这个方式如果保存大量用户id就会比较麻烦，我们的目的就为了基数，而不是保存用户id</p>
+<p><strong>Hyperloglog优点</strong></p>
+<p>2^64不同的元素的技术，只需要费12kb内存，如果从内存角度来看，Hyperloglog是首选</p>
+<p>0.81%的错误率</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; PFADD mykey a b c d e f g h i j	<span class="c1"># 设置mykey</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; PFCOUNT mykey	<span class="c1"># 统计mykey数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+127.0.0.1:6379&gt; PFADD mykey2 i j k z x c v b n m	<span class="c1"># 设置mykey2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; PFCOUNT mykey2	<span class="c1"># 统计mykey2</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+127.0.0.1:6379&gt; PFMERGE mykey3 mykey mykey2	<span class="c1"># 求mykey和mykey2的并集，然后将其合并到mykey3</span>
+OK
+127.0.0.1:6379&gt; PFCOUNT mykey3 <span class="c1"># 统计mykey3的数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">16</span>
+</code></pre></div><h2 id="bitmaps">Bitmaps</h2>
+<blockquote>
+<p>位存储</p>
+</blockquote>
+<p>统计疫情感染人数：0 0 10 0</p>
+<p>统计用户信息，活跃、不活跃！登陆、未登陆、打卡。userid status day，365大卡，两个状态的，都可以使用Bitmaps。</p>
+<p>Bitmaps位图，数据结构，都是操作二进制位来进行记录，只有0和1两个状态！</p>
+<p>365天=365bit 1字节=8bit</p>
+<p>![image-20201213162824279](/Users/cjp/Library/Application Support/typora-user-images/image-20201213162824279.png)</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" class="prev" rel="prev" title="Mysql存储过程"><i class="fas fa-angle-left fa-fw"></i>Mysql存储过程</a>
+            <a href="/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/" class="next" rel="next" title="Golang Make和new的区别">Golang Make和new的区别<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

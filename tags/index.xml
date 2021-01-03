@@ -4,26 +4,47 @@
         <link>http://example.org/tags/</link>
         <description>Tags - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Daily</title>
+    <link>http://example.org/tags/daily/</link>
+    <pubDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/daily/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>SQL</title>
+    <link>http://example.org/tags/sql/</link>
+    <pubDate>Sun, 03 Jan 2021 13:33:59 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/sql/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Mysql</title>
+    <link>http://example.org/tags/mysql/</link>
+    <pubDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/mysql/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Golang</title>
+    <link>http://example.org/tags/golang/</link>
+    <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/golang/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Redis</title>
+    <link>http://example.org/tags/redis/</link>
+    <pubDate>Sun, 03 Jan 2021 13:26:49 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/redis/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>部署</title>
     <link>http://example.org/tags/%E9%83%A8%E7%BD%B2/</link>
     <pubDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/tags/%E9%83%A8%E7%BD%B2/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>算法</title>
-    <link>http://example.org/tags/%E7%AE%97%E6%B3%95/</link>
-    <pubDate>Sat, 26 Dec 2020 15:38:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/tags/%E7%AE%97%E6%B3%95/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Mysql</title>
-    <link>http://example.org/tags/mysql/</link>
-    <pubDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://example.org/tags/mysql/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>数据结构</title>
@@ -33,11 +54,11 @@
     <guid>http://example.org/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Daily</title>
-    <link>http://example.org/tags/daily/</link>
-    <pubDate>Fri, 25 Dec 2020 01:08:33 &#43;0800</pubDate>
+    <title>算法</title>
+    <link>http://example.org/tags/%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/tags/daily/</guid>
+    <guid>http://example.org/tags/%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

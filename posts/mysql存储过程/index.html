@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Mysql存储过程 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Mysql存储过程" />
+<meta property="og:description" content="MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" />
+<meta property="og:image" content="http://example.org/logo.png"/>
+<meta property="article:published_time" content="2021-01-03T13:25:50+08:00" />
+<meta property="article:modified_time" content="2021-01-03T13:25:50+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="Mysql存储过程"/>
+<meta name="twitter:description" content="MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" /><link rel="prev" href="http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/" /><link rel="next" href="http://example.org/posts/redis/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Mysql存储过程",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/"
+        },"genre": "posts","keywords": "Mysql","wordcount":  3144 ,
+        "url": "http:\/\/example.org\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/","datePublished": "2021-01-03T13:25:50+08:00","dateModified": "2021-01-03T13:25:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Mysql存储过程</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-03">2021-01-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3144 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#缺点">缺点</a></li>
+    <li><a href="#创建存储过程">创建存储过程</a>
+      <ul>
+        <li><a href="#1界定符">1、界定符</a></li>
+        <li><a href="#2存储过程创建">2、存储过程创建</a></li>
+        <li><a href="#3局部变量">3、局部变量</a></li>
+        <li><a href="#4用户变量">4、用户变量</a></li>
+        <li><a href="#5set语句">5、SET语句</a></li>
+        <li><a href="#6selectinto语句">6、SELECT&hellip;INTO语句</a></li>
+        <li><a href="#7流程控制语句">7、流程控制语句</a></li>
+        <li><a href="#8调用存储过程">8、调用存储过程</a></li>
+        <li><a href="#9删除存储过程">9、删除存储过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#存储函数">存储函数</a></li>
+    <li><a href="#游标">游标</a>
+      <ul>
+        <li><a href="#游标的语法">游标的语法</a></li>
+      </ul>
+    </li>
+    <li><a href="#触发器">触发器</a>
+      <ul>
+        <li><a href="#触发器的基本语法">触发器的基本语法</a></li>
+        <li><a href="#样例">样例</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="mysql存储过程">MySQL存储过程</h1>
+<blockquote>
+<p>存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。</p>
+<p>存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给丁参数（需要时）来调用执行。</p>
+<p>存储过程思想上很简单，就是通过SQL语言层面的代码封装与重用。</p>
+</blockquote>
+<p>存储过程是数据库的一个对象，在层次上和索引、视图、触发器、表一个层级。</p>
+<p>可以在存储过程中放很多语句（封装sql语句集合），能够处理复杂的sql语句</p>
+<p>当用户数据量很大的时候，一个表会放很多数据，这样查询表的操作就会很慢很慢。</p>
+<p>对于上面的例子中，通常使用的手段是把这些表按天来单独放，每天的数据，放在一个表中。</p>
+<p>这个操作就可以用存储过程来实现。</p>
+<blockquote>
+<p>存储过程是一组为了完成某项特定功能的sql语句集，其实质上就是一段存储在数据库中的代码，他可以由声明式的sql语句（如CREATE,UPDATE,SELECT等语句）和过程式sql语句（如IF&hellip;THEN&hellip;ELSE控制结构语句）组成。存储过程思想上很简单，就是数据库 SQL 语言层面的代码封装与重用。
+作者：爱西考的王同学
+链接：https://juejin.cn/post/6844903848394702856</p>
+</blockquote>
+<ul>
+<li>在生产环境下可以直接通过修改存储过程的方式修改业务逻辑（或bug）而不用重启服务器</li>
+<li>执行速度快，存储过程经过编译之后会比单独执行一个语句要快。</li>
+<li>减少网络传输的流量</li>
+<li>方便优化</li>
+</ul>
+<h2 id="缺点">缺点</h2>
+<p>过程化编程，复杂业务处理的维护成本高</p>
+<p>调试不便</p>
+<p>不同数据库之间的可移植性差——不同数据库语法不一致</p>
+<h2 id="创建存储过程">创建存储过程</h2>
+<p>sql语句中常常以<code>;</code>结尾，但是存储过程会包括很多条sql语句，为了解决这个问题，通常使用DELIMITER命令，将sql语句的结束符临时修改为其他符号。</p>
+<h3 id="1界定符">1、界定符</h3>
+<p><strong>DELIMITER语法格式</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span> <span class="o">?</span>
+</code></pre></div><p>执行上面的语句之后，结束符号就是<code>?</code>了</p>
+<p><code>?</code>是用户定义的结束符，通常这个符号可以是一些特殊的符号，另外应该避免使用反斜杠，因为它是转移字符，如果希望换回默认的分毫作为结束标记，只需在命令行输入下面的sql语句即可</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span> <span class="p">;</span>
+</code></pre></div><h3 id="2存储过程创建">2、存储过程创建</h3>
+<p>mysql中使用<code>CREATE PROCEDURE</code>语句来创建存储过程</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">p_name</span><span class="p">([</span><span class="n">proc_parameter</span><span class="p">[...]])</span>
+<span class="n">routine_body</span>
+</code></pre></div><p>其中proc_parameter的语法格式是：</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="p">[</span><span class="k">IN</span><span class="o">|</span><span class="k">OUT</span><span class="o">|</span><span class="k">INOUT</span><span class="p">]</span> <span class="n">parame_name</span> <span class="n">type</span>
+</code></pre></div><ul>
+<li>
+<p>p_name用户指定存储过程的名称</p>
+</li>
+<li>
+<p>proc_parameter用于指定存储过程中的参数列表。其中，语法项<code>parame_name</code>为参数名 <code>type</code>为参数的类型（类型可以是Mysql中任意的有效的数据类型）。Mysql的存储过程支持三种类型的参数，即输入参数<code>IN</code>，输出参数<code>OUT</code>,输入输出参数<code>INOUT</code>。</p>
+<p>输入参数是使数据可以传递给一个存储过程。</p>
+<p>输出参数是用于存储过程中需要返回的一个操作结果</p>
+<p>输入输出参数及可以充当输入参数，也可以充当输出结果</p>
+<p>参数的取名<strong>不要和表中的列相同</strong>，否则尽管不会返回出错的信息，但储存过程中的sql语句会将参数名当作列名，从而引发不可预知的错误，</p>
+</li>
+<li>
+<p>语法项<code>routine_body</code>表示存储过程的主体部分，也成为存储过程题，其包含了需要执行的sql，过程体以关键字<code>BEGIN</code>开始，以关键字END结束。若只有一条SQL可以忽略<code>BEGIN...END</code>标志</p>
+</li>
+</ul>
+<h3 id="3局部变量">3、局部变量</h3>
+<p>在存储过程体重可以声明局部变量，用来存储过程体中的临时结果。在Mysql中使用<code>DECLARE</code>语句来声明局部变量</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">DECLARE</span> <span class="n">var_name</span> <span class="n">type</span> <span class="p">[</span><span class="k">DEFAULT</span> <span class="n">value</span><span class="p">]</span>
+</code></pre></div><p><code>var name</code>用于指定局部变量的名称 <code>type</code>用来声明变量的类型，<code>DEFAULT</code>用来指定默认值，如果没有则置为NULL</p>
+<blockquote>
+<p>局部变量只能在存储过程体的BEGIN&hellip;END中，局部变量必须在存储过程体的抬头出生命，局部变量的作用范围仅限于声明它的BEGIN&hellip;END语句快，其他语句块中的语句不可以使用它</p>
+</blockquote>
+<h3 id="4用户变量">4、用户变量</h3>
+<p>用户变量一般以@开头</p>
+<p>:warning:滥用用户变量会导致程序难以理解及管理</p>
+<h3 id="5set语句">5、SET语句</h3>
+<p>在Mysql中通过SET语句对局部变量赋值，其格式为</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">var_name</span> <span class="o">=</span> <span class="n">expr</span><span class="p">[,</span><span class="n">var_name2</span> <span class="o">=</span> <span class="n">expr</span><span class="p">]...</span>
+</code></pre></div><h3 id="6selectinto语句">6、SELECT&hellip;INTO语句</h3>
+<p>在mysql中，可以使用SELECT&hellip;INTO语句把选定的值存储到局部变量中，格式为</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">col_name</span><span class="p">[,...]</span> <span class="k">INTO</span> <span class="n">var_name</span><span class="p">[,...]</span> <span class="n">table_expr</span>
+</code></pre></div><p>col_name用于指定列名，var_name用于指定要赋值的变量名<code>table_expr</code>表示SELECT语句中FROM后面的部分</p>
+<h3 id="7流程控制语句">7、流程控制语句</h3>
+<ol>
+<li>
+<p>条件判断语句
+<strong>if-then-else 语句:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">DELIMITER</span> <span class="o">&amp;&amp;</span>  
+<span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">proc2</span><span class="p">(</span><span class="k">IN</span> <span class="k">parameter</span> <span class="nb">int</span><span class="p">)</span>  
+     <span class="o">-&gt;</span> <span class="k">begin</span> 
+     <span class="o">-&gt;</span> <span class="k">declare</span> <span class="n">var</span> <span class="nb">int</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">set</span> <span class="n">var</span><span class="o">=</span><span class="k">parameter</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">if</span> <span class="n">var</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> 
+     <span class="o">-&gt;</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">t</span> <span class="k">values</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>  
+     <span class="o">-&gt;</span> <span class="k">end</span> <span class="k">if</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">if</span> <span class="k">parameter</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> 
+     <span class="o">-&gt;</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">else</span> 
+     <span class="o">-&gt;</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">2</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">end</span> <span class="k">if</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="k">end</span><span class="p">;</span>  
+     <span class="o">-&gt;</span> <span class="o">&amp;&amp;</span>  
+<span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">DELIMITER</span> <span class="p">;</span> 
+</code></pre></div><p><strong>case语句:</strong></p>
+<pre><code>mysql &gt; DELIMITER &amp;&amp;  
+mysql &gt; CREATE PROCEDURE proc3 (in parameter int)  
+     -&gt; begin 
+     -&gt; declare var int;  
+     -&gt; set var=parameter+1;  
+     -&gt; case var  
+     -&gt; when 0 then   
+     -&gt; insert into t values(17);  
+     -&gt; when 1 then   
+     -&gt; insert into t values(18);  
+     -&gt; else   
+     -&gt; insert into t values(19);  
+     -&gt; end case;  
+     -&gt; end;  
+     -&gt; &amp;&amp;  
+mysql &gt; DELIMITER ; 
+复制代码
+</code></pre><ol>
+<li>循环语句
+<strong>while ···· end while:</strong></li>
+</ol>
+<pre><code>mysql &gt; DELIMITER &amp;&amp;  
+mysql &gt; CREATE PROCEDURE proc4()  
+     -&gt; begin 
+     -&gt; declare var int;  
+     -&gt; set var=0;  
+     -&gt; while var&lt;6 do  
+     -&gt; insert into t values(var);  
+     -&gt; set var=var+1;  
+     -&gt; end while;  
+     -&gt; end;  
+     -&gt; &amp;&amp;  
+mysql &gt; DELIMITER ;
+复制代码
+</code></pre><p><strong>repeat···· end repea：</strong>
+它在执行操作后检查结果，而 while 则是执行前进行检查。</p>
+<pre><code>mysql &gt; DELIMITER &amp;&amp;  
+mysql &gt; CREATE PROCEDURE proc5 ()  
+     -&gt; begin   
+     -&gt; declare v int;  
+     -&gt; set v=0;  
+     -&gt; repeat  
+     -&gt; insert into t values(v);  
+     -&gt; set v=v+1;  
+     -&gt; until v&gt;=5  
+     -&gt; end repeat;  
+     -&gt; end;  
+     -&gt; &amp;&amp;  
+mysql &gt; DELIMITER ;
+复制代码
+repeat
+    --循环体
+    until 循环条件  
+end repeat;
+复制代码
+</code></pre><p><strong>loop ·····endloop:</strong>
+loop 循环不需要初始条件，这点和 while 循环相似，同时和 repeat 循环一样不需要结束条件, leave 语句的意义是离开循环。</p>
+<pre><code>mysql &gt; DELIMITER &amp;&amp;  
+mysql &gt; CREATE PROCEDURE proc6 ()  
+     -&gt; begin 
+     -&gt; declare v int;  
+     -&gt; set v=0;  
+     -&gt; LOOP_LABLE:loop  
+     -&gt; insert into t values(v);  
+     -&gt; set v=v+1;  
+     -&gt; if v &gt;=5 then 
+     -&gt; leave LOOP_LABLE;  
+     -&gt; end if;  
+     -&gt; end loop;  
+     -&gt; end;  
+     -&gt; &amp;&amp;  
+mysql &gt; DELIMITER ;
+复制代码
+</code></pre><p><strong>ITERATE迭代：</strong></p>
+<pre><code>mysql &gt; DELIMITER &amp;&amp;  
+mysql &gt; CREATE PROCEDURE proc10 ()  
+     -&gt; begin 
+     -&gt; declare v int;  
+     -&gt; set v=0;  
+     -&gt; LOOP_LABLE:loop  
+     -&gt; if v=3 then   
+     -&gt; set v=v+1;  
+     -&gt; ITERATE LOOP_LABLE;  
+     -&gt; end if;  
+     -&gt; insert into t values(v);  
+     -&gt; set v=v+1;  
+     -&gt; if v&gt;=5 then 
+     -&gt; leave LOOP_LABLE;  
+     -&gt; end if;  
+     -&gt; end loop;  
+     -&gt; end;  
+     -&gt; &amp;&amp;  
+mysql &gt; DELIMITER ;
+复制代码
+</code></pre></li>
+</ol>
+<h3 id="8调用存储过程">8、调用存储过程</h3>
+<p>上面的流程只是创建了存储过程，真正要用的话还是得call一下</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span> <span class="n">sp_name</span><span class="p">[(</span><span class="err">传参</span><span class="p">)]</span>
+</code></pre></div><h3 id="9删除存储过程">9、删除存储过程</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">PROCEDURE</span> <span class="n">sp_name</span><span class="p">;</span>
+</code></pre></div><h2 id="存储函数">存储函数</h2>
+<blockquote>
+<p>存储过程和存储函数一样，都是sql和语句组成的代码块</p>
+<p>存储函数不能有输入函数，可以直接调用，不需要用call语句</p>
+</blockquote>
+<h2 id="游标">游标</h2>
+<blockquote>
+<p>MySQL中的游标可以理解成一个可迭代对象(类比Python中的列表、字典等可迭代对象)，它可以用来存储select 语句查询到的结果集，这个结果集可以包含多行数据，从而使我们可以使用迭代的方法从游标中依次取出每行数据。其实本质上就是结果集，当我们对查询的结果进行前一行或者后一行类似的操作时就可以使用到游标</p>
+</blockquote>
+<h3 id="游标的语法">游标的语法</h3>
+<ul>
+<li>首先需要 定义游标； declare 游标名称 cursor for 查询语句；</li>
+<li>其次，打开游标； open 游标名称</li>
+<li>然后，对查询的结果集 即游标进行 检索行至变量提供使用</li>
+<li>最后关闭游标； close 游标名称</li>
+</ul>
+<p>游标使用样例</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">printName</span><span class="p">()</span>
+<span class="k">BEGIN</span>
+	<span class="c1">-- 订单名称
+</span><span class="c1"></span>    <span class="k">declare</span> <span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+    <span class="c1">-- 创建游标
+</span><span class="c1"></span>    <span class="k">declare</span> <span class="n">cur</span> <span class="k">cursor</span> <span class="k">for</span> <span class="k">select</span> <span class="n">detail_name</span> <span class="k">from</span> <span class="n">oder_detail</span> <span class="k">where</span> <span class="n">oid</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
+    <span class="c1">-- 打开游标
+</span><span class="c1"></span>    <span class="k">open</span> <span class="n">cur</span><span class="p">;</span>
+		<span class="k">fetch</span> <span class="n">cur</span> <span class="k">into</span> <span class="n">name</span><span class="p">;</span>
+		<span class="k">select</span> <span class="n">name</span><span class="p">;</span>
+    <span class="c1">-- 关闭游标
+</span><span class="c1"></span>    <span class="k">close</span> <span class="n">cur</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
+</code></pre></div><p>调用存储过程</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span> <span class="n">printName</span><span class="p">;</span>
+</code></pre></div><p>输出结果</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="err">毛巾</span>
+</code></pre></div><h2 id="触发器">触发器</h2>
+<blockquote>
+<p>触发器是指当表发生改变的时候触发的动作</p>
+<p>例如，当A忘表中插入数据的时候此时表发生了改变，现在想要在每次插入数据之前检测所有的入参是否都是小写，此时就可以用触发器来检测；</p>
+</blockquote>
+<p>这里说的表发生改变就是指的增删改，动作可以发生在增删改之前或者之后，触发事件就是我们需要写的的存储过程；</p>
+<h3 id="触发器的基本语法">触发器的基本语法</h3>
+<ul>
+<li>创建触发器 create trgger 触发器名称 触发动作 on 表明 for each row[触发事件]</li>
+<li>删除触发器 drop trigger 触发器名称</li>
+<li>查看触发器 show triggers</li>
+</ul>
+<p>触发器是依赖于表的，像视图、临时表这种是没有触发器的</p>
+<p>一般来说一个表最多支持六个触发器</p>
+<p>触发器用的不多，因为很占用系统资源</p>
+<h3 id="样例">样例</h3>
+<p><code>创建触发器</code>; 创建一个触发器 getPrice 作用于 oder_detail 表的每行，每当 插入数据之后就查询这条订单明细的价格赋值给变量 @price ；NEW是一张虚表，记录者被插入数据的行；故我们能在NEW表中获取每次插入的数据；</p>
+<pre><code>-- insert 触发器
+CREATE TRIGGER getPrice AFTER INSERT ON oder_detail FOR EACH ROW
+SELECT NEW.price INTO @price;
+复制代码
+</code></pre><p><code>检测插入触发器</code>; 插入一条数据，使用查询语句查询变量 显示为 20；</p>
+<pre><code>-- 检测插入触发器
+
+INSERT INTO `oder_detail`( `detail_name`, `price`, `oid`) VALUES ( '脸盆', 20.00, 2);
+
+select @price;
+复制代码
+</code></pre><p><code>删除触发器</code>;</p>
+<pre><code>-- 删除触发器
+drop trigger getPrice;
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">Mysql</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/" class="prev" rel="prev" title="牛客mysql题解"><i class="fas fa-angle-left fa-fw"></i>牛客mysql题解</a>
+            <a href="/posts/redis/" class="next" rel="next" title="Redis">Redis<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

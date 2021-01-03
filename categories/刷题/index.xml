@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>刷题 - 分类 - 氕氘氚</title>
+        <link>http://example.org/categories/%E5%88%B7%E9%A2%98/</link>
+        <description>刷题 - 分类 - 氕氘氚</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:22:33 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/%E5%88%B7%E9%A2%98/" rel="self" type="application/rss+xml" /><item>
+    <title>牛客mysql题解</title>
+    <link>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</link>
+    <pubDate>Sun, 03 Jan 2021 13:22:33 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
+    <description><![CDATA[链接： https://www.nowcoder.com/ta/sql SQL1 SELECT * from employees Order BY hire_date DESC LIMIT 1; SQL2 -- OFFSET要在limit后面，这样可以选出倒数第三个 SELECT * from employees Order BY hire_date DESC LIMIT 1 OFFSET 2; SQL3 SELECT salaries.*,dept_manager.dept_no FROM salaries LEFT JOIN dept_manager ON salaries.emp_no = dept_manager.emp_no WHERE salaries.to_date=&#39;9999-01-01&#39;]]></description>
+</item><item>
+    <title>动态规划</title>
+    <link>http://example.org/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+    <pubDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+    <description><![CDATA[动态规划 今天看到leetcode上有个求斐波那契数列的题目 （剑指offer 10-I） 刚开始使用了递归，发现超时 func fib(n int) int { if n == 0{ return 0 }else if n ==]]></description>
+</item></channel>
+</rss>

@@ -4,12 +4,26 @@
         <link>http://example.org/tags/daily/</link>
         <description>Daily - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 25 Dec 2020 01:08:33 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/daily/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/daily/" rel="self" type="application/rss+xml" /><item>
+    <title>关于堆内存和栈内存</title>
+    <link>http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</link>
+    <pubDate>Sun, 03 Jan 2021 13:37:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E5%85%B3%E4%BA%8E%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</guid>
+    <description><![CDATA[栈内存和堆内存 栈内存:栈内存首先是一片内存区域，存储的都是局部变量，凡是定义在方法中的都是局部变量（方法外的是全局变量），for循环内部定义]]></description>
+</item><item>
     <title>Hello Hugo</title>
     <link>http://example.org/posts/first_post/</link>
     <pubDate>Fri, 25 Dec 2020 01:08:33 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/posts/first_post/</guid>
     <description><![CDATA[Hello Hugo！ :wave:hello everyone!]]></description>
+</item><item>
+    <title>设计模式概述</title>
+    <link>http://example.org/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/</link>
+    <pubDate>Fri, 03 Jan 2020 13:39:01 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/</guid>
+    <description><![CDATA[设计模式 设计模式（design pattern）是一套被反复使用，多数人知晓的、经过分类编目的、代码设计的经验，使用设计模式是为了课重复使用代]]></description>
 </item></channel>
 </rss>
