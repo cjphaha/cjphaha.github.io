@@ -1,22 +1,22 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>SQL - 标签 - 氕氘氚</title>
-        <link>http://example.org/tags/sql/</link>
+        <link>http://cjpa.top/tags/sql/</link>
         <description>SQL - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:33:59 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/sql/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:33:59 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/sql/" rel="self" type="application/rss+xml" /><item>
     <title>常见的sql语句用法</title>
-    <link>http://example.org/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</link>
+    <link>http://cjpa.top/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</link>
     <pubDate>Sun, 03 Jan 2021 13:33:59 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</guid>
+    <guid>http://cjpa.top/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</guid>
     <description><![CDATA[SQL SQL分为两个部分，一个是操作语言（DML）。一个是数据定义语言（DDL） 查询和更新指令构成了SQL的DML部分 SELECT——从数据库表]]></description>
 </item><item>
     <title>牛客mysql题解</title>
-    <link>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</link>
+    <link>http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</link>
     <pubDate>Sun, 03 Jan 2021 13:22:33 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
+    <guid>http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
     <description><![CDATA[链接： https://www.nowcoder.com/ta/sql SQL1 SELECT * from employees Order BY hire_date DESC LIMIT 1; SQL2 -- OFFSET要在limit后面，这样可以选出倒数第三个 SELECT * from employees Order BY hire_date DESC LIMIT 1 OFFSET 2; SQL3 SELECT salaries.*,dept_manager.dept_no FROM salaries LEFT JOIN dept_manager ON salaries.emp_no = dept_manager.emp_no WHERE salaries.to_date=&#39;9999-01-01&#39;]]></description>
 </item></channel>
 </rss>
