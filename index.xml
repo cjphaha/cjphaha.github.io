@@ -4,9 +4,16 @@
         <link>http://cjpa.top/</link>
         <description>氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</lastBuildDate>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Mon, 04 Jan 2021 16:13:04 &#43;0800</lastBuildDate>
             <atom:link href="http://cjpa.top/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang GC</title>
+    <link>http://cjpa.top/posts/golang-gc/</link>
+    <pubDate>Mon, 04 Jan 2021 16:13:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/golang-gc/</guid>
+    <description><![CDATA[Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存]]></description>
+</item><item>
     <title>Golang GMP原理</title>
     <link>http://cjpa.top/posts/golang-gmp%E5%8E%9F%E7%90%86/</link>
     <pubDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</pubDate>
@@ -69,12 +76,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/nginx/</guid>
     <description><![CDATA[Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力]]></description>
-</item><item>
-    <title>事务</title>
-    <link>http://cjpa.top/posts/%E4%BA%8B%E5%8A%A1/</link>
-    <pubDate>Sat, 26 Dec 2020 10:47:06 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/%E4%BA%8B%E5%8A%A1/</guid>
-    <description><![CDATA[事务 什么是事务？ 要么都成功，要么都失败 1、sql执行 A给B转账 A100 &ndash;&gt;200 B 200 2、sql执行 B收到A的钱 A 800 &ndash;&gt;400 将一组SQL放在同一个批次中执行，要么]]></description>
 </item></channel>
 </rss>
