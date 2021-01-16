@@ -4,7 +4,14 @@
         <link>http://cjpa.top/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Mon, 04 Jan 2021 16:13:04 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Raft详解</title>
+    <link>http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[Raft和Paxos 背景介绍 分布式事务 分布式事务指事务的操作位于不同的分布式系统节点上，需要保证事务的ACID特性。 解决这种分布式一致性问题]]></description>
+</item><item>
     <title>Golang GC</title>
     <link>http://cjpa.top/posts/golang-gc/</link>
     <pubDate>Mon, 04 Jan 2021 16:13:04 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
     <description><![CDATA[链接： https://www.nowcoder.com/ta/sql SQL1 SELECT * from employees Order BY hire_date DESC LIMIT 1; SQL2 -- OFFSET要在limit后面，这样可以选出倒数第三个 SELECT * from employees Order BY hire_date DESC LIMIT 1 OFFSET 2; SQL3 SELECT salaries.*,dept_manager.dept_no FROM salaries LEFT JOIN dept_manager ON salaries.emp_no = dept_manager.emp_no WHERE salaries.to_date=&#39;9999-01-01&#39;]]></description>
-</item><item>
-    <title>Nginx</title>
-    <link>http://cjpa.top/posts/nginx/</link>
-    <pubDate>Thu, 31 Dec 2020 16:19:02 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/nginx/</guid>
-    <description><![CDATA[Nginx 1 引言 为什么学习nginx？ 问题1:客户端到底要讲请求发给哪台服务器 问题2:如果所有客户端的请求都发送给了服务器1，那么服务器1的处理压力]]></description>
 </item></channel>
 </rss>
