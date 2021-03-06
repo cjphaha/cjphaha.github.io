@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Dubbo Go HelloWorld - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Dubbo Go HelloWorld" />
+<meta property="og:description" content="Dubbo-go HelloWorld 1. 简介 随着微服务架构的流行，许多高性能 rpc 框架应运而生，dubbo是一个高性能的rpc框架，dubbo-go是阿里开源的dubbo框架的g" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/dubbo-go-helloword/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-03-06T16:20:04+08:00" />
+<meta property="article:modified_time" content="2021-03-06T16:20:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="Dubbo Go HelloWorld"/>
+<meta name="twitter:description" content="Dubbo-go HelloWorld 1. 简介 随着微服务架构的流行，许多高性能 rpc 框架应运而生，dubbo是一个高性能的rpc框架，dubbo-go是阿里开源的dubbo框架的g"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/dubbo-go-helloword/" /><link rel="prev" href="http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Dubbo Go HelloWorld",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/dubbo-go-helloword\/"
+        },"genre": "posts","keywords": "Dubbo-go","wordcount":  3378 ,
+        "url": "http:\/\/cjpa.top\/posts\/dubbo-go-helloword\/","datePublished": "2021-03-06T16:20:04+08:00","dateModified": "2021-03-06T16:20:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Dubbo Go HelloWorld</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%A1%86%E6%9E%B6/"><i class="far fa-folder fa-fw"></i>框架</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-06">2021-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3378 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-简介">1. 简介</a></li>
+    <li><a href="#2-学习目标">2 学习目标</a></li>
+    <li><a href="#3-详细内容">3. 详细内容</a></li>
+    <li><a href="#4-准备工作">4. 准备工作</a>
+      <ul>
+        <li><a href="#41-获取代码">4.1 获取代码</a></li>
+        <li><a href="#42-安装注册中心">4.2 安装注册中心</a></li>
+        <li><a href="#43-目录结构">4.3 目录结构</a></li>
+        <li><a href="#44-设置配置文件路径">4.4 设置配置文件路径</a></li>
+        <li><a href="#45-hessian介绍">4.5 hessian介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-启动server端">5. 启动server端</a>
+      <ul>
+        <li><a href="#51-server端配置文件讲解">5.1 server端配置文件讲解</a></li>
+        <li><a href="#52-usergo解读">5.2 user.go解读</a></li>
+        <li><a href="#53-servergo解读">5.3 server.go解读</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-client端">6. client端</a>
+      <ul>
+        <li><a href="#61-client端配置文件解读">6.1 client端配置文件解读</a></li>
+        <li><a href="#62-usergo解读">6.2 user.go解读</a></li>
+        <li><a href="#63-clientgo解读">6.3 client.go解读</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-平滑关闭">7. 平滑关闭</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="dubbo-go-helloworld">Dubbo-go HelloWorld</h1>
+<h2 id="1-简介">1. 简介</h2>
+<p>随着微服务架构的流行，许多高性能 rpc 框架应运而生，dubbo是一个高性能的rpc框架，dubbo-go是阿里开源的dubbo框架的go语言版本，可以实现java和go服务之间的互相调用，本教程将介绍dubbo-go的基础用法，以及相关概念。</p>
+<h2 id="2-学习目标">2 学习目标</h2>
+<ul>
+<li>了解配置文件的使用</li>
+<li>掌握使用dubbo-go编写微服务应用</li>
+<li>了解微服务架构的相关概念</li>
+</ul>
+<h2 id="3-详细内容">3. 详细内容</h2>
+<ul>
+<li>快速上手</li>
+<li>运行注册中心</li>
+<li>代码解读</li>
+<li>平滑关闭</li>
+</ul>
+<h2 id="4-准备工作">4. 准备工作</h2>
+<h3 id="41-获取代码">4.1 获取代码</h3>
+<p>将demo获取下来</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/dubbogo/dubbo-samples.git
+</code></pre></div><h3 id="42-安装注册中心">4.2 安装注册中心</h3>
+<p>在微服务架构中，注册中心是最核心的基础服务之一，各个服务将自己的网络地址等信息注册到注册中心，注册中心存储这些数据。服务的消费者从注册中心查询服务提供者的地址，并通过该地址调用服务提供者的接口。</p>
+<p>不使用注册中心也可以实现微服务，但是带来的问题是如果某一个服务提供者的ip变动，或者实例有增加或销毁，服务调用者需要再手动修改提供者的网络地址。注册中心提供了服务注册与发现、服务检查等功能。服务调用者只需要通过注册中心便可以调用到服务提供者。常见的注册中心有zookeeper、consul、etcd、nacos等，本案例使用zookeeper，推荐使用docker安装，下面演示一下如何使用docker拉取镜像及运行zookeeper。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 拉去zookeeper景象</span>
+docker pull zookeeper
+<span class="c1"># 运行</span>
+docker run -d -p 2181:2181 --name zookeeper-container --restart always zookeeper
+</code></pre></div><h3 id="43-目录结构">4.3 目录结构</h3>
+<p>demo的文件目录如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">.
+├── app
+├── assembly
+└── profiles
+</code></pre></div><p>app是代码目录</p>
+<p>assembly是在不同的环境中的执行脚本</p>
+<p>profiles是配置文件所在的文件夹</p>
+<h3 id="44-设置配置文件路径">4.4 设置配置文件路径</h3>
+<p>配置文件在dubbo-go中非常重要，注册中心的网络地址、传输协议、日志表等信息都需要写在配置文件中，在项目启动的时候会先加载配置文件。因此在启动配置文件的时候，需要指定一下配置文件的位置，目前支持设置环境变量及添加启动参数的方式来指定路径。对于server端来说有两个变量必须需要设置：CONF_PROVIDER_FILE_PATH、APP_LOG_CONF_FILE，分别应该指向服务端配置文件、日志配置文件。</p>
+<p>环境变量的使用方法如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">export</span> <span class="nv">CONF_PROVIDER_FILE_PATH</span><span class="o">=</span><span class="s2">&#34;../profiles/dev/server.yml&#34;</span> 
+$ <span class="nb">export</span> <span class="nv">APP_LOG_CONF_FILE</span><span class="o">=</span><span class="s2">&#34;../profiles/dev/log.yml&#34;</span>
+</code></pre></div><p>client也类似，客户端环境变量的使用方法如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">export</span> <span class="nv">CONF_CONSUMER_FILE_PATH</span><span class="o">=</span><span class="s2">&#34;../profiles/dev/client.yml&#34;</span>
+$ <span class="nb">export</span> <span class="nv">APP_LOG_CONF_FILE</span><span class="o">=</span><span class="s2">&#34;../profiles/dev/log.yml&#34;</span>
+</code></pre></div><blockquote>
+<p>1.5.6版本之后可以使用命令行的方式来指定配置文件的路径</p>
+</blockquote>
+<p>server端</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ go run . -proConf ../profiles/dev/server.yml -logConf ../profiles/dev/log.yml
+</code></pre></div><p>client端</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ go run . -conConf ../profiles/dev/client.yml -logConf ../profiles/dev/log.yml
+</code></pre></div><h3 id="45-hessian介绍">4.5 hessian介绍</h3>
+<p>在微服务架构中，少不了rpc，rpc即远程过程调用，使用rpc框架可以向调用方屏蔽各种复杂性，向服务提供方也屏蔽各类复杂性，使用rpc带来的好处有如下：</p>
+<ul>
+<li>
+<p>调用方感觉就像调用本地函数一样</p>
+</li>
+<li>
+<p>服务提供方感觉就像实现一个本地函数一样来实现服务</p>
+</li>
+</ul>
+<p>下图可以更生动的描述rpc框架所起到的作用</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306150132695.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306150132695.png, http://cdn.cjpa.top/cdnimages/image-20210306150132695.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306150132695.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306150132695.png"
+        title="image-20210306150132695" /></p>
+<p>rpc协议并不是一个具体的协议，可以由开发者自行设计，开发者可以自己对rpc进行封装和注册，对于数据的传输格式以及顺序也可以自己定制，对数据格式的处理需要使用到打解包工具，常见的打解包工具有Protobuf，json，hessian2。dubbo使用的是hessian。</p>
+<p>作者在之前的项目中使用过grpc框架，grpc进行序列化需要借助proto文件，在使用的时候需要先用protoc生成开发者所需要的语言的文件，然后再进行调用这样做的好处是，以通过共用一个文件来保证各服务的一致性，但是使用起来并不是那么方便。dubbo/hession就比较简单，但是需要严格控制各个服务之间的数据格式</p>
+<p>hessian使用非常简单，真正提供了类似于调用本地方法一样调用接口的功能 ，返回的参数不需要二次解析并且足够轻量。</p>
+<h2 id="5-启动server端">5. 启动server端</h2>
+<p>在按照4.4中的说明设置好server端之后，可以执行</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">go run .
+</code></pre></div><p>便可启动server端</p>
+<h3 id="51-server端配置文件讲解">5.1 server端配置文件讲解</h3>
+<p>服务端需要的重要配置有三个字段：services、protocols、registries。</p>
+<p>profiles/dev/server.yml:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">registries </span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="c"># 注册中心的名字</span><span class="w">
+</span><span class="w">  </span><span class="s2">&#34;demoZk&#34;</span><span class="p">:</span><span class="w">
+</span><span class="w">  	</span><span class="c"># 注册中心协议</span><span class="w">
+</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zookeeper&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 健康检查超时时间</span><span class="w">
+</span><span class="w">    </span><span class="nt">timeout    </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3s&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># zookeeper的地址及端口</span><span class="w">
+</span><span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;127.0.0.1:2181&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="c"># 要暴露的rpc-service名</span><span class="w">
+</span><span class="w">  </span><span class="s2">&#34;UserProvider&#34;</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
+</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;demoZk&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 暴露的协议名</span><span class="w">
+</span><span class="w">    </span><span class="nt">protocol </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 暴露的服务所处的 interface，相当于dubbo.xml中的interface</span><span class="w">
+</span><span class="w">    </span><span class="nt">interface </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.ikurento.user.UserProvider&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 负载均衡的策略</span><span class="w">
+</span><span class="w">    </span><span class="nt">loadbalance</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;random&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">warmup</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;100&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 集群失败策略</span><span class="w">
+</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 调用的方法</span><span class="w">
+</span><span class="w">    </span><span class="nt">methods</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;GetUser&#34;</span><span class="w">
+</span><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">loadbalance</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;random&#34;</span><span class="w">
+</span><span class="w"></span><span class="c"># 暴露的协议名及端口</span><span class="w">
+</span><span class="w"></span><span class="nt">protocols</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="s2">&#34;dubbo&#34;</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">20000</span><span class="w">
+</span></code></pre></div><p>其中，中间服务的协议名需要和 registries 下的 mapkey 对应，暴露的协议名需要和 protocols 下的 mapkey 对应。</p>
+<p>上述例子中，使用了 dubbo 作为暴露协议，使用了 zookeeper 作为中间注册协议，并且给定了端口。如果 zk 需要设置用户名和密码，也可以在配置中写好。</p>
+<h3 id="52-usergo解读">5.2 user.go解读</h3>
+<p>user.go定义了rpc-service结构体以及传输的数据结构</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">config</span><span class="p">.</span><span class="nf">SetProviderService</span><span class="p">(</span><span class="nb">new</span><span class="p">(</span><span class="nx">UserProvider</span><span class="p">))</span>
+	<span class="c1">// ------for hessian2------
+</span><span class="c1"></span>	<span class="nx">hessian</span><span class="p">.</span><span class="nf">RegisterPOJO</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">User</span><span class="p">{})</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Id</span>   <span class="kt">string</span>
+	<span class="nx">Name</span> <span class="kt">string</span>
+	<span class="nx">Age</span>  <span class="kt">int32</span>
+	<span class="nx">Time</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">UserProvider</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">UserProvider</span><span class="p">)</span> <span class="nf">GetUser</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;req:%#v&#34;</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span>
+	<span class="nx">rsp</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span><span class="s">&#34;A001&#34;</span><span class="p">,</span> <span class="s">&#34;Alex Stocks&#34;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">()}</span>
+	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;rsp:%#v&#34;</span><span class="p">,</span> <span class="nx">rsp</span><span class="p">)</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">rsp</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>ser 为用户自定义的传输结构体，UserProvider 为用户自定义的 rpc_service；包含一个 rpc 函数，GetUser。</p>
+<p>在 init 函数中，调用 config 的 SetProviderService 函数，将当前 rpc_service 注册在框架 config 上，hessian则提供了如5.2所描述的二进制编码的功能，注册传输结构体 User。</p>
+<h3 id="53-servergo解读">5.3 server.go解读</h3>
+<p>server.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">hessian</span><span class="p">.</span><span class="nf">RegisterPOJO</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">User</span><span class="p">{})</span>
+   <span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+   <span class="nf">initSignal</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>main 函数中只进行了两个操作，首先使用 hessian 注册组件将 User 结构体注册，从而可以在接下来使用 getty 打解包。</p>
+<p>之后调用 config.Load 函数，该函数位于框架 config/config_loader.go 内，这个函数是整个框架服务的启动点，  config.Load会从环境变量或启动参数中获取consumer的位置，然后从配置文件中把配置读入框架。</p>
+<p>最终开启信号监听 initSignal() 优雅地结束一个服务的启动过程。后文会介绍。</p>
+<h2 id="6-client端">6. client端</h2>
+<h3 id="61-client端配置文件解读">6.1 client端配置文件解读</h3>
+<div class="highlight"><pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">registries </span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="s2">&#34;demoZk&#34;</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zookeeper&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">timeout  </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3s&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;127.0.0.1:2181&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">references</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="s2">&#34;UserProvider&#34;</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
+</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;demoZk&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 协议</span><span class="w">
+</span><span class="w">    </span><span class="nt">protocol </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 暴露的服务所处的 interface，相当于dubbo.xml中的interface</span><span class="w">
+</span><span class="w">    </span><span class="nt">interface </span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.ikurento.user.UserProvider&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 调用的方法</span><span class="w">
+</span><span class="w">    </span><span class="nt">methods </span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;GetUser&#34;</span><span class="w">
+</span><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></code></pre></div><p>client端的配置文件和server端大体一致，其中refrences字段和server端不太一样， refrences 的字段就是对当前服务要主调的服务的配置，其中详细说明了调用协议、注册协议、接口 id、调用方法、集群策略等</p>
+<h3 id="62-usergo解读">6.2 user.go解读</h3>
+<p>client端的use.go的代码和server端基本一致</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">config</span><span class="p">.</span><span class="nf">SetConsumerService</span><span class="p">(</span><span class="nx">userProvider</span><span class="p">)</span>
+	<span class="nx">hessian</span><span class="p">.</span><span class="nf">RegisterPOJO</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">User</span><span class="p">{})</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Id</span>   <span class="kt">string</span>
+	<span class="nx">Name</span> <span class="kt">string</span>
+	<span class="nx">Age</span>  <span class="kt">int32</span>
+	<span class="nx">Time</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">UserProvider</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">GetUser</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{},</span> <span class="nx">rsp</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="kt">error</span>
+<span class="p">}</span>
+</code></pre></div><p>其中User结构体一定要保持一致，如果不保持一致会导致传输失败，</p>
+<h3 id="63-clientgo解读">6.3 client.go解读</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">hessian</span><span class="p">.</span><span class="nf">RegisterPOJO</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">User</span><span class="p">{})</span>
+	<span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mf">3e9</span><span class="p">)</span>
+	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;\n\n\nstart to test dubbo&#34;</span><span class="p">)</span>
+	<span class="nx">user</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">User</span><span class="p">{}</span>
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">userProvider</span><span class="p">.</span><span class="nf">GetUser</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{}{</span><span class="s">&#34;A001&#34;</span><span class="p">},</span> <span class="nx">user</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span>
+	<span class="nf">initSignal</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>client作为调用方，锁执行的步骤要稍微复杂一些，</p>
+<p>首先也是将使用 hessian 注册组件将 User 结构体注册，然后加载配置。</p>
+<p>userProvider中的GetUser方法可以实现对server端远程服务的调用，可以看到，有了hessian提供打解包，dubbo-go服务之间的调用非常方便。</p>
+<p>initSignal()是平滑关闭函数，下文会有介绍。</p>
+<h2 id="7-平滑关闭">7. 平滑关闭</h2>
+<p>initSignal</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">initSignal</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">signals</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Signal</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+	<span class="c1">// It is not possible to block SIGKILL or syscall.SIGSTOP
+</span><span class="c1"></span>	<span class="nx">signal</span><span class="p">.</span><span class="nf">Notify</span><span class="p">(</span><span class="nx">signals</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Interrupt</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Kill</span><span class="p">,</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGHUP</span><span class="p">,</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGQUIT</span><span class="p">,</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGINT</span><span class="p">)</span>
+	<span class="k">for</span> <span class="p">{</span>
+		<span class="nx">sig</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">signals</span>
+		<span class="nx">logger</span><span class="p">.</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;get signal %s&#34;</span><span class="p">,</span> <span class="nx">sig</span><span class="p">.</span><span class="nf">String</span><span class="p">())</span>
+		<span class="k">switch</span> <span class="nx">sig</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">SIGHUP</span><span class="p">:</span>
+			<span class="c1">// reload()
+</span><span class="c1"></span>		<span class="k">default</span><span class="p">:</span>
+			<span class="nx">time</span><span class="p">.</span><span class="nf">AfterFunc</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Duration</span><span class="p">(</span><span class="nx">survivalTimeout</span><span class="p">),</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+				<span class="nx">logger</span><span class="p">.</span><span class="nf">Warnf</span><span class="p">(</span><span class="s">&#34;app exit now by force...&#34;</span><span class="p">)</span>
+				<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">})</span>
+			<span class="c1">// The program exits normally or timeout forcibly exits.
+</span><span class="c1"></span>			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;provider app exit now...&#34;</span><span class="p">)</span>
+			<span class="k">return</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>在server和client中都是用到了平滑关闭。</p>
+<p>平滑关闭的实现原理很简单，第一步是定义一个chanel，然后监听系统中断的信号，如果收到了中断的信号，就把这个信号传递到chanel中。在接收到chanel之前，会一直循环检测，直到chanel中收到了中断参数，然后系统会执行关闭的相关函数。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/dubbo-go/">Dubbo-go</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/raft%E8%AF%A6%E8%A7%A3/" class="prev" rel="prev" title="Raft详解"><i class="fas fa-angle-left fa-fw"></i>Raft详解</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

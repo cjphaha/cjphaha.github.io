@@ -4,7 +4,14 @@
         <link>http://cjpa.top/tags/</link>
         <description>Tags - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Dubbo-go</title>
+    <link>http://cjpa.top/tags/dubbo-go/</link>
+    <pubDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/tags/dubbo-go/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>分布式</title>
     <link>http://cjpa.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
     <pubDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</pubDate>
@@ -66,13 +73,6 @@
     <pubDate>Sat, 26 Dec 2020 10:43:44 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://cjpa.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>算法</title>
-    <link>http://cjpa.top/tags/%E7%AE%97%E6%B3%95/</link>
-    <pubDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/tags/%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -4,7 +4,14 @@
         <link>http://cjpa.top/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Dubbo Go HelloWorld</title>
+    <link>http://cjpa.top/posts/dubbo-go-helloword/</link>
+    <pubDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/dubbo-go-helloword/</guid>
+    <description><![CDATA[Dubbo-go HelloWorld 1. 简介 随着微服务架构的流行，许多高性能 rpc 框架应运而生，dubbo是一个高性能的rpc框架，dubbo-go是阿里开源的dubbo框架的g]]></description>
+</item><item>
     <title>Raft详解</title>
     <link>http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/</link>
     <pubDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
     <description><![CDATA[MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完]]></description>
-</item><item>
-    <title>牛客mysql题解</title>
-    <link>http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</link>
-    <pubDate>Sun, 03 Jan 2021 13:22:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/</guid>
-    <description><![CDATA[链接： https://www.nowcoder.com/ta/sql SQL1 SELECT * from employees Order BY hire_date DESC LIMIT 1; SQL2 -- OFFSET要在limit后面，这样可以选出倒数第三个 SELECT * from employees Order BY hire_date DESC LIMIT 1 OFFSET 2; SQL3 SELECT salaries.*,dept_manager.dept_no FROM salaries LEFT JOIN dept_manager ON salaries.emp_no = dept_manager.emp_no WHERE salaries.to_date=&#39;9999-01-01&#39;]]></description>
 </item></channel>
 </rss>
