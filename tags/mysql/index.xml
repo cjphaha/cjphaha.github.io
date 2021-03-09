@@ -4,7 +4,14 @@
         <link>http://cjpa.top/tags/mysql/</link>
         <description>Mysql - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/mysql/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 09 Mar 2021 10:41:52 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/mysql/" rel="self" type="application/rss+xml" /><item>
+    <title>B&#43;树和hash索引的区别</title>
+    <link>http://cjpa.top/posts/b&#43;%E6%A0%91%E5%92%8Chash%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <pubDate>Tue, 09 Mar 2021 10:41:52 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/b&#43;%E6%A0%91%E5%92%8Chash%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <description><![CDATA[B+树和hash的区别 B+树的好处： B+树是一个平衡的多叉树，从根节点到每个叶子结点的高度差值不超过1，叶子结点之间有指针相互链接 B+树上面]]></description>
+</item><item>
     <title>MyISAM和InnoDB的区别</title>
     <link>http://cjpa.top/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
     <pubDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</pubDate>

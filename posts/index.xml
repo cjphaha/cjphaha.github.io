@@ -4,7 +4,14 @@
         <link>http://cjpa.top/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 09 Mar 2021 10:41:52 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>B&#43;树和hash索引的区别</title>
+    <link>http://cjpa.top/posts/b&#43;%E6%A0%91%E5%92%8Chash%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <pubDate>Tue, 09 Mar 2021 10:41:52 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/b&#43;%E6%A0%91%E5%92%8Chash%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <description><![CDATA[B+树和hash的区别 B+树的好处： B+树是一个平衡的多叉树，从根节点到每个叶子结点的高度差值不超过1，叶子结点之间有指针相互链接 B+树上面]]></description>
+</item><item>
     <title>Dubbo Go HelloWorld</title>
     <link>http://cjpa.top/posts/dubbo-go-helloword/</link>
     <pubDate>Sat, 06 Mar 2021 16:20:04 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/redis/</guid>
     <description><![CDATA[Redis Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。 Redis 与其他 key - value 缓存产品有以下三个特点： Redis支持数据的持久化，可以将内存中的数据保]]></description>
-</item><item>
-    <title>Mysql存储过程</title>
-    <link>http://cjpa.top/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
-    <pubDate>Sun, 03 Jan 2021 13:25:50 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
-    <description><![CDATA[MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完]]></description>
 </item></channel>
 </rss>
