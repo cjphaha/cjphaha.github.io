@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>gRPC概述 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="gRPC概述" />
+<meta property="og:description" content="什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-04-11T17:03:31+08:00" />
+<meta property="article:modified_time" content="2021-04-11T17:03:31+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="gRPC概述"/>
+<meta name="twitter:description" content="什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/" /><link rel="prev" href="http://cjpa.top/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "gRPC概述",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/grpc%E6%A6%82%E8%BF%B0\/"
+        },"genre": "posts","keywords": "gRPC","wordcount":  4896 ,
+        "url": "http:\/\/cjpa.top\/posts\/grpc%E6%A6%82%E8%BF%B0\/","datePublished": "2021-04-11T17:03:31+08:00","dateModified": "2021-04-11T17:03:31+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">gRPC概述</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><i class="far fa-folder fa-fw"></i>微服务</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-11">2021-04-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4896 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是rpc">什么是RPC</a></li>
+    <li><a href="#简单跑个demo">简单跑个Demo</a>
+      <ul>
+        <li><a href="#服务端">服务端</a></li>
+        <li><a href="#客户端">客户端</a></li>
+      </ul>
+    </li>
+    <li><a href="#自签证书">自签证书</a></li>
+    <li><a href="#热身">热身</a></li>
+    <li><a href="#使用自签caserverclient证书和双向认证">使用自签CA，server，Client证书和双向认证</a>
+      <ul>
+        <li><a href="#ca证书">CA证书</a></li>
+        <li><a href="#重新生成服务端证书">重新生成服务端证书</a></li>
+        <li><a href="#生成客户端证书">生成客户端证书</a></li>
+      </ul>
+    </li>
+    <li><a href="#双向认证下rpc-gateway使用">双向认证下rpc-gateway使用</a></li>
+    <li><a href="#语法速学">语法速学</a>
+      <ul>
+        <li><a href="#repeated">repeated</a></li>
+        <li><a href="#enum">enum</a></li>
+        <li><a href="#导入外部proto">导入外部proto</a></li>
+        <li><a href="#日期类型">日期类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#场景练习">场景练习</a>
+      <ul>
+        <li><a href="#子订单模型">子订单模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用第三方库进行验证">使用第三方库进行验证</a></li>
+    <li><a href="#流模式">流模式</a>
+      <ul>
+        <li><a href="#服务端流">服务端流</a></li>
+        <li><a href="#客户端流">客户端流</a></li>
+      </ul>
+    </li>
+    <li><a href="#双向流">双向流</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是rpc">什么是RPC</h2>
+<p>常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择</p>
+<p>常见的协议</p>
+<ul>
+<li>HTTP</li>
+</ul>
+<p>RPC是远程过程调用，主要在服务端执行</p>
+<p><!-- raw HTML omitted --></p>
+<p>rpc就是把</p>
+<ul>
+<li>
+<p>上述过程封装下，使其操作更加有优化</p>
+</li>
+<li>
+<p>使用大家都认可的协议使其规范化</p>
+</li>
+<li>
+<p>做成一个框架</p>
+</li>
+</ul>
+<p>rpc在执行过程中就像在调用本地方法一样（底层还是TCP），rpc把一些细节给封装了一下</p>
+<p>GRPC支持多个语言，go语言的仓库为</p>
+<div class="highlight"><pre class="chroma"><code class="language-http" data-lang="http"><span class="err">http://github.com/grpc/grpc-go
+</span></code></pre></div><p>grpc是一个框架，具体的传输数据还是要用到一些相关的戒指</p>
+<p>grpc传输所使用的协议为protobuf</p>
+<blockquote>
+<p>protohuf用protoc（一个程序）来编译</p>
+</blockquote>
+<p>protobuf的go的版本安装方法如下所示：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">go get github.com/golang/protobuf/protoc-gen-go
+</code></pre></div><p>protobuf是一个轻便高效的序列化数据结构协议，可以用于网络通信和数据存储</p>
+<p>特点：性能高，传输快，维护方便</p>
+<h2 id="简单跑个demo">简单跑个Demo</h2>
+<h3 id="服务端">服务端</h3>
+<p>创建中间文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="kn">package</span> <span class="nn">services</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">ProdRequest</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">ProdResponse</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_stock</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>创建如下所示的项目路径</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png, http://cdn.cjpa.top/cdnimages/image-20210103015635075.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210103015635075.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
+        title="image-20210103015635075" /></p>
+<p>然后在pbfiles目录下执行命令：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span>../ Prod.proto
+</code></pre></div><p>生成了如下所示的文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png, http://cdn.cjpa.top/cdnimages/image-20210103015905780.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210103015905780.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
+        title="image-20210103015905780" /></p>
+<p>在prod.proto里面添加方法</p>
+<pre><code>syntax = &quot;proto3&quot;;
+package services;
+
+message ProdRequest {
+  int32 prod_id = 1;
+}
+
+message ProdResponse {
+  int32 prod_stock = 1;
+}
+
+service ProdService {
+  rpc GetProdStock (ProdRequest) returns (ProdResponse);
+}
+</code></pre><p>然后重新生成文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Prod.proto
+</code></pre></div><p>现在发现里面又多了一些东西</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png, http://cdn.cjpa.top/cdnimages/image-20210116025654884.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116025654884.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
+        title="image-20210116025654884" /></p>
+<p>这里有一个接口，我们要在go里面去实现这个接口</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png, http://cdn.cjpa.top/cdnimages/image-20210116025748541.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116025748541.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
+        title="image-20210116025748541" /></p>
+<p>新建一个ProdService文件，用来实现services接口</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">services</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;context&#34;</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;google.golang.org/grpc&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">ProdService</span> <span class="kd">struct</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">ProdService</span><span class="p">)</span> <span class="nf">GetProdStock</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">ProdRequest</span><span class="p">,</span> <span class="nx">opts</span> <span class="o">...</span><span class="nx">grpc</span><span class="p">.</span><span class="nx">CallOption</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">ProdResponse</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>下面开始写服务端：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;google.golang.org/grpc&#34;</span>
+	<span class="s">&#34;net&#34;</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;go-grpc-learning/services&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">rpcServer</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">()</span>
+	<span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceServer</span><span class="p">(</span><span class="nx">rpcServer</span><span class="p">,</span><span class="nb">new</span><span class="p">(</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdService</span><span class="p">))</span>
+	<span class="nx">lis</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">net</span><span class="p">.</span><span class="nf">Listen</span><span class="p">(</span><span class="s">&#34;tcp&#34;</span><span class="p">,</span><span class="s">&#34;:8084&#34;</span><span class="p">)</span>
+	<span class="nx">rpcServer</span><span class="p">.</span><span class="nf">Serve</span><span class="p">(</span><span class="nx">lis</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>这里有一个比较特殊RegisterProdServiceServer函数会提示参数不匹配，在网课中是把RegisterProdServiceServer声明的地方删掉最后一个参数</p>
+<h3 id="客户端">客户端</h3>
+<p>客户端的话就把服务端的Prod.pb.go文件拷贝过去就可以了</p>
+<p>然后客户端的main函数：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;context&#34;</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;google.golang.org/grpc&#34;</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;grpc-client/services&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">connection</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="s">&#34;:8084&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">connection</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">prodClient</span> <span class="o">:=</span> <span class="nx">services</span><span class="p">.</span><span class="nf">NewProdServiceClient</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span>
+	<span class="nx">prodRes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">prodClient</span><span class="p">.</span><span class="nf">GetProdStock</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdRequest</span><span class="p">{</span><span class="nx">ProdId</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+	<span class="k">if</span>  <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">prodRes</span><span class="p">.</span><span class="nx">ProdStock</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>这样子运行会报错：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">2021/01/16 14:42:17 grpc: no transport security <span class="nb">set</span> <span class="o">(</span>use grpc.WithInsecure<span class="o">()</span> explicitly or <span class="nb">set</span> credentials<span class="o">)</span>
+</code></pre></div><p>看提示是没有证书，正常来说grpc是需要使用证书的，然后证书的问题下一章节再说，先按照提示设置</p>
+<p>grpc.WithInsecure()</p>
+<p>第18行改成这样就可以了</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">connection</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="s">&#34;:8084&#34;</span><span class="p">,</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">WithInsecure</span><span class="p">())</span>
+</code></pre></div><h2 id="自签证书">自签证书</h2>
+<blockquote>
+<p>一般来说在生产环境中是不允许使用自签证书的，在买域名的时候域名服务商一般会送一个证书</p>
+</blockquote>
+<p>这个证书可以找域名服务商申请，一般是免费</p>
+<p>加入证书代码：服务端</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">creds</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewServerTLSFromFile</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;keys/ssl.key&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">rpcServer</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">Creds</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png, http://cdn.cjpa.top/cdnimages/image-20210116154636989.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116154636989.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
+        title="image-20210116154636989" /></p>
+<p>重新运行server，现在再运行client就报错了</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">2021/01/16 15:47:10 rpc error: <span class="nv">code</span> <span class="o">=</span> Unavailable <span class="nv">desc</span> <span class="o">=</span> connection closed
+</code></pre></div><p>client也一样的加入证书</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">creds</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewClientTLSFromFile</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;www.cjpa.top&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">connection</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="s">&#34;:8084&#34;</span><span class="p">,</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">WithTransportCredentials</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
+</code></pre></div><p>这个时候运行就可以正常接收到数据了</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png, http://cdn.cjpa.top/cdnimages/image-20210116155354637.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116155354637.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
+        title="image-20210116155354637" /></p>
+<h2 id="热身">热身</h2>
+<p>之前服务端使用的tcp进行连接，现在尝试用一个http看看</p>
+<ul>
+<li>
+<p>为什么要使用httpserver？</p>
+<p>因为有时候一些其他的服务可能没有用到grpc服务，而是用的http服务，为了能够让其他没有用到grpc的client也能调用到我们写的服务，需要写处理http的接口</p>
+<p>代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">creds</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewServerTLSFromFile</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;keys/ssl.key&#34;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="nx">rpcServer</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">Creds</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
+  <span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceServer</span><span class="p">(</span><span class="nx">rpcServer</span><span class="p">,</span><span class="nb">new</span><span class="p">(</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdService</span><span class="p">))</span>
+  <span class="c1">//lis, _ := net.Listen(&#34;tcp&#34;,&#34;:8084&#34;)
+</span><span class="c1"></span>  <span class="c1">//rpcServer.Serve(lis)
+</span><span class="c1"></span>  <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
+  <span class="nx">mux</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">rpcServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span><span class="nx">request</span><span class="p">)</span>
+  <span class="p">})</span>
+  <span class="nx">httpServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+      <span class="nx">Addr</span> <span class="p">:</span> <span class="s">&#34;:8084&#34;</span><span class="p">,</span>
+      <span class="nx">Handler</span><span class="p">:</span> <span class="nx">mux</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png, http://cdn.cjpa.top/cdnimages/image-20210116160407471.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116160407471.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
+        title="image-20210116160407471" /></p>
+</li>
+</ul>
+<p>用浏览器访问之后发现提示gRPC requires HTTP/2，这是因为grpc提供http服务的时候用的是http2，而普通的浏览器访问时http1.x，因此会有这个提示</p>
+<p>解决方案：</p>
+<p>这样就变成了用https访问</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServeTLS</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;keys/ssl.key&#34;</span><span class="p">)</span>
+</code></pre></div><p>现在可以正常访问，但是还时优点小问题</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png, http://cdn.cjpa.top/cdnimages/image-20210116161154420.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116161154420.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
+        title="image-20210116161154420" /></p>
+<p>下面检查一下看看请求过来的时候用了什么协议</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">mux</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">Proto</span><span class="p">)</span><span class="c1">// 可以打印协议
+</span><span class="c1"></span>		<span class="nx">rpcServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span><span class="nx">request</span><span class="p">)</span>
+	<span class="p">})</span>
+</code></pre></div><p>发现输出的是http/2.0</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png, http://cdn.cjpa.top/cdnimages/image-20210116161412141.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116161412141.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
+        title="image-20210116161412141" /></p>
+<p>总体问题不大，这个过会儿再看吧</p>
+<p>下面用客户端访问服务端，然后把所有的信息都给打印下来</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="err">&amp;</span><span class="p">{</span><span class="err">POST</span> <span class="err">/services.ProdService/GetProdStock</span> <span class="err">HTTP/2.0</span> <span class="err">2</span> <span class="err">0</span> 
+  <span class="err">map[</span>
+  <span class="err">Content-Type:[application/grpc]</span> 
+	<span class="err">Te:[trailers]</span> 
+	<span class="err">User-Agent:[grpc-go/1.35.0]]</span> <span class="err">0xc000090210</span> <span class="err">&lt;nil&gt;</span> <span class="err">-1</span> <span class="err">[]</span> <span class="err">false</span> <span class="err">www.cjpa.top</span> <span class="err">map[]</span> <span class="err">map[]</span> <span class="err">&lt;nil&gt;</span> <span class="err">map[]</span> <span class="err">127.0.0.1:53297</span> <span class="err">/services.ProdService/GetProdStock</span> <span class="err">0xc000122a50</span> <span class="err">&lt;nil&gt;</span> <span class="err">&lt;nil&gt;</span> <span class="err">0xc000096080</span>
+<span class="p">}</span>
+</code></pre></div><p>可以看到Context-Type里面有grpc</p>
+<p>后面需要做的就是怎么调用这个grpc</p>
+<h2 id="使用自签caserverclient证书和双向认证">使用自签CA，server，Client证书和双向认证</h2>
+<h3 id="ca证书">CA证书</h3>
+<blockquote>
+<p>CA证书（root certificate）是属于根证书颁发机构（CA）的公钥证书，用以验证它所签发的证书（客户端、服务端）</p>
+</blockquote>
+<p>生成流程</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">openssl
+genrsa -out ca.key <span class="m">2048</span>
+req -new -x509 -days <span class="m">3650</span> -key ca.key -out ca.pem
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png, http://cdn.cjpa.top/cdnimages/image-20210116184649950.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116184649950.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
+        title="image-20210116184649950" /></p>
+<h3 id="重新生成服务端证书">重新生成服务端证书</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">genrsa -out server.key <span class="m">2048</span>
+req -new -key server.key -out server.csr
+x509 -req -sha256 -CA ca.pem -CAkey ca.key -CAcreateserial -days <span class="m">3650</span> -in server.csr -out server.pem
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png, http://cdn.cjpa.top/cdnimages/image-20210116170307022.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116170307022.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
+        title="image-20210116170307022" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png, http://cdn.cjpa.top/cdnimages/image-20210116185013470.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185013470.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
+        title="image-20210116185013470" /></p>
+<p>上面的过程中都会提示要输入common name，<strong>这里统一填写localhost</strong>，写成域名也可以</p>
+<h3 id="生成客户端证书">生成客户端证书</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ecparam -genkey -name secp384r1 -out client.key
+req -new -key client.key -out client.csr
+x509 -req -sha256 -CA ca.pem -CAkey ca.key -CAcreateserial -days <span class="m">3650</span> -in client.csr -out client.pem
+</code></pre></div><p>然后在程序中重新覆盖server.crt和server.key</p>
+<p>服务端覆盖之前</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png, http://cdn.cjpa.top/cdnimages/image-20210116185355527.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185355527.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
+        title="image-20210116185355527" /></p>
+<p>覆盖之后</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png, http://cdn.cjpa.top/cdnimages/image-20210116185543153.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185543153.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
+        title="image-20210116185543153" /></p>
+<p>服务端代码改造</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">func main<span class="o">()</span> <span class="o">{</span>
+	//creds, err :<span class="o">=</span> credentials.NewServerTLSFromFile<span class="o">(</span><span class="s2">&#34;keys/ssl.crt&#34;</span>,<span class="s2">&#34;keys/ssl.key&#34;</span><span class="o">)</span>
+	//if err !<span class="o">=</span> nil <span class="o">{</span>
+	//	log.Fatal<span class="o">(</span>err<span class="o">)</span>
+	//<span class="o">}</span>
+	cert, _ :<span class="o">=</span> tls.LoadX509KeyPair<span class="o">(</span><span class="s2">&#34;cert/server.pem&#34;</span>,<span class="s2">&#34;cert/server.key&#34;</span><span class="o">)</span>
+	certPool :<span class="o">=</span> x509.NewCertPool<span class="o">()</span>
+	ca, _ :<span class="o">=</span> ioutil.ReadFile<span class="o">(</span><span class="s2">&#34;cert/ca.pem&#34;</span><span class="o">)</span>
+	certPool.AppendCertsFromPEM<span class="o">(</span>ca<span class="o">)</span>
+
+	creds :<span class="o">=</span> credentials.NewTLS<span class="o">(</span><span class="p">&amp;</span>tls.Config<span class="o">{</span>
+		Certificates: <span class="o">[]</span>tls.Certificate<span class="o">{</span>cert<span class="o">}</span>,
+		ClientAuth: tls.RequireAndVerifyClientCert,
+		ClientCAs: certPool,
+	<span class="o">})</span>
+
+	rpcServer :<span class="o">=</span> grpc.NewServer<span class="o">(</span>grpc.Creds<span class="o">(</span>creds<span class="o">))</span>
+	services.RegisterProdServiceServer<span class="o">(</span>rpcServer,new<span class="o">(</span>services.ProdService<span class="o">))</span>
+	//lis, _ :<span class="o">=</span> net.Listen<span class="o">(</span><span class="s2">&#34;tcp&#34;</span>,<span class="s2">&#34;:8084&#34;</span><span class="o">)</span>
+	//rpcServer.Serve<span class="o">(</span>lis<span class="o">)</span>
+	mux :<span class="o">=</span> http.NewServeMux<span class="o">()</span>
+	mux.HandleFunc<span class="o">(</span><span class="s2">&#34;/&#34;</span>, func<span class="o">(</span>writer http.ResponseWriter, request *http.Request<span class="o">)</span> <span class="o">{</span>
+		fmt.Println<span class="o">(</span>request<span class="o">)</span>
+		rpcServer.ServeHTTP<span class="o">(</span>writer,request<span class="o">)</span>
+	<span class="o">})</span>
+	httpServer :<span class="o">=</span> <span class="p">&amp;</span>http.Server<span class="o">{</span>
+		Addr : <span class="s2">&#34;:8084&#34;</span>,
+		Handler: mux,
+	<span class="o">}</span>
+	//httpServer.ListenAndServe<span class="o">()</span>
+	httpServer.ListenAndServeTLS<span class="o">(</span><span class="s2">&#34;cert/server.pem&#34;</span>,<span class="s2">&#34;cert/server.key&#34;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div><p>改造客户端：</p>
+<p>和server差不多，也是把证书文件拷贝过去，不过server.key不能放进去</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png, http://cdn.cjpa.top/cdnimages/image-20210116185748615.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185748615.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
+        title="image-20210116185748615" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+	<span class="c1">//creds, err := credentials.NewClientTLSFromFile(&#34;keys/ssl.crt&#34;,&#34;www.cjpa.top&#34;)
+</span><span class="c1"></span>	<span class="c1">//if err != nil {
+</span><span class="c1"></span>	<span class="c1">//	log.Fatal(err)
+</span><span class="c1"></span>	<span class="c1">//}
+</span><span class="c1"></span>
+	<span class="nx">cert</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">tls</span><span class="p">.</span><span class="nf">LoadX509KeyPair</span><span class="p">(</span><span class="s">&#34;cert/client.pem&#34;</span><span class="p">,</span><span class="s">&#34;cert/client.key&#34;</span><span class="p">)</span>
+	<span class="nx">certPool</span> <span class="o">:=</span> <span class="nx">x509</span><span class="p">.</span><span class="nf">NewCertPool</span><span class="p">()</span>
+	<span class="nx">ca</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadFile</span><span class="p">(</span><span class="s">&#34;cert/ca.pem&#34;</span><span class="p">)</span>
+	<span class="nx">certPool</span><span class="p">.</span><span class="nf">AppendCertsFromPEM</span><span class="p">(</span><span class="nx">ca</span><span class="p">)</span>
+
+	<span class="nx">creds</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewTLS</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">tls</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span>
+		<span class="nx">Certificates</span><span class="p">:</span> <span class="p">[]</span><span class="nx">tls</span><span class="p">.</span><span class="nx">Certificate</span><span class="p">{</span><span class="nx">cert</span><span class="p">},</span><span class="c1">//服务端证书
+</span><span class="c1"></span>		<span class="nx">ServerName</span><span class="p">:</span> <span class="s">&#34;localhost&#34;</span><span class="p">,</span><span class="c1">//双向验证
+</span><span class="c1"></span>		<span class="nx">RootCAs</span><span class="p">:</span> <span class="nx">certPool</span><span class="p">,</span>
+	<span class="p">})</span>
+
+	<span class="nx">connection</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="s">&#34;:8084&#34;</span><span class="p">,</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">WithTransportCredentials</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">connection</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">prodClient</span> <span class="o">:=</span> <span class="nx">services</span><span class="p">.</span><span class="nf">NewProdServiceClient</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span>
+	<span class="nx">prodRes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">prodClient</span><span class="p">.</span><span class="nf">GetProdStock</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdRequest</span><span class="p">{</span><span class="nx">ProdId</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+	<span class="k">if</span>  <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">prodRes</span><span class="p">.</span><span class="nx">ProdStock</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div><p>现在服务正常运行了</p>
+<h2 id="双向认证下rpc-gateway使用">双向认证下rpc-gateway使用</h2>
+<blockquote>
+<p>用gateway来同时提供rpc和http接口</p>
+</blockquote>
+<p>有一个第三方库</p>
+<div class="highlight"><pre class="chroma"><code class="language-http" data-lang="http"><span class="err">https://github.com/grpc-ecosystem/grpc-gateway
+</span></code></pre></div><p>对于普通的http请求，在grpc基础之上加一层代理并转发，转变成protobuf访问，然后再把protobuf的响应转化为http响应，返回给客户端</p>
+<p>安装：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+</code></pre></div><p>然后再拓展里面找到这个文件夹</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png, http://cdn.cjpa.top/cdnimages/image-20210116192546770.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116192546770.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
+        title="image-20210116192546770" /></p>
+<p>拷贝过来</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png, http://cdn.cjpa.top/cdnimages/image-20210116192759563.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116192759563.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
+        title="image-20210116192759563" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png, http://cdn.cjpa.top/cdnimages/image-20210116194231640.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116194231640.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
+        title="image-20210116194231640" /></p>
+<p>一个是正常的的prod.pb，一个是网关</p>
+<p>下面开始改造代码</p>
+<p>先改造pbfiles/Prod.proto</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="kn">package</span> <span class="nn">services</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="k">import</span> <span class="s">&#34;google/api/annotations.proto&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">ProdRequest</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">ProdResponse</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_stock</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">service</span> <span class="n">ProdService</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="k">rpc</span> <span class="n">GetProdStock</span> <span class="p">(</span><span class="n">ProdRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">ProdResponse</span><span class="p">){</span><span class="err">
+</span><span class="err"></span>      <span class="k">option</span> <span class="p">(</span><span class="n">google.api.http</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>        <span class="n">get</span><span class="o">:</span> <span class="s">&#34;/v1/prod/{prod_id}&#34;</span><span class="err">
+</span><span class="err"></span>       <span class="p">};</span><span class="err">
+</span><span class="err"></span>  <span class="p">};</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>在pbfiles里面打开终端，执行命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 这个会生成Prod.pb.go</span>
+protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Prod.proto
+<span class="c1"># 这会生成Prod.pd.gw.go</span>
+protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</span><span class="o">=</span>true:../services Prod.proto
+</code></pre></div><p>编写http网关</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// 路由
+</span><span class="c1"></span>	<span class="nx">gwmux</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
+	<span class="c1">// 这个opt指定客户端使用的证书
+</span><span class="c1"></span>	<span class="nx">opt</span> <span class="o">:=</span> <span class="p">[]</span><span class="nx">grpc</span><span class="p">.</span><span class="nx">DialOption</span><span class="p">{</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">WithTransportCredentials</span><span class="p">(</span><span class="nx">helper</span><span class="p">.</span><span class="nf">GetClientCreds</span><span class="p">())}</span>
+	<span class="c1">// RegisterProdServiceHandlerFromEndpoint方法在Prod.pb.gw.go里面，这个Endpoint意思就是grpc的地址，和server.go里面的端口保持一致
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceHandlerFromEndpoint</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">gwmux</span><span class="p">,</span> <span class="s">&#34;localhost:8084&#34;</span><span class="p">,</span><span class="nx">opt</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">httpServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+		<span class="nx">Addr</span><span class="p">:</span> <span class="s">&#34;:8085&#34;</span><span class="p">,</span>
+		<span class="nx">Handler</span><span class="p">:</span> <span class="nx">gwmux</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>这样操作之后，http请求可以通过8085端口来进行访问，然后再转发给本地的8084rpc服务</p>
+<p>在浏览器中访问8085:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png, http://cdn.cjpa.top/cdnimages/image-20210117011302915.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117011302915.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
+        title="image-20210117011302915" /></p>
+<h2 id="语法速学">语法速学</h2>
+<h3 id="repeated">repeated</h3>
+<p>上节课是传入一个商品id获取一个库存，现在我们来获取一堆商品的库存</p>
+<p>还是老规矩，改造代码pbfiles/Pord.proto：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">syntax</span> <span class="p">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span>
+<span class="kn">package</span> <span class="nx">services</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s">&#34;google/api/annotations.proto&#34;</span><span class="p">;</span>
+
+<span class="nx">message</span> <span class="nx">ProdRequest</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="nx">prod_id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">message</span> <span class="nx">QuerySize</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="nx">size</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// 页尺寸，这个1是顺序
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="nx">message</span> <span class="nx">ProdResponse</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="nx">prod_stock</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* 
+</span><span class="cm">返回一堆商品库存，使用了repeated修饰符
+</span><span class="cm">因为grpc是一个跨语言的框架，不能按照go的风格来写，repeated就代表这个属性可以重复
+</span><span class="cm">*/</span>
+<span class="nx">message</span> <span class="nx">ProdResponseList</span> <span class="p">{</span>
+  <span class="nx">repeated</span> <span class="nx">ProdResponse</span> <span class="nx">prodRes</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">service</span> <span class="nx">ProdService</span> <span class="p">{</span>
+  <span class="nx">rpc</span> <span class="nf">GetProdStock</span> <span class="p">(</span><span class="nx">ProdRequest</span><span class="p">)</span> <span class="nf">returns</span> <span class="p">(</span><span class="nx">ProdResponse</span><span class="p">){</span>
+    <span class="nf">option</span> <span class="p">(</span><span class="nx">google</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">http</span><span class="p">)</span> <span class="p">=</span> <span class="p">{</span>
+      <span class="nx">get</span><span class="p">:</span> <span class="s">&#34;/v1/prod/{prod_id}&#34;</span>
+     <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="nx">rpc</span> <span class="nf">getProdStocks</span> <span class="p">(</span><span class="nx">QuerySize</span><span class="p">)</span> <span class="nf">returns</span> <span class="p">(</span><span class="nx">ProdResponseList</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><p>生成prod.pb.go文件：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Prod.proto
+</code></pre></div><p>Services/ProdService.go里面也要实现一下上面定义的getProdStocks</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">ProdService</span><span class="p">)</span> <span class="nf">GetProdStocks</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="nx">request</span> <span class="o">*</span><span class="nx">QuerySize</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">ProdResponseList</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">Prods</span> <span class="o">:=</span> <span class="p">[]</span><span class="o">*</span><span class="nx">ProdResponse</span><span class="p">{</span>
+		<span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="mi">28</span><span class="p">},</span>
+		<span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="mi">36</span><span class="p">},</span>
+		<span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
+		<span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="mi">78</span><span class="p">},</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ProdResponseList</span><span class="p">{</span>
+		<span class="nx">ProdRes</span><span class="p">:</span> <span class="nx">Prods</span><span class="p">,</span>
+	<span class="p">},</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>然后客户端调用：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">prodClient</span><span class="p">.</span><span class="nf">GetProdStocks</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">QuerySize</span><span class="p">{</span><span class="nx">Size</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">ProdRes</span><span class="p">)</span>
+</code></pre></div><p>控制台输出如下</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png, http://cdn.cjpa.top/cdnimages/image-20210117015802763.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117015802763.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
+        title="image-20210117015802763" /></p>
+<h3 id="enum">enum</h3>
+<p>上一个例子中我们实现了切片和数组</p>
+<p>现在讲一下枚举类型</p>
+<p>改造pbfiles/Prod.proto</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="kd">enum</span> <span class="n">ProdAreas</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="n">A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="n">B</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="n">C</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">ProdRequest</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="n">ProdAreas</span> <span class="n">prod_area</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>重新生成Prod.pb.go</p>
+<p>改造服务端代码</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">ProdService</span><span class="p">)</span> <span class="nf">GetProdStock</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">ProdRequest</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">ProdResponse</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">stock</span> <span class="kt">int32</span> <span class="p">=</span> <span class="mi">0</span>
+	<span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">ProdArea</span> <span class="o">==</span> <span class="nx">ProdAreas_A</span> <span class="p">{</span>
+		<span class="nx">stock</span> <span class="p">=</span> <span class="mi">30</span>
+	<span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">ProdArea</span> <span class="o">==</span> <span class="nx">ProdAreas_B</span> <span class="p">{</span>
+		<span class="nx">stock</span> <span class="p">=</span> <span class="mi">40</span>
+	<span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">ProdArea</span> <span class="o">==</span> <span class="nx">ProdAreas_C</span> <span class="p">{</span>
+		<span class="nx">stock</span> <span class="p">=</span> <span class="mi">50</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ProdResponse</span><span class="p">{</span><span class="nx">ProdStock</span><span class="p">:</span> <span class="nx">stock</span><span class="p">},</span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>客户端</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">prodRes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">prodClient</span><span class="p">.</span><span class="nf">GetProdStock</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdRequest</span><span class="p">{</span><span class="nx">ProdId</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">ProdArea</span><span class="p">:</span> <span class="nx">services</span><span class="p">.</span><span class="nx">ProdAreas_A</span><span class="p">})</span>
+	<span class="k">if</span>  <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">prodRes</span><span class="p">.</span><span class="nx">ProdStock</span><span class="p">)</span>
+</code></pre></div><p>输出结果如下</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png, http://cdn.cjpa.top/cdnimages/image-20210117020822456.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117020822456.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
+        title="image-20210117020822456" /></p>
+<h3 id="导入外部proto">导入外部proto</h3>
+<p>新建一个proto文件，专门放一些实体</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png, http://cdn.cjpa.top/cdnimages/image-20210117022046672.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117022046672.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
+        title="image-20210117022046672" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="kn">package</span> <span class="nn">services</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="c1">//商品模型
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">ProdModel</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">string</span> <span class="n">prod_name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">float</span> <span class="n">prod_price</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>在Prod.proto里面导入</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="k">import</span> <span class="s">&#34;Models.proto&#34;</span><span class="p">;</span><span class="err">
+</span></code></pre></div><p>然后写一个rpc服务</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="k">rpc</span> <span class="n">getProdInfo</span> <span class="p">(</span><span class="n">ProdRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">ProdModel</span><span class="p">)</span> <span class="p">{};</span><span class="err">
+</span></code></pre></div><p>生成go文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Prod.proto
+protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Models.proto
+</code></pre></div><p>实现getProdInfo</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">ProdService</span><span class="p">)</span> <span class="nf">GetProdInfo</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">ProdRequest</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">ProdModel</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">ret</span> <span class="o">:=</span> <span class="nx">ProdModel</span> <span class="p">{</span>
+		<span class="nx">ProdId</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span>
+		<span class="nx">ProdName</span><span class="p">:</span> <span class="s">&#34;测试商品&#34;</span><span class="p">,</span>
+		<span class="nx">ProdPrice</span><span class="p">:</span> <span class="mf">20.5</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ret</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>客户端调用</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">prod</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">prodClient</span><span class="p">.</span><span class="nf">GetProdInfo</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdRequest</span><span class="p">{</span><span class="nx">ProdId</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">prod</span><span class="p">.</span><span class="nx">ProdName</span><span class="p">)</span>
+</code></pre></div><p>结果如下</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png, http://cdn.cjpa.top/cdnimages/image-20210117022326393.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117022326393.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
+        title="image-20210117022326393" /></p>
+<h3 id="日期类型">日期类型</h3>
+<p>创建主订单模型</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="k">import</span> <span class="s">&#34;google/protobuf/timestamp.proto&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="c1">// 主订单模型
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">OrderMain</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">order_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">// 订单ID
+</span><span class="c1"></span>  <span class="kt">string</span> <span class="n">order_no</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="c1">// 订单号
+</span><span class="c1"></span>  <span class="kt">int32</span> <span class="n">user_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="c1">// 购买者Id
+</span><span class="c1"></span>  <span class="kt">float</span> <span class="n">order_money</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="c1">// 商品金额
+</span><span class="c1"></span>  <span class="c1">//这边还需要一个订单时间
+</span><span class="c1"></span>  <span class="n">google.protobuf.Timestamp</span> <span class="n">order_time</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>日期类型在go里面的使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;github.com/golang/protobuf/ptypes/timestamp&#34;</span>
+<span class="nx">t</span> <span class="o">:=</span> <span class="nx">timestamp</span><span class="p">.</span><span class="nx">Timestamp</span><span class="p">{</span><span class="nx">Seconds</span><span class="p">:</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">Unix</span><span class="p">()}</span>
+</code></pre></div><h2 id="场景练习">场景练习</h2>
+<p>上面的网关用的是get方法，下面用post试试</p>
+<p>首先改造proto代码</p>
+<p>Pbfiles/Order.proto</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">syntax</span> <span class="p">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span>
+<span class="kn">package</span> <span class="nx">services</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s">&#34;google/api/annotations.proto&#34;</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s">&#34;Models.proto&#34;</span><span class="p">;</span>
+
+<span class="nx">message</span> <span class="nx">OrderRequest</span> <span class="p">{</span>
+  <span class="nx">OrderMain</span> <span class="nx">order_main</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">message</span> <span class="nx">OrderResponse</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="nx">status</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="nx">message</span> <span class="p">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">service</span> <span class="nx">OrderService</span> <span class="p">{</span>
+  <span class="nx">rpc</span> <span class="nf">NewOrder</span><span class="p">(</span><span class="nx">OrderRequest</span><span class="p">)</span> <span class="nf">returns</span> <span class="p">(</span><span class="nx">OrderResponse</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">option</span> <span class="p">(</span><span class="nx">google</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">http</span><span class="p">)</span> <span class="p">=</span> <span class="p">{</span>
+      <span class="nx">post</span><span class="p">:</span> <span class="s">&#34;/v1/orders&#34;</span>
+      <span class="nx">body</span><span class="p">:</span> <span class="s">&#34;order_main&#34;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><p>生成新的网关代码，和grpc代码</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Prod.proto <span class="o">&amp;&amp;</span>
+protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Models.proto <span class="o">&amp;&amp;</span>
+protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span class="o">=</span>grpc:../services Orders.proto <span class="o">&amp;&amp;</span>
+protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</span><span class="o">=</span>true:../services Prod.proto <span class="o">&amp;&amp;</span>
+protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</span><span class="o">=</span>true:../services Orders.proto
+</code></pre></div><p>改造OrderService.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">OrderService</span><span class="p">)</span> <span class="nf">NewOrder</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="nx">orderRequest</span> <span class="o">*</span><span class="nx">OrderRequest</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">OrderResponse</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">orderRequest</span><span class="p">)</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">OrderResponse</span><span class="p">{</span>
+		<span class="nx">Status</span><span class="p">:</span> <span class="s">&#34;ok&#34;</span><span class="p">,</span>
+		<span class="nx">Message</span><span class="p">:</span> <span class="s">&#34;success&#34;</span><span class="p">,</span>
+	<span class="p">},</span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>编写HttpServer.go（网关代码）</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// 路由
+</span><span class="c1"></span>	<span class="nx">gwmux</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
+	<span class="nx">gRpcEndPoint</span> <span class="o">:=</span> <span class="s">&#34;localhost:8084&#34;</span>
+	<span class="c1">// 这个opt指定客户端使用的证书
+</span><span class="c1"></span>	<span class="nx">opt</span> <span class="o">:=</span> <span class="p">[]</span><span class="nx">grpc</span><span class="p">.</span><span class="nx">DialOption</span><span class="p">{</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">WithTransportCredentials</span><span class="p">(</span><span class="nx">helper</span><span class="p">.</span><span class="nf">GetClientCreds</span><span class="p">())}</span>
+	<span class="c1">// 商品服务网关
+</span><span class="c1"></span>	<span class="c1">// RegisterProdServiceHandlerFromEndpoint方法在Prod.pb.gw.go里面，这个Endpoint意思就是grpc的地址，和server.go里面的端口保持一致
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceHandlerFromEndpoint</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">gwmux</span><span class="p">,</span> <span class="nx">gRpcEndPoint</span><span class="p">,</span><span class="nx">opt</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c1">// 订单服务网关
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="p">=</span> <span class="nx">services</span><span class="p">.</span><span class="nf">RegisterOrderServiceHandlerFromEndpoint</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">gwmux</span><span class="p">,</span> <span class="nx">gRpcEndPoint</span><span class="p">,</span><span class="nx">opt</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">httpServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+		<span class="nx">Addr</span><span class="p">:</span> <span class="s">&#34;:8085&#34;</span><span class="p">,</span>
+		<span class="nx">Handler</span><span class="p">:</span> <span class="nx">gwmux</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>postman测试跑一波</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png, http://cdn.cjpa.top/cdnimages/image-20210117171021263.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117171021263.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
+        title="image-20210117171021263" /></p>
+<p>服务端</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png, http://cdn.cjpa.top/cdnimages/image-20210117171103294.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117171103294.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
+        title="image-20210117171103294" /></p>
+<h3 id="子订单模型">子订单模型</h3>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// 主订单模型
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">OrderMain</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">order_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">// 订单ID
+</span><span class="c1"></span>  <span class="kt">string</span> <span class="n">order_no</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="c1">// 订单号
+</span><span class="c1"></span>  <span class="kt">int32</span> <span class="n">user_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="c1">// 购买者Id
+</span><span class="c1"></span>  <span class="kt">float</span> <span class="n">order_money</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="c1">// 商品金额
+</span><span class="c1"></span>  <span class="c1">// 这边还需要一个订单时间
+</span><span class="c1"></span>  <span class="n">google.protobuf.Timestamp</span> <span class="n">order_time</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="c1">// 嵌套
+</span><span class="c1"></span>  <span class="k">repeated</span> <span class="n">OrderDetail</span> <span class="n">order_detail</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="c1">// 子订单模型
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">OrderDetail</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">detail_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">string</span> <span class="n">order_no</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">prod_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">float</span> <span class="n">prod_price</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span>  <span class="n">prod_num</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><h2 id="使用第三方库进行验证">使用第三方库进行验证</h2>
+<p><a href="https://github.com/envoyproxy/protoc-gen-validate">https://github.com/envoyproxy/protoc-gen-validate</a></p>
+<p>这个有点鸡肋，但是也挺方便还挺好用</p>
+<h2 id="流模式">流模式</h2>
+<p>为什么要使用流模式？</p>
+<p>上面的例子传输的数据比较小</p>
+<p>基本模式是客户端请求&ndash;服务端响应</p>
+<p>这种模式有两个问题：</p>
+<ul>
+<li>如果传输数据比较大的时候会导致压力陡增</li>
+<li>服务端需要等待客户端的包全部发送才能处理以及响应</li>
+</ul>
+<p>这样很慢，grpc只吃了流模式</p>
+<p>举个例子</p>
+<p>假设要从库里去取一批（x万到几十万），批量查询用户的积分</p>
+<p>用户模型如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="kd">message</span> <span class="nc">UserInfo</span><span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="kt">int32</span> <span class="n">user_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>	<span class="kt">int32</span> <span class="n">user_score</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></div><p>我们心里期望的模式是，每次先处理1w个，然后一万一万的处理，直到结束</p>
+<h3 id="服务端流">服务端流</h3>
+<p>服务端流就是服务端分批发送</p>
+<p>User.proto代码改造</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="k">rpc</span> <span class="n">GetUserScoreByServerStream</span> <span class="p">(</span><span class="n">UserScoreRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">UserScoreResponse</span><span class="p">);</span><span class="err">
+</span></code></pre></div><p>服务端UserService.go代码改造</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//服务端流模式
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">UserService</span><span class="p">)</span> <span class="nf">GetUserScoreByServerStream</span><span class="p">(</span><span class="nx">in</span> <span class="o">*</span><span class="nx">UserScoreRequest</span><span class="p">,</span><span class="nx">stream</span> <span class="nx">UserService_GetUserScoreByServerStreamServer</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">score</span> <span class="kt">int32</span> <span class="p">=</span> <span class="mi">101</span>
+	<span class="nx">users</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="o">*</span><span class="nx">UserInfo</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">user</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">in</span><span class="p">.</span><span class="nx">Users</span> <span class="p">{</span>
+		<span class="nx">user</span><span class="p">.</span><span class="nx">UserScore</span> <span class="p">=</span> <span class="nx">score</span>
+		<span class="nx">score</span> <span class="o">++</span>
+		<span class="nx">users</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">users</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span>
+		<span class="c1">// 每隔两条发送一次
+</span><span class="c1"></span>		<span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">index</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">{</span>
+			<span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">UserScoreResponse</span><span class="p">{</span><span class="nx">Users</span><span class="p">:</span> <span class="nx">users</span><span class="p">})</span>
+			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nx">err</span>
+			<span class="p">}</span>
+			<span class="nx">users</span> <span class="p">=</span> <span class="p">(</span><span class="nx">users</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+		<span class="p">}</span>
+		<span class="c1">// 发送完之后就晴空
+</span><span class="c1"></span>		<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">users</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">UserScoreResponse</span><span class="p">{</span> <span class="nx">Users</span><span class="p">:</span><span class="nx">users</span><span class="p">})</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>客户端扫描读取：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">stream</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">userClient</span><span class="p">.</span><span class="nf">GetUserScoreByServerStream</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="o">&amp;</span><span class="nx">req</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="p">{</span>
+		<span class="nx">res</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Recv</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+			<span class="k">break</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Users</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></div><h3 id="客户端流">客户端流</h3>
+<p>客户端分批接收</p>
+<p>场景</p>
+<p>客户端批量查询用户积分</p>
+<ul>
+<li>客户端一次性把用户列表发送过去（客户端获取列表比较慢）</li>
+<li>服务端查询比较快</li>
+</ul>
+<p>这个时候可以使用客户端流模式，服务端就一直扫描消息，然后扫描到了就发送给客户端</p>
+<p>改装User.proto</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// 客户端流
+</span><span class="c1"></span><span class="k">rpc</span> <span class="n">GetUserByClientStream</span> <span class="p">(</span><span class="n">stream</span> <span class="n">UserScoreRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">UserScoreResponse</span><span class="p">)</span> <span class="p">{};</span><span class="err">
+</span></code></pre></div><p>UserService.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 客户端流
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">UserService</span><span class="p">)</span> <span class="nf">GetUserByClientStream</span><span class="p">(</span><span class="nx">stream</span> <span class="nx">UserService_GetUserByClientStreamServer</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">score</span> <span class="kt">int32</span> <span class="p">=</span> <span class="mi">101</span>
+	<span class="nx">users</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="o">*</span><span class="nx">UserInfo</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="k">for</span> <span class="p">{</span>
+		<span class="nx">req</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Recv</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">SendAndClose</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">UserScoreResponse</span><span class="p">{</span> <span class="nx">Users</span><span class="p">:</span><span class="nx">users</span><span class="p">})</span> <span class="c1">//关闭流
+</span><span class="c1"></span>		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">user</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">{</span>
+			<span class="nx">user</span><span class="p">.</span><span class="nx">UserScore</span> <span class="p">=</span> <span class="nx">score</span> <span class="c1">// 业务处理
+</span><span class="c1"></span>			<span class="nx">score</span><span class="o">++</span>
+			<span class="nx">users</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">users</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>改造客户端代码</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="c1">// 客户端流发送
+</span><span class="c1"></span>	<span class="nx">stream</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">userClient</span><span class="p">.</span><span class="nf">GetUserByClientStream</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">req</span> <span class="p">=</span> <span class="nx">services</span><span class="p">.</span><span class="nx">UserScoreRequest</span><span class="p">{}</span>
+		<span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="o">*</span><span class="nx">services</span><span class="p">.</span><span class="nx">UserInfo</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">for</span> <span class="nx">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>	<span class="c1">// 加了六条消息，假设是一个耗时的过程
+</span><span class="c1"></span>			<span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">Users</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">UserInfo</span><span class="p">{</span><span class="nx">UserId</span><span class="p">:</span> <span class="nx">i</span><span class="p">})</span>
+		<span class="p">}</span>
+		<span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">req</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="c1">// 在结束之后发送关闭信号，并且接收消息
+</span><span class="c1"></span>	<span class="nx">res</span><span class="p">,</span><span class="nx">_</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">CloseAndRecv</span><span class="p">()</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Users</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="双向流">双向流</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png, http://cdn.cjpa.top/cdnimages/image-20210117193056258.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117193056258.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
+        title="image-20210117193056258" /></p>
+<p>场景：</p>
+<p>客户端分批查询用户积分</p>
+<ul>
+<li>客户端分批把用户列表发送过去（客户端获取列表比较慢）</li>
+<li>服务端查询积分也很慢，所以分批发送过去</li>
+</ul>
+<p>此时两边都很慢，那么就使用双向流模式</p>
+<p>改造代码user.proto</p>
+<div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf">  <span class="c1">// 双向流
+</span><span class="c1"></span>  <span class="k">rpc</span> <span class="n">GetUserScoreByTWS</span> <span class="p">(</span><span class="n">stream</span> <span class="n">UserScoreRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">UserScoreResponse</span><span class="p">)</span> <span class="p">{};</span><span class="err">
+</span></code></pre></div><p>UserService.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//双向流
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">UserService</span><span class="p">)</span> <span class="nf">GetUserScoreByTWS</span><span class="p">(</span><span class="nx">stream</span> <span class="nx">UserService_GetUserScoreByTWSServer</span><span class="p">)</span> <span class="kt">error</span><span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">score</span> <span class="kt">int32</span> <span class="p">=</span> <span class="mi">101</span>
+	<span class="nx">users</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="o">*</span><span class="nx">UserInfo</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="k">for</span> <span class="p">{</span>
+		<span class="c1">//接收
+</span><span class="c1"></span>		<span class="nx">req</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Recv</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="kc">nil</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">user</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">{</span>
+			<span class="nx">user</span><span class="p">.</span><span class="nx">UserScore</span> <span class="p">=</span> <span class="nx">score</span> <span class="c1">// 业务处理
+</span><span class="c1"></span>			<span class="nx">score</span><span class="o">++</span>
+			<span class="nx">users</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">users</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="c1">//发送
+</span><span class="c1"></span>		<span class="nx">err</span> <span class="p">=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">UserScoreResponse</span><span class="p">{</span><span class="nx">Users</span><span class="p">:</span> <span class="nx">users</span><span class="p">})</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">users</span> <span class="p">=</span> <span class="p">(</span><span class="nx">users</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>客户端</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="c1">// 客户端流发送
+</span><span class="c1"></span>	<span class="nx">stream</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">userClient</span><span class="p">.</span><span class="nf">GetUserScoreByTWS</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+	<span class="c1">//stream, err := userClient.GetUserByClientStream(context.Background())
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">req</span> <span class="p">=</span> <span class="nx">services</span><span class="p">.</span><span class="nx">UserScoreRequest</span><span class="p">{}</span>
+		<span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="o">*</span><span class="nx">services</span><span class="p">.</span><span class="nx">UserInfo</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">for</span> <span class="nx">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>	<span class="c1">// 加了六条消息，假设是一个耗时的过程
+</span><span class="c1"></span>			<span class="nx">req</span><span class="p">.</span><span class="nx">Users</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">Users</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">services</span><span class="p">.</span><span class="nx">UserInfo</span><span class="p">{</span><span class="nx">UserId</span><span class="p">:</span> <span class="nx">i</span><span class="p">})</span>
+		<span class="p">}</span>
+		<span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">req</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="c1">// 在结束之后发送关闭信号，并且接收消息
+</span><span class="c1"></span>		<span class="nx">res</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nx">stream</span><span class="p">.</span><span class="nf">Recv</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+			<span class="k">break</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Users</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></div><p>可以看到，每次读去了5个</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png, http://cdn.cjpa.top/cdnimages/image-20210117194535096.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117194535096.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
+        title="image-20210117194535096" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/grpc/">gRPC</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/" class="prev" rel="prev" title="GRPC的优劣势"><i class="fas fa-angle-left fa-fw"></i>GRPC的优劣势</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

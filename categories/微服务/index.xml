@@ -4,7 +4,14 @@
         <link>http://cjpa.top/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</link>
         <description>微服务 - 分类 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="self" type="application/rss+xml" /><item>
+    <title>gRPC概述</title>
+    <link>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</link>
+    <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</guid>
+    <description><![CDATA[什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服]]></description>
+</item><item>
     <title>GRPC的优劣势</title>
     <link>http://cjpa.top/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/</link>
     <pubDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</pubDate>

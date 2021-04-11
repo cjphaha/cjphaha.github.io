@@ -4,7 +4,14 @@
         <link>http://cjpa.top/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>gRPC概述</title>
+    <link>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</link>
+    <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</guid>
+    <description><![CDATA[什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服]]></description>
+</item><item>
     <title>GRPC的优劣势</title>
     <link>http://cjpa.top/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/</link>
     <pubDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
     <description><![CDATA[MyISAM和InnoDB的区别 关于数据库引擎： mysql现在默认使用innodb mysql5.5之前使用myisam myisam innodb 事务支持 不支持 支持]]></description>
-</item><item>
-    <title>Golang Make和new的区别</title>
-    <link>http://cjpa.top/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
-    <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
-    <description><![CDATA[new和make new和make都是内置函数，主要用来创建分配内存类型 new new（T）可以创建一个没有任何数据的T类型的指针，并且返回该实例的]]></description>
 </item></channel>
 </rss>
