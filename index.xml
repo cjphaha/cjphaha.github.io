@@ -4,9 +4,16 @@
         <link>http://cjpa.top/</link>
         <description>氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</lastBuildDate>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 02 May 2021 01:43:58 &#43;0800</lastBuildDate>
             <atom:link href="http://cjpa.top/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>20210502日记</title>
+    <link>http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/</link>
+    <pubDate>Sun, 02 May 2021 01:43:58 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/</guid>
+    <description><![CDATA[keep learning,keep modest, keep enthusiasm]]></description>
+</item><item>
     <title>gRPC概述</title>
     <link>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</link>
     <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
@@ -69,12 +76,5 @@
     <author>作者</author>
     <guid>http://cjpa.top/posts/%E5%B8%B8%E8%A7%81%E7%9A%84sql%E8%AF%AD%E5%8F%A5%E7%94%A8%E6%B3%95/</guid>
     <description><![CDATA[SQL SQL分为两个部分，一个是操作语言（DML）。一个是数据定义语言（DDL） 查询和更新指令构成了SQL的DML部分 SELECT——从数据库表]]></description>
-</item><item>
-    <title>MyISAM和InnoDB的区别</title>
-    <link>http://cjpa.top/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
-    <pubDate>Sun, 03 Jan 2021 13:33:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://cjpa.top/posts/myisam%E5%92%8Cinnodb%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
-    <description><![CDATA[MyISAM和InnoDB的区别 关于数据库引擎： mysql现在默认使用innodb mysql5.5之前使用myisam myisam innodb 事务支持 不支持 支持]]></description>
 </item></channel>
 </rss>
