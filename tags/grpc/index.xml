@@ -5,18 +5,18 @@
         <description>gRPC - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
             <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/grpc/" rel="self" type="application/rss+xml" /><item>
-    <title>gRPC概述</title>
-    <link>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</link>
+    <title>简单聊一聊gRPC</title>
+    <link>http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</link>
     <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/grpc%E6%A6%82%E8%BF%B0/</guid>
+    <guid>http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</guid>
     <description><![CDATA[什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服]]></description>
 </item><item>
-    <title>GRPC的优劣势</title>
-    <link>http://cjpa.top/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/</link>
+    <title>和普通的http相比gRPC有什么好处？</title>
+    <link>http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</link>
     <pubDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/grpc%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF/</guid>
+    <guid>http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</guid>
     <description><![CDATA[RPC的全称是remote procedure call。 生态优势 rpc没有对具体的编码和解码进行规定，在rpc生态中，有很多rpc框架，google的grpc]]></description>
 </item></channel>
 </rss>

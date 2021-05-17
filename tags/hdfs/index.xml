@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>HDFS - 标签 - 氕氘氚</title>
+        <link>http://cjpa.top/tags/hdfs/</link>
+        <description>HDFS - 标签 - 氕氘氚</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/hdfs/" rel="self" type="application/rss+xml" /><item>
+    <title>介绍一个数据库——DHFS</title>
+    <link>http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</link>
+    <pubDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</guid>
+    <description><![CDATA[HDFS hdfs是hadoop的核心 概述 介绍 在现代的企业环境中，单机容量往往无法存储大量数据，需要跨机器存储，统一管理分布在集群上的文件系统成为泡]]></description>
+</item></channel>
+</rss>

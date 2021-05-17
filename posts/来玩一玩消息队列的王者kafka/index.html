@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>来玩一玩消息队列的王者——kafka - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="来玩一玩消息队列的王者——kafka" />
+<meta property="og:description" content="Kafka 概念 基于发布、订阅模式的消息中间件 没有消息队列的话，两个进程通信是直接连接 同步的效率会比较低，异步处理在执行之后还可以执行其他的。 缓冲也叫" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/%E6%9D%A5%E7%8E%A9%E4%B8%80%E7%8E%A9%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%8E%8B%E8%80%85kafka/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-04-01T01:46:45+08:00" />
+<meta property="article:modified_time" content="2021-04-01T01:46:45+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="来玩一玩消息队列的王者——kafka"/>
+<meta name="twitter:description" content="Kafka 概念 基于发布、订阅模式的消息中间件 没有消息队列的话，两个进程通信是直接连接 同步的效率会比较低，异步处理在执行之后还可以执行其他的。 缓冲也叫"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/%E6%9D%A5%E7%8E%A9%E4%B8%80%E7%8E%A9%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%8E%8B%E8%80%85kafka/" /><link rel="prev" href="http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/" /><link rel="next" href="http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "来玩一玩消息队列的王者——kafka",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/%E6%9D%A5%E7%8E%A9%E4%B8%80%E7%8E%A9%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%8E%8B%E8%80%85kafka\/"
+        },"genre": "posts","keywords": "kafka","wordcount":  2581 ,
+        "url": "http:\/\/cjpa.top\/posts\/%E6%9D%A5%E7%8E%A9%E4%B8%80%E7%8E%A9%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%8E%8B%E8%80%85kafka\/","datePublished": "2021-04-01T01:46:45+08:00","dateModified": "2021-04-01T01:46:45+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">来玩一玩消息队列的王者——kafka</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"><i class="far fa-folder fa-fw"></i>中间件</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-01">2021-04-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2581 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kafka">Kafka</a>
+      <ul>
+        <li><a href="#概念">概念</a></li>
+        <li><a href="#消息队列的两种模式">消息队列的两种模式</a></li>
+        <li><a href="#基础架构">基础架构</a></li>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#kafka命令操作">kafka命令操作</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="kafka">Kafka</h2>
+<h3 id="概念">概念</h3>
+<p>基于发布、订阅模式的消息中间件</p>
+<p>没有消息队列的话，两个进程通信是直接连接</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306213555530.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306213555530.png, http://cdn.cjpa.top/cdnimages/image-20210306213555530.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306213555530.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306213555530.png"
+        title="image-20210306213555530" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306213655510.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306213655510.png, http://cdn.cjpa.top/cdnimages/image-20210306213655510.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306213655510.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306213655510.png"
+        title="image-20210306213655510" /></p>
+<p>同步的效率会比较低，异步处理在执行之后还可以执行其他的。</p>
+<p>缓冲也叫削峰。</p>
+<p>使用消息队列的好处</p>
+<ul>
+<li>
+<p>解耦</p>
+<p>允许独立的拓展或修改两边的处理过程，只要确保他们遵守同样的接口约束</p>
+</li>
+<li>
+<p>可恢复性</p>
+<p>系统的一部分组件失效时，不会影响到整个系统。消息队列降低了进程之间的耦合度，所以即使一个处理消息的进程挂掉，加入队列中的消息仍然可以在系统恢复后被处理</p>
+</li>
+<li>
+<p>缓冲</p>
+<p>有助于控制和优化数据流经过系统的速度，解决生产消息和消费消息的处理速度不一致的情况</p>
+</li>
+<li>
+<p>灵活性&amp;峰值处理能力</p>
+<p>在访问量剧增的情况下，应用仍然需要继续发挥作用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命，无疑是一个巨大的浪费。使用消息队列能够使关键组件顶住突发的访问压力，而不会因为突发的超负荷的请求而完全崩溃</p>
+</li>
+</ul>
+<h3 id="消息队列的两种模式">消息队列的两种模式</h3>
+<ul>
+<li>
+<p>点对点模式</p>
+<p>一对一，消费者主动拉取数据，消息收到后消息清除，消息只能给一个人。</p>
+<p>消息生产者生产消息发送到Queue中，然后消息消费者从Queue中取出并且消费消息。消息被消费之后，queue中不再有存储，所以消息消费者不可能消费到已经被消费的消息。queue支持存在多个消费者，但是对一个消息而言，只会有一个消费者可以消费。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306235109052.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306235109052.png, http://cdn.cjpa.top/cdnimages/image-20210306235109052.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306235109052.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306235109052.png"
+        title="image-20210306235109052" /></p>
+</li>
+<li>
+<p>发布/订阅模式</p>
+<p>一对多，消费者消费数据之后不会清除消息</p>
+<p>消息生产者（发布）将消息发布到topic中，同时有豆哥消息消费者（订阅）消费该消息。和点对点方式不同，发布到topic的消息会被所有的订阅者消费</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306235431183.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306235431183.png, http://cdn.cjpa.top/cdnimages/image-20210306235431183.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306235431183.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306235431183.png"
+        title="image-20210306235431183" /></p>
+<p>​	这个保留也是有一定的期限的，因为它只是一个消息队列，不是一个数据库系统。kafka是一个发布/订阅的模式。</p>
+<p>​	可能会有这么一种情况，不想要的数据也会收到。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210306235807017.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210306235807017.png, http://cdn.cjpa.top/cdnimages/image-20210306235807017.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210306235807017.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210306235807017.png"
+        title="image-20210306235807017" /></p>
+<p>如果消息队列的速度和消费者的速度不太一样，可能会造成资源浪费。所以订阅/发布的这种模式，一般有两种实现方式</p>
+<ul>
+<li>消费者主动去拉消息</li>
+<li>消息队列主动推</li>
+</ul>
+<p>kafka是消费者主动拉消息的模式。</p>
+<p>kafka的缺点：</p>
+<p>消费者自己需要轮询来查看消息队列中有没有数据。有时会比较浪费consumer的资源。</p>
+<h3 id="基础架构">基础架构</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210323205911929.png"
+        data-srcset="http://cdn.cjpa.top/image-20210323205911929.png, http://cdn.cjpa.top/image-20210323205911929.png 1.5x, http://cdn.cjpa.top/image-20210323205911929.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210323205911929.png"
+        title="image-20210323205911929" /></p>
+<h4 id="producer">Producer</h4>
+<p>消费生产者，想kafka broker发消息的客户端</p>
+<h4 id="consumer">Consumer</h4>
+<p>消息消费者，向kafka broker取消息的客户端</p>
+<h4 id="consumer-groupcg">Consumer Group(CG)</h4>
+<p>消费者组，由一个或者多个consumer组成。<strong>消费者组内每个消费者负责消费不同分取的数据，一个分区只能由一个组内消费者消费，消费者组之间互不影响</strong>所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者</p>
+<h4 id="broker">Broker</h4>
+<p>一台kafka服务器就是一个broker，一个集群由多个broker组成。一个broker可以容纳多个topic</p>
+<h4 id="topic">Topic</h4>
+<p>可以理解为一个队列，生产者和消费者面相的都是一个topic</p>
+<h4 id="partion">Partion</h4>
+<p>为了实现拓展性，一个非常大的topic可以分布到多个broker（也就是服务器）上，一个topic可以分为多个partion，每个partion是一个有序的队列</p>
+<h4 id="replica">Replica</h4>
+<p>副本，为了保证集群中某个节点发生故障时，该节点上的partion数据不丢失，且kafka仍然能够<strong>继续工作</strong>，kafka提供了副本机制，一个topic的每个分区都有若干个副本，一个<strong>leader</strong>和若干个<strong>follower</strong></p>
+<h4 id="leader">Leader</h4>
+<p>每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是<strong>leader</strong></p>
+<h4 id="follower">follower</h4>
+<p>每个分区多个副本的“从”，实时从leader中同步数据，保持和leader数据的同步，leader发生故障时，某个follower会成为新的leader</p>
+<p>生产者生产消息</p>
+<p>kafka集群管理消息（数据）</p>
+<p>消费者消费消息</p>
+<p>zookeeper注册消息</p>
+<blockquote>
+<p>0.9之前消费者记录数据的位置是靠存放到zk里面的偏移量，0.9之后是存到了kafka本地的系统的topic中（kafka消息是存到磁盘中）</p>
+</blockquote>
+<p>为什么这样做？</p>
+<p>原来的方式给zk的要有点太大了，在高并发情况下边取数据边记录位置，会很麻烦</p>
+<h3 id="安装">安装</h3>
+<h4 id="docker-安装">docker 安装</h4>
+<p>下载镜像</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo docker pull wurstmeister/zookeeper 
+sudo docker pull wurstmeister/kafka
+</code></pre></div><p>启动zookeeper</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo docker run -d --name zookeeper-container -p <span class="m">2181</span> -t wurstmeister/zookeeper
+</code></pre></div><p>启动kafka</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo docker run -d --name kafka --publish 9092:9092 --link zookeeper-container --env <span class="nv">KAFKA_ZOOKEEPER_CONNECT</span><span class="o">=</span>zookeeper-container:2181 --env <span class="nv">KAFKA_ADVERTISED_HOST_NAME</span><span class="o">=</span>127.0.0.1 --env <span class="nv">KAFKA_ADVERTISED_PORT</span><span class="o">=</span><span class="m">9092</span> --volume /etc/localtime:/etc/localtime wurstmeister/kafka 
+</code></pre></div><p>进入到kafka</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo docker <span class="nb">exec</span> -it kafka /bin/bash 
+</code></pre></div><p>进入到kafka默认目录</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /opt/kafka
+</code></pre></div><h4 id="下载">下载</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210323211846617.png"
+        data-srcset="http://cdn.cjpa.top/image-20210323211846617.png, http://cdn.cjpa.top/image-20210323211846617.png 1.5x, http://cdn.cjpa.top/image-20210323211846617.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210323211846617.png"
+        title="image-20210323211846617" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜  apps ls
+kafka_2.11-0.11.0.0.tgz
+➜  apps tar -zxvf kafka_2.11-0.11.0.0.tgz	<span class="c1"># 解压</span>
+➜  apps ls
+kafka_2.11-0.11.0.0     kafka_2.11-0.11.0.0.tgz
+➜  mv kafka_2.11-0.11.0.0 kafka <span class="c1"># 改名</span>
+<span class="nb">cd</span> kafka/config
+➜  config ll
+total <span class="m">128</span>
+-rw-r--r--@ <span class="m">1</span> cjp  staff   906B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-console-sink.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   909B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-console-source.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   5.7K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-distributed.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   883B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-file-sink.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   881B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-file-source.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   1.1K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-log4j.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   2.7K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> connect-standalone.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   1.2K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> consumer.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   4.6K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> log4j.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   1.9K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> producer.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   6.8K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> server.properties# 主要改这个
+-rw-r--r--@ <span class="m">1</span> cjp  staff   1.0K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> tools-log4j.properties
+-rw-r--r--@ <span class="m">1</span> cjp  staff   1.0K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> zookeeper.properties
+</code></pre></div><h4 id="配置文件">配置文件</h4>
+<p>server.properties</p>
+<pre><code class="language-properties" data-lang="properties"># broker的全局唯一编号，不能重复
+broker.id=0
+# 删除topic功能使能
+delete.topic.enable=true
+# 处理网络请求的线程数量
+num.network.threads=3
+# 用来处理磁盘io的线程数量
+num.io.threads=8
+# 发送套接字的缓冲区大小
+socket.send.buffer.bytes=102400
+# 接收套接字的缓冲区大小
+socket.receive.bffer.bytes=102400
+# 请求套接字的缓冲区大小
+socket.request.max.bytes=104857600
+# kafka里面暂存数据的目录，和日志的名字很像，但是不是日志
+log.dirs=/tmp/kafka-logs
+# topic在定钱broker上的分区个数
+num.partitions=1
+# 用来恢复和清理data下数据的线程数量
+num.recovery.threads.per.data.dir=1
+# 数据保存的时间,过期将被清除
+log.retention.hours=168
+# log文件的大小
+log.segment.bytes=1073741824
+# 配置连接zookeeper集群地址
+zookeeper.connect=localhost:2181
+</code></pre><h4 id="配置环境变量">配置环境变量</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ vim ./etc/profile
+<span class="c1"># KAFKA_HOME</span>
+<span class="nb">export</span> <span class="nv">KAFKA_HOME</span><span class="o">=</span>/Users/cjp/apps/kafka
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$KAFKA_HOME</span>/bin
+$ <span class="nb">source</span> /etc/profile
+</code></pre></div><h4 id="启动kafka">启动kafka</h4>
+<p>查看bin目录</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜  bin ll
+<span class="c1"># 这两个主要用在测试环境中，一般不怎么用</span>
+-rwxr-xr-x@  <span class="m">1</span> cjp  staff   945B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> kafka-console-consumer.sh	<span class="c1"># 控制台的消费者</span>
+-rwxr-xr-x@  <span class="m">1</span> cjp  staff   944B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> kafka-console-producer.sh	<span class="c1"># 控制台的生产者</span>
+-rwxr-xr-x@  <span class="m">1</span> cjp  staff   1.3K  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> kafka-server-start.sh	<span class="c1"># 开始</span>
+-rwxr-xr-x@  <span class="m">1</span> cjp  staff   975B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> kafka-server-stop.sh·	<span class="c1"># 停止</span>
+-rwxr-xr-x@  <span class="m">1</span> cjp  staff   863B  <span class="m">6</span> <span class="m">23</span>  <span class="m">2017</span> kafka-topics.sh	<span class="c1"># topic的增删改查 </span>
+</code></pre></div><p>执行命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-server-start.sh config/server.properties
+</code></pre></div><p>但是这样直接启动会有一个问题就是kafka会一直占用终端，还有一种方法就是把kafka设置为守护进程（仅在hadoop环境中有效）</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-server-start.sh -daemon config/server.properties
+</code></pre></div><p>hadoop启动脚本</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210324102848336.png"
+        data-srcset="http://cdn.cjpa.top/image-20210324102848336.png, http://cdn.cjpa.top/image-20210324102848336.png 1.5x, http://cdn.cjpa.top/image-20210324102848336.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210324102848336.png"
+        title="image-20210324102848336" /></p>
+<h3 id="kafka命令操作">kafka命令操作</h3>
+<p>1）查看当前服务器中所有的topic</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-topics.sh --zookeeper localhost:2181 --list
+</code></pre></div><p>2）创建topic</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor <span class="m">1</span> --partitions <span class="m">1</span> --topic first
+</code></pre></div><p>选项说明</p>
+<p>&ndash;topic 定义topic名</p>
+<p>&ndash;replication-factor 定义副本数(<strong>副本数不能超过集群的数量</strong>)</p>
+<p>&ndash;partitions 定义分区数</p>
+<p>3）删除topic</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic first
+</code></pre></div><p>需要server.properties中方设置delete.topic.enable=true否则只是标记删除</p>
+<p>4）发送消息</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜  kafka bin/kafka-console-producer.sh --broker-list localhost:9092 --topic first
+&gt;hello kafka, i am cjp, your master.
+</code></pre></div><p>5）消费消息</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic first
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic first
+</code></pre></div><ul>
+<li>
+<p>建议用&ndash;bootstrap-server代替&ndash;zookeeper</p>
+</li>
+<li>
+<p>用<strong>控制台</strong>这边比较特殊，要用&ndash;from-beginning</p>
+</li>
+</ul>
+<p>6）查看分区详情</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-topics.sh --zookeeper localhost:2181 --describe --topic first
+</code></pre></div><ol start="7">
+<li>修改分区数</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic first --partitions <span class="m">6</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kafka/">kafka</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/" class="prev" rel="prev" title="介绍一个数据库——DHFS"><i class="fas fa-angle-left fa-fw"></i>介绍一个数据库——DHFS</a>
+            <a href="/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/" class="next" rel="next" title="和普通的http相比gRPC有什么好处？">和普通的http相比gRPC有什么好处？<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

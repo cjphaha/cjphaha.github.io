@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Hello，flink - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Hello，flink" />
+<meta property="og:description" content="简介 Flink是一个框架和分布式处理引擎，用于对无界和有界数据流进行状态计算 是一个大数据的引擎，有状态的数据计算。 关键是数据流 为什么选择Fl" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/helloflink/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-03-20T01:33:13+08:00" />
+<meta property="article:modified_time" content="2021-03-20T01:33:13+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="Hello，flink"/>
+<meta name="twitter:description" content="简介 Flink是一个框架和分布式处理引擎，用于对无界和有界数据流进行状态计算 是一个大数据的引擎，有状态的数据计算。 关键是数据流 为什么选择Fl"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/helloflink/" /><link rel="prev" href="http://cjpa.top/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/" /><link rel="next" href="http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hello，flink",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/helloflink\/"
+        },"genre": "posts","keywords": "flink","wordcount":  3474 ,
+        "url": "http:\/\/cjpa.top\/posts\/helloflink\/","datePublished": "2021-03-20T01:33:13+08:00","dateModified": "2021-03-20T01:33:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Hello，flink</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"><i class="far fa-folder fa-fw"></i>大数据</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-20">2021-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3474 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#flink的应用">flink的应用</a></li>
+        <li><a href="#数据处理的结构">数据处理的结构</a></li>
+        <li><a href="#flink的特点">flink的特点</a></li>
+        <li><a href="#flink-vs-spark-streaming">flink vs spark streaming</a></li>
+        <li><a href="#简单操作">简单操作</a></li>
+        <li><a href="#部署">部署</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="简介">简介</h3>
+<blockquote>
+<p>Flink是一个<strong>框架</strong>和<strong>分布式</strong>处理引擎，用于对<strong>无界和有界数据流</strong>进行状态计算</p>
+</blockquote>
+<p>是一个大数据的引擎，有状态的数据计算。</p>
+<p>关键是数据流</p>
+<p><!-- raw HTML omitted --></p>
+<p>为什么选择Flink</p>
+<ul>
+<li>
+<p>流数据更真实的反映了我们的生活方式</p>
+<p>真实的情况是，数据是源源不断的，比如订单、弹幕、日志、用户行为、聊天信息等。</p>
+<p>但是如果要是来一条处理一条，对机器的性能要求会比较高，比较好的方法是让它攒一波再处理。</p>
+</li>
+<li>
+<p>传统的数据架构师基于有限数据集的</p>
+<p>spark streaming可以做这个事情，但是还是有一定的延迟（秒级）</p>
+<p>现在我们要做的是做到毫秒级，并且低延迟、高吞吐，这就是flink要做的。</p>
+</li>
+<li>
+<p>我们的目标</p>
+<ul>
+<li>
+<p>低延迟</p>
+</li>
+<li>
+<p>高吞吐</p>
+</li>
+<li>
+<p>结果的准确性和良好的容错性</p>
+<p>分布式系统在传输的过程中有可能会乱序，导致数据出现一些问题。</p>
+<p>容错性：有一个节点挂了之后，系统要能够会滚到一个比较近的状态</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="flink的应用">flink的应用</h3>
+<p>电商和市场营销</p>
+<p>​	数据报表、广告投放、业务流程需要</p>
+<p>物联网</p>
+<p>​	传感器实时数据采集和显示、实时报警、交通运输业</p>
+<p>电信业</p>
+<p>​	基站流量调配</p>
+<p>银行和金融业</p>
+<p>​	实时结算和通知推送，实时检测异常行为</p>
+<p>数据特别大的时候计算起来会很慢，用hive，sql语句甚至可能达到几个小时那么多</p>
+<p>我们可以变通一下，只要来一个数据，我们就把数据算一下。</p>
+<h3 id="数据处理的结构">数据处理的结构</h3>
+<h4 id="传统的数据处理架构">传统的数据处理架构</h4>
+<p><!-- raw HTML omitted --></p>
+<p>所有发过来的数据都是一个事件</p>
+<p>优点</p>
+<ul>
+<li>实时性很好</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>就是并发性太差了</li>
+</ul>
+<p>数据越来越多的时候该怎么办？</p>
+<h4 id="分析处理">分析处理</h4>
+<p><!-- raw HTML omitted --></p>
+<p>数据显暂时放在业务数据库里面，需要数据的时候先ETL数据清洗，然后再放在数据仓库里面，然后再响应</p>
+<p>优点</p>
+<ul>
+<li>不用做联表查询</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>实时性没有那么好</li>
+</ul>
+<h4 id="有状态的流式处理">有状态的流式处理</h4>
+<p><!-- raw HTML omitted --></p>
+<p>直接把数据放在本地内存中，用本地内存的状态，代替了表，在高并发的时候可以做集群。</p>
+<p>如果想要保持数据持久化，设置一个周期检查点（CheckPoint），定期缓存。</p>
+<p>缺点</p>
+<ul>
+<li>分布式情况下，因为网络的原因，数据的顺序就有了一些问题</li>
+</ul>
+<h4 id="第二代流处理">第二代流处理</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210308011228616.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210308011228616.png, http://cdn.cjpa.top/cdnimages/image-20210308011228616.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210308011228616.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210308011228616.png"
+        title="image-20210308011228616" /></p>
+<p>lambda架构</p>
+<p>用两套系统（流处理、批处理），同时保证低延迟和结果准确</p>
+<p>流处理保证速度，把处理结果放在结果表中，同时数据也做一个批处理，最后把batch和speed表结合，得到结果。</p>
+<p>用户看到的结果是很快的有一个数据的结果（不准确），隔一段时间之后，再获取精确的结果</p>
+<p>缺点</p>
+<ul>
+<li>需要维护两套系统</li>
+<li>两个表算的不一样，实际开发的话会很麻烦</li>
+</ul>
+<p><strong>流处理低延迟，但是结果不是很准确，批处理结果稳定，延迟比较少</strong></p>
+<h4 id="第三代流处理">第三代流处理</h4>
+<p>Flink</p>
+<p><!-- raw HTML omitted --></p>
+<h3 id="flink的特点">flink的特点</h3>
+<ul>
+<li>事件驱动</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210317153712907.png"
+        data-srcset="http://cdn.cjpa.top/image-20210317153712907.png, http://cdn.cjpa.top/image-20210317153712907.png 1.5x, http://cdn.cjpa.top/image-20210317153712907.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210317153712907.png"
+        title="image-20210317153712907" /></p>
+<p>要有一个程序一直运行着，监听数据的到来。</p>
+<ul>
+<li>
+<p>基于流的世界观</p>
+<p>在flink的世界观中，一切都是流组成的，离线数据是有界的流</p>
+<p>实时数据是一个没有界限的流，这就是所谓的有界流和无界流</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210317154249733.png"
+        data-srcset="http://cdn.cjpa.top/image-20210317154249733.png, http://cdn.cjpa.top/image-20210317154249733.png 1.5x, http://cdn.cjpa.top/image-20210317154249733.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210317154249733.png"
+        title="image-20210317154249733" /></p>
+</li>
+<li>
+<p>分层api</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210317154319489.png"
+        data-srcset="http://cdn.cjpa.top/image-20210317154319489.png, http://cdn.cjpa.top/image-20210317154319489.png 1.5x, http://cdn.cjpa.top/image-20210317154319489.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210317154319489.png"
+        title="image-20210317154319489" /></p>
+<ul>
+<li>越往上越抽象，表达含义越简明，使用越方便</li>
+<li>越底层越具体，表达能力越丰富，使用越灵活</li>
+</ul>
+</li>
+</ul>
+<p>SQL和Table API还在丰富和发展过程中，阿里的blink做的还挺强。data stream api层用的最多，批处理用的是data set api</p>
+<p>如果data stream还不够用的话，可以用processFunction api来处理。</p>
+<ul>
+<li>精确一次（exactly-once）的状态一致性保证</li>
+<li>低延迟，每秒处理百万个事件，毫秒级延迟</li>
+<li>与众多常用的存储系统的连接</li>
+<li>高可用，动态沱镇，实现7*24小时全天候运行</li>
+</ul>
+<h3 id="flink-vs-spark-streaming">flink vs spark streaming</h3>
+<h4 id="流stream和微批micro-batching">流（stream）和微批（micro-batching）</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210317155127194.png"
+        data-srcset="http://cdn.cjpa.top/image-20210317155127194.png, http://cdn.cjpa.top/image-20210317155127194.png 1.5x, http://cdn.cjpa.top/image-20210317155127194.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210317155127194.png"
+        title="image-20210317155127194" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210317155135753.png"
+        data-srcset="http://cdn.cjpa.top/image-20210317155135753.png, http://cdn.cjpa.top/image-20210317155135753.png 1.5x, http://cdn.cjpa.top/image-20210317155135753.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210317155135753.png"
+        title="image-20210317155135753" /></p>
+<h4 id="数据模型">数据模型</h4>
+<ul>
+<li>spark采用RDD模型，spark streaming的DStream实际上也就是一组组小批数据RDD的集合</li>
+<li>flink基本数据模型是数据流，以及事件（Event）序列</li>
+</ul>
+<h4 id="运行时架构">运行时架构</h4>
+<ul>
+<li>spark是批计算，将DAG划分为不同的stage，一个完成后才可以计算下一个</li>
+<li>flink是标准的流执行模式，一个事件在一个节点处理完后可以直接法网下一个节点进行处理</li>
+</ul>
+<h3 id="简单操作">简单操作</h3>
+<p>scale版 配置maven依赖</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;groupId&gt;</span>org.example<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>flink-learning-01<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>flink-scala_2.12<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.10.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>flink-streaming-scala_2.12<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.10.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+    <span class="nt">&lt;build&gt;</span>
+        <span class="nt">&lt;plugins&gt;</span>
+            <span class="c">&lt;!-- 主要做编译--&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>net.alchim31.maven<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>scala-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>4.4.0<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;executions&gt;</span>
+                    <span class="nt">&lt;execution&gt;</span>
+                        <span class="c">&lt;!-- 声明绑定到maven的compile阶段 --&gt;</span>
+                        <span class="nt">&lt;goals&gt;</span>
+                            <span class="nt">&lt;goal&gt;</span>compile<span class="nt">&lt;/goal&gt;</span>
+                        <span class="nt">&lt;/goals&gt;</span>
+                    <span class="nt">&lt;/execution&gt;</span>
+                <span class="nt">&lt;/executions&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+            <span class="c">&lt;!-- 用来打包的 --&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>3.3.0<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;configuration&gt;</span>
+<span class="c">&lt;!--                    后缀，表示把依赖都打进去 --&gt;</span>
+                    <span class="nt">&lt;descriptorRefs&gt;</span>
+                        <span class="nt">&lt;descriptorRef&gt;</span>jar-width-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+                    <span class="nt">&lt;/descriptorRefs&gt;</span>
+                <span class="nt">&lt;/configuration&gt;</span>
+                <span class="nt">&lt;executions&gt;</span>
+                    <span class="nt">&lt;execution&gt;</span>
+                        <span class="nt">&lt;id&gt;</span>make-assembly<span class="nt">&lt;/id&gt;</span>
+                        <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+                        <span class="nt">&lt;goals&gt;</span>
+                            <span class="nt">&lt;goal&gt;</span>single<span class="nt">&lt;/goal&gt;</span>
+                        <span class="nt">&lt;/goals&gt;</span>
+                    <span class="nt">&lt;/execution&gt;</span>
+                <span class="nt">&lt;/executions&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;/plugins&gt;</span>
+    <span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div><p>java版依赖</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;groupId&gt;</span>org.example<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>flink-learning-01<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>flink-java<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.10.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>flink-streaming-java_2.12<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.10.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div><h4 id="批处理">批处理</h4>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 批处理
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WordCount</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="c1">// 创建执行环境
+</span><span class="c1"></span>        <span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="c1">// 从文件中读取数据
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">inputPath</span> <span class="o">=</span> <span class="s">&#34;/Users/cjp/bilibili-workspace/flink-learning-01/src/main/resources/hello.txt&#34;</span><span class="o">;</span>
+        <span class="n">DataSource</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">inputDataSet</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">readTextFile</span><span class="o">(</span><span class="n">inputPath</span><span class="o">);</span>
+        <span class="c1">// 对数据集进行处理，按照空格分词展开，转换成（word，1）二元组进行统计
+</span><span class="c1"></span>        <span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">resultSet</span> <span class="o">=</span> <span class="n">inputDataSet</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="n">MyflatMapper</span><span class="o">()).</span><span class="na">groupBy</span><span class="o">(</span><span class="n">0</span><span class="o">)</span> <span class="c1">// 按照第一个位置的word分组
+</span><span class="c1"></span>        <span class="o">.</span><span class="na">sum</span><span class="o">(</span><span class="n">1</span><span class="o">);</span><span class="c1">// 将第二个位置上的数据求和
+</span><span class="c1"></span>        <span class="n">resultSet</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 自定义类，实现flatMapFunction接口
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyflatMapper</span> <span class="kd">implements</span> <span class="n">FlatMapFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flatMap</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+            <span class="c1">// 按空格分词
+</span><span class="c1"></span>            <span class="n">String</span><span class="o">[]</span> <span class="n">words</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&#34; &#34;</span><span class="o">);</span>
+            <span class="c1">// 遍历所有word，包成二元组输出
+</span><span class="c1"></span>            <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">word</span><span class="o">:</span><span class="n">words</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">out</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple2</span><span class="o">&lt;&gt;(</span><span class="n">word</span><span class="o">,</span> <span class="n">1</span><span class="o">));</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>流处理</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamWordCount</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+        <span class="c1">// 创建流处理执行环境
+</span><span class="c1"></span>        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="c1">// 设置执行线程
+</span><span class="c1"></span>        <span class="cm">/*
+</span><span class="cm">        前面的标记就是线程数
+</span><span class="cm">        2&gt; (javascript,1)
+</span><span class="cm">        1&gt; (hello,1)
+</span><span class="cm">        2&gt; (vue,1)
+</span><span class="cm">        3&gt; (golang,1)
+</span><span class="cm">        1&gt; (hello,2)
+</span><span class="cm">        1&gt; (hello,3)
+</span><span class="cm">        1&gt; (java,1)
+</span><span class="cm">        1&gt; (hello,4)
+</span><span class="cm">         */</span>
+        <span class="n">env</span><span class="o">.</span><span class="na">setParallelism</span><span class="o">(</span><span class="n">3</span><span class="o">);</span>
+
+
+        <span class="c1">// 从文件中读取数据
+</span><span class="c1">//        String inputPath = &#34;/Users/cjp/bilibili-workspace/flink-learning-01/src/main/resources/hello.txt&#34;;
+</span><span class="c1">//        DataStream&lt;String&gt; inputDataStream = env.readTextFile(inputPath);
+</span><span class="c1"></span>
+        <span class="c1">// 用parameter tool工具从程序启动参数中提取配置项
+</span><span class="c1"></span>        <span class="n">ParameterTool</span> <span class="n">parameterTool</span> <span class="o">=</span> <span class="n">ParameterTool</span><span class="o">.</span><span class="na">fromArgs</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">host</span> <span class="o">=</span> <span class="n">parameterTool</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;host&#34;</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="n">parameterTool</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&#34;port&#34;</span><span class="o">);</span>
+        <span class="c1">// 从socket文本流读取数据
+</span><span class="c1"></span>        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">inputDataStream</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">socketTextStream</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+
+        <span class="c1">// 基于数据流进行转换计算
+</span><span class="c1"></span>        <span class="n">SingleOutputStreamOperator</span> <span class="n">resultStream</span> <span class="o">=</span> <span class="n">inputDataStream</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="n">WordCount</span><span class="o">.</span><span class="na">MyflatMapper</span><span class="o">())</span>
+                <span class="c1">// 按照当前key的hash code进行重分区
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">keyBy</span><span class="o">(</span><span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">sum</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="n">resultStream</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+
+        <span class="c1">// 执行任务
+</span><span class="c1"></span>        <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><p>设置启动参数</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210326163835212.png"
+        data-srcset="http://cdn.cjpa.top/image-20210326163835212.png, http://cdn.cjpa.top/image-20210326163835212.png 1.5x, http://cdn.cjpa.top/image-20210326163835212.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210326163835212.png"
+        title="image-20210326163835212" /></p>
+<p>控制台开启7777端口，模拟业务中不断的发送数据</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜  flink-learning-01 nc -lk <span class="m">7777</span>
+hello
+你好，我叫陈家鹏 哈哈
+这是一个linux的端口 可以用来发送数据
+</code></pre></div><p>控制台输出如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">1&gt; <span class="o">(</span>这是一个linux的端�端口,1<span class="o">)</span>
+3&gt; <span class="o">(</span>可以用来发送数据,1<span class="o">)</span>
+</code></pre></div><h3 id="部署">部署</h3>
+<h4 id="standalone模式">Standalone模式</h4>
+<blockquote>
+<p>不依赖于其他的工具，可以自己单独部署</p>
+</blockquote>
+<h5 id="安装">安装</h5>
+<p>解压缩flink-1.10.1-bin-scala_2.12.tgz（http://archive.apache.org/dist/flink/flink-1.10.1/flink-1.10.1-bin-scala_2.12.tgz），进入到conf目录中</p>
+<p>Bin</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">├── bash-java-utils.jar
+├── config.sh
+├── find-flink-home.sh
+├── flink	<span class="c1"># 最重要的命令，如果想要在集群上提交一个作业，停止，取消，都可以用flink命令</span>
+├── flink-console.sh
+├── flink-daemon.sh
+├── historyserver.sh
+├── jobmanager.sh	<span class="c1"># 管理作业，比较核心</span>
+├── kubernetes-entry.sh
+├── kubernetes-session.sh
+├── mesos-appmaster-job.sh
+├── mesos-appmaster.sh
+├── mesos-taskmanager.sh
+├── pyflink-gateway-server.sh
+├── pyflink-shell.sh
+├── sql-client.sh
+├── standalone-job.sh
+├── start-cluster.sh	<span class="c1"># 启动集群</span>
+├── start-scala-shell.sh
+├── start-zookeeper-quorum.sh
+├── stop-cluster.sh	<span class="c1"># 停止集群</span>
+├── stop-zookeeper-quorum.sh
+├── taskmanager.sh
+├── yarn-session.sh
+└── zookeeper.sh
+</code></pre></div><p>conf</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">.
+├── flink-conf.yaml
+├── log4j-cli.properties
+├── log4j-console.properties
+├── log4j-yarn-session.properties
+├── log4j.properties
+├── logback-console.xml
+├── logback-yarn.xml
+├── logback.xml
+├── masters
+├── slaves
+├── sql-client-defaults.yaml
+└── zoo.cfg
+</code></pre></div><p>1）修改flink/conf/flink-conf.yaml文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">jobmanager.heap.size: 1024m	<span class="c1"># job manager的堆内存大小（因为jobmanager运行在jvm上面）</span>
+taskmanager.memory.process.size: 1728m	<span class="c1"># 当前taskmanager整个内存的内存的总大小</span>
+<span class="c1"># taskmanager既有堆内存也有堆外内存，flink是有状态的流式计算，这些状态是放在内存中的</span>
+taskmanager.numberOfTaskSlots: 1# 不同的插槽，不同的slot上可以运行不同的线程
+parallelism.default: 1	<span class="c1"># 默认并行度，默认用一个线程执行</span>
+<span class="c1"># numberOfTaskSlots和parallelism的区别，</span>
+<span class="c1"># numberOfTaskSlots是表示最大的能力，并且是针对一个taskmanager</span>
+<span class="c1"># parallelism是实际跑多少个，针对总体</span>
+</code></pre></div><p>2）cat masters</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 提交job的入口，jobmanager地址</span>
+localhost:8081
+</code></pre></div><p>3）cat slaves</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># taskmanager地址</span>
+localhost
+</code></pre></div><p>4）运行</p>
+<p>切到bin</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">./start-cluster.sh
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210326202414119.png"
+        data-srcset="http://cdn.cjpa.top/image-20210326202414119.png, http://cdn.cjpa.top/image-20210326202414119.png 1.5x, http://cdn.cjpa.top/image-20210326202414119.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210326202414119.png"
+        title="image-20210326202414119" /></p>
+<p>available和配置文件中的taskmanager.numberOfTaskSlots: 1一致</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210326202549097.png"
+        data-srcset="http://cdn.cjpa.top/image-20210326202549097.png, http://cdn.cjpa.top/image-20210326202549097.png 1.5x, http://cdn.cjpa.top/image-20210326202549097.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210326202549097.png"
+        title="image-20210326202549097" /></p>
+<h5 id="命令提交job">命令提交job</h5>
+<p>1）提交</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">./bin/flink run -c com.atguigu.ec.StreamWordCount -p <span class="m">3</span> /Users/cjp/bilibili-workspace/flink-learning-01/target/flink-learning-01-1.0-SNAPSHOT.jar --host localhost --port <span class="m">7777</span>
+<span class="c1"># c 启动类</span>
+<span class="c1"># p 并行度</span>
+<span class="c1"># 后面的就是启动参数</span>
+</code></pre></div><p>2）查看所有job</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">./bin/flink list
+</code></pre></div><p>3）取消</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">./bin/flink cancel job_id
+</code></pre></div><h4 id="k8s和yarn部署">k8s和yarn部署</h4>
+<h5 id="yarn">yarn</h5>
+<p>yarn有两种模式，分别为Session-Cluster和Per-Job-Cluster两种模式</p>
+<ul>
+<li>Session-Cluster</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210327195340690.png"
+        data-srcset="http://cdn.cjpa.top/image-20210327195340690.png, http://cdn.cjpa.top/image-20210327195340690.png 1.5x, http://cdn.cjpa.top/image-20210327195340690.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210327195340690.png"
+        title="image-20210327195340690" /></p>
+<p>Session-Cluster模式需要先启动集群，然后提交作业，接着会想yarn申请一块空尽之后，资源永远保持不变，如果资源满了，下一个作业就无法提交，只能等到yarn中的启动一个作业执行完之后，释放了资源，下一个作业才会正常提交。</p>
+<p>所有的作业共享Dispather和ResourceManager共享资源，适合规模小，执行时间短的作业</p>
+<p><strong>在yarn中初始化一个flink集群，开辟指定的资源，以后提交任务都会向这里提交，这个flink集群会常驻在yarn集群中，除非手工停止。</strong></p>
+<ul>
+<li>Per-Job-Cluster</li>
+</ul>
+<p>一个job会对应一个集群，每提交一个作业会根据自身的情况，都会单独向yarn申请资源，知道作业执行完成，一个作业的失败与否，并不会影响下一个作业的正常提交和运行，独享Dispatcher和ResourceManager，按需接受资源申请，适合规模大长时间运行的作业</p>
+<p><strong>每次提交都会创建一个新的flink集群，任务之间相互独立，互不影响，方便管理。任务执行完成之后创建的集群也会消失</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-20</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/flink/">flink</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/" class="prev" rel="prev" title="Hive——非常牛的一个数仓工具"><i class="fas fa-angle-left fa-fw"></i>Hive——非常牛的一个数仓工具</a>
+            <a href="/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/" class="next" rel="next" title="介绍一个数据库——DHFS">介绍一个数据库——DHFS<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

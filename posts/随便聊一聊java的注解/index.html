@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>随便聊一聊java的注解 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="随便聊一聊java的注解" />
+<meta property="og:description" content="java注解 Annotation 1、编译器注解 不会被编译到.class文件，在编译之后就被编译器扔掉了 @Override：让编译器检查该方法是否正确的实现了覆" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-05-10T01:53:18+08:00" />
+<meta property="article:modified_time" content="2021-05-10T01:53:18+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="随便聊一聊java的注解"/>
+<meta name="twitter:description" content="java注解 Annotation 1、编译器注解 不会被编译到.class文件，在编译之后就被编译器扔掉了 @Override：让编译器检查该方法是否正确的实现了覆"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/" /><link rel="prev" href="http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/" /><link rel="next" href="http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "随便聊一聊java的注解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3\/"
+        },"genre": "posts","keywords": "Java","wordcount":  665 ,
+        "url": "http:\/\/cjpa.top\/posts\/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3\/","datePublished": "2021-05-10T01:53:18+08:00","dateModified": "2021-05-10T01:53:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">随便聊一聊java的注解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AF%AD%E8%A8%80/"><i class="far fa-folder fa-fw"></i>语言</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 665 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#二定义注解">二、定义注解</a>
+      <ul>
+        <li><a href="#元注解">元注解</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="java注解">java注解</h1>
+<blockquote>
+<p>Annotation</p>
+</blockquote>
+<h4 id="1编译器注解">1、编译器注解</h4>
+<blockquote>
+<p>不会被编译到.class文件，在编译之后就被编译器扔掉了</p>
+</blockquote>
+<p>@Override：让编译器检查该方法是否正确的实现了覆写</p>
+<p>@SuppressWarnings：告诉编译器忽略此处代码产生的警告</p>
+<h4 id="2处理class文件使用的注解">2、处理.class文件使用的注解</h4>
+<blockquote>
+<p>会被编译进入到.class文件，但是加载结束之后并不会存在于内存中，这些注解只被一些底层库使用，一般不需要开发者来处理</p>
+</blockquote>
+<h4 id="3程序运行期间可以读取的注解">3、程序运行期间可以读取的注解</h4>
+<blockquote>
+<p>加载后一直存在于JVM中。</p>
+</blockquote>
+<p>定义一个注解的时候，一般包含一下参数</p>
+<ul>
+<li>
+<p>所有基本类型</p>
+</li>
+<li>
+<p>String</p>
+</li>
+<li>
+<p>枚举类型</p>
+</li>
+<li>
+<p>基本类型、String、class以及枚举的数组</p>
+</li>
+</ul>
+<h2 id="二定义注解">二、定义注解</h2>
+<p>java使用@interface语法来定义注解Annotation</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Report</span><span class="o">{</span>
+  <span class="kt">int</span> <span class="nf">type</span><span class="o">()</span> <span class="k">default</span> <span class="n">0</span><span class="o">;</span>
+  <span class="n">String</span> <span class="nf">level</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;info&#34;</span><span class="o">;</span>
+  <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><p>default就是设定默认值的作用</p>
+<h3 id="元注解">元注解</h3>
+<p>用A注解来修饰B注解，A就是元注解，java中定义毫克一些元注解，我们直接用就行了</p>
+<p>例如：</p>
+<p>@Target可以定义其他的注解可以被应用于源码的那些位置</p>
+<ul>
+<li>类或接口：<code>ElementType.TYPE</code>；</li>
+<li>字段：<code>ElementType.FIELD</code>；</li>
+<li>方法：<code>ElementType.METHOD</code>；</li>
+<li>构造方法：<code>ElementType.CONSTRUCTOR</code>；</li>
+<li>方法参数：<code>ElementType.PARAMETER</code>。</li>
+</ul>
+<p>@Retention定义生命周期</p>
+<ul>
+<li>仅编译期：<code>RetentionPolicy.SOURCE</code>；在编译之后被丢掉</li>
+<li>仅class文件：<code>RetentionPolicy.CLASS</code>；只保存到class文件中。并不会被加载进JVM</li>
+<li>运行期：<code>RetentionPolicy.RUNTIME</code>。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-05-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/java/">Java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20210502%E6%97%A5%E8%AE%B0/" class="prev" rel="prev" title="20210502日记"><i class="fas fa-angle-left fa-fw"></i>20210502日记</a>
+            <a href="/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/" class="next" rel="next" title="用uniapp打包出一个跨端app！">用uniapp打包出一个跨端app！<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

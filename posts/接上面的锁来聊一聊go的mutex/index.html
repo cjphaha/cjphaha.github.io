@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>接上面的锁来聊一聊go的mutex - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="接上面的锁来聊一聊go的mutex" />
+<meta property="og:description" content="Golang mutex mutex的由来Mutual exclusion（互斥）的前缀组合，俗称互斥体/互斥锁 mutex的数据结构 因为足够简单，因此不需要额外初始" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-05-17T06:00:12+08:00" />
+<meta property="article:modified_time" content="2021-05-17T06:00:12+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="接上面的锁来聊一聊go的mutex"/>
+<meta name="twitter:description" content="Golang mutex mutex的由来Mutual exclusion（互斥）的前缀组合，俗称互斥体/互斥锁 mutex的数据结构 因为足够简单，因此不需要额外初始"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/" /><link rel="prev" href="http://cjpa.top/posts/%E5%90%84%E7%A7%8D%E9%94%81.../" /><link rel="next" href="http://cjpa.top/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "接上面的锁来聊一聊go的mutex",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex\/"
+        },"genre": "posts","keywords": "Daily","wordcount":  1447 ,
+        "url": "http:\/\/cjpa.top\/posts\/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex\/","datePublished": "2021-05-17T06:00:12+08:00","dateModified": "2021-05-17T06:00:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">接上面的锁来聊一聊go的mutex</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AC%94%E8%AE%B0/"><i class="far fa-folder fa-fw"></i>笔记</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-17">2021-05-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1447 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mutex的数据结构">mutex的数据结构</a></li>
+    <li><a href="#mutex的两种模式">mutex的两种模式</a>
+      <ul>
+        <li><a href="#正常模式">正常模式</a></li>
+        <li><a href="#饥饿模式">饥饿模式</a></li>
+        <li><a href="#饥饿模式转换为正常模式">饥饿模式转换为正常模式</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#lock和unlock的逻辑">lock和unlock的逻辑</a>
+      <ul>
+        <li><a href="#lock">lock</a></li>
+        <li><a href="#unlock">unlock</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="golang-mutex">Golang mutex</h1>
+<blockquote>
+<p>mutex的由来<strong>Mut</strong>ual <strong>ex</strong>clusion（互斥）的前缀组合，俗称互斥体/互斥锁</p>
+</blockquote>
+<h2 id="mutex的数据结构">mutex的数据结构</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406134531905.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406134531905.png, http://cdn.cjpa.top/image-20210406134531905.png 1.5x, http://cdn.cjpa.top/image-20210406134531905.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406134531905.png"
+        title="image-20210406134531905" /></p>
+<p>因为足够简单，因此不需要额外初始化，这个结构体的零值就是一个有效的互斥锁，处于unlocked状态。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406134657389.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406134657389.png, http://cdn.cjpa.top/image-20210406134657389.png 1.5x, http://cdn.cjpa.top/image-20210406134657389.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406134657389.png"
+        title="image-20210406134657389" /></p>
+<p>state存储互斥锁的状态，加锁和解锁都是通过atomic包提供的函数原子性操作该字段</p>
+<p>sema用作信号量，主要用做等待队列。</p>
+<h2 id="mutex的两种模式">mutex的两种模式</h2>
+<h3 id="正常模式">正常模式</h3>
+<p>在正常情况下，尝试加锁的goroutine会先自旋，通过原子操作获得锁。</p>
+<p>如果几次自旋之后仍然获取不到锁，则通过信号量等待</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406140621310.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406140621310.png, http://cdn.cjpa.top/image-20210406140621310.png 1.5x, http://cdn.cjpa.top/image-20210406140621310.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406140621310.png"
+        title="image-20210406140621310" /></p>
+<p>所有的等待者都会按照先入先出的顺序排队等待</p>
+<p>当锁被释放，第一个等待者并不会直接拥有锁，而是会和那些处于自旋状态，尚未排队等待的goroutine，这种情况下，正在自旋的goroutine更有优势，原因如下：</p>
+<ul>
+<li>处于自旋状态的goroutine本身就正在cpu上面运行</li>
+<li>自旋的goroutine有很多个而被唤醒的只有一个，因此被唤醒的goroutine很大概率上拿不到锁</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406141349526.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406141349526.png, http://cdn.cjpa.top/image-20210406141349526.png 1.5x, http://cdn.cjpa.top/image-20210406141349526.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406141349526.png"
+        title="image-20210406141349526" /></p>
+<p>这种情况下这个goroutine会被重新插入到队列的头部，而不是尾部。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406141545062.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406141545062.png, http://cdn.cjpa.top/image-20210406141545062.png 1.5x, http://cdn.cjpa.top/image-20210406141545062.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406141545062.png"
+        title="image-20210406141545062" /></p>
+<h3 id="饥饿模式">饥饿模式</h3>
+<p>当一个goroutine本次加锁等待时间超过了<strong>1ms</strong>之后，它会把当前的Mutex从正常模式转化为饥饿模式，在饥饿模式下，mutex的所有权，从执行Unlock的goroutine转换到等待队列头部的Goroutine，后来者也不会自旋，也不会尝试获取锁，会直接到等待队列的尾部。</p>
+<h3 id="饥饿模式转换为正常模式">饥饿模式转换为正常模式</h3>
+<p>当一个等待着获得锁之后，它会在以下两种情况时将mutex从饥饿模式切换为正常模式</p>
+<ul>
+<li>它的等待时间小于1ms</li>
+<li>它是最后一个等待着</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>正常模式，自旋和排队是同时存在的。</p>
+<ul>
+<li>优点</li>
+</ul>
+<p>这样可以保证良好的吞吐量，因为频繁的挂起、唤醒goroutine会带来较多的开销，但是又不能无限制的自旋，要把自旋控制在一个较小的范围。</p>
+<ul>
+<li>缺点</li>
+</ul>
+<p>可能会出现队列尾端的goroutine迟迟抢不到锁（尾端延迟的情况）</p>
+<p>饥饿模式下，不再自旋尝试，所有goroutine统统都要排队</p>
+<ul>
+<li>优点</li>
+</ul>
+<p>可以减少尾端延迟</p>
+<ul>
+<li>缺点</li>
+</ul>
+<p>牺牲了吞吐性</p>
+<h2 id="lock和unlock的逻辑">lock和unlock的逻辑</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406142856743.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406142856743.png, http://cdn.cjpa.top/image-20210406142856743.png 1.5x, http://cdn.cjpa.top/image-20210406142856743.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406142856743.png"
+        title="image-20210406142856743" /></p>
+<p>state的类型时int32</p>
+<p>第一位用作锁状态标识，置为1，表示已加锁，对应掩码常量位mutexLocked</p>
+<p>第二位标记是否已经唤醒了，置为1，表示已经唤醒，对应掩码常量为mutexWoken</p>
+<p>第三位标记mutex的工作模式，置为1，表示饥饿模式，对应掩码常量为mutextStaring</p>
+<p>mutexWaiterShift=3，表示除了最低三位意外，state的其他位用来记录有多少个等待者在排队</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406143446521.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406143446521.png, http://cdn.cjpa.top/image-20210406143446521.png 1.5x, http://cdn.cjpa.top/image-20210406143446521.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406143446521.png"
+        title="image-20210406143446521" /></p>
+<p>lock和unlock方法</p>
+<p>下面是精简掉了注释和race检测相关的代码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406143528779.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406143528779.png, http://cdn.cjpa.top/image-20210406143528779.png 1.5x, http://cdn.cjpa.top/image-20210406143528779.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406143528779.png"
+        title="image-20210406143528779" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406143533747.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406143533747.png, http://cdn.cjpa.top/image-20210406143533747.png 1.5x, http://cdn.cjpa.top/image-20210406143533747.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406143533747.png"
+        title="image-20210406143533747" /></p>
+<p>两个方法中主要通过atomic函数实现了fast path，相应的slowpath被单独放在了lockslow和unlockSlow方法中</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406143703750.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406143703750.png, http://cdn.cjpa.top/image-20210406143703750.png 1.5x, http://cdn.cjpa.top/image-20210406143703750.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406143703750.png"
+        title="image-20210406143703750" /></p>
+<blockquote>
+<p>源码注视中说：这样是为了便于编译器对内联fastpath进行优化</p>
+</blockquote>
+<h3 id="lock">lock</h3>
+<p>lock方法的fastpath希望mutwx处于unlocked状态，没有goroutine在排队，更不会饥饿</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406144235986.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406144235986.png, http://cdn.cjpa.top/image-20210406144235986.png 1.5x, http://cdn.cjpa.top/image-20210406144235986.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406144235986.png"
+        title="image-20210406144235986" /></p>
+<p>理想状态下一个cas操作就可以获取锁</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406144246030.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406144246030.png, http://cdn.cjpa.top/image-20210406144246030.png 1.5x, http://cdn.cjpa.top/image-20210406144246030.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406144246030.png"
+        title="image-20210406144246030" /></p>
+<p>如果一个cas操作没有获取锁，就需要执行lockslow方法</p>
+<h3 id="unlock">unlock</h3>
+<p>unlock方法类似，需要用原子操作从mutex.state中减去mutexLocked（释放锁）</p>
+<p>然后根据state的新值，来判断是否需要执行slowpath</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406144515453.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406144515453.png, http://cdn.cjpa.top/image-20210406144515453.png 1.5x, http://cdn.cjpa.top/image-20210406144515453.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406144515453.png"
+        title="image-20210406144515453" /></p>
+<p>如果新值为0，也就代表没有giroutine在排队，也就不需要执行其他操作，如果新值为0，就执行unlockslow，看看是不是需要唤醒某个giroutine</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/image-20210406150451189.png"
+        data-srcset="http://cdn.cjpa.top/image-20210406150451189.png, http://cdn.cjpa.top/image-20210406150451189.png 1.5x, http://cdn.cjpa.top/image-20210406150451189.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/image-20210406150451189.png"
+        title="image-20210406150451189" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-05-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/daily/">Daily</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%90%84%E7%A7%8D%E9%94%81.../" class="prev" rel="prev" title="各种锁.."><i class="fas fa-angle-left fa-fw"></i>各种锁..</a>
+            <a href="/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/" class="next" rel="next" title="研究一下go语言的gc原理">研究一下go语言的gc原理<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

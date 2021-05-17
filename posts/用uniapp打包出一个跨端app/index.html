@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>用uniapp打包出一个跨端app！ - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="用uniapp打包出一个跨端app！" />
+<meta property="og:description" content="使用uniapp在macOS 10.15.6上打包安卓离线App 创建之后目录如下所示： 在hubilder离线sdk里面找到sdk/libs文件" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/" />
+<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="article:published_time" content="2021-05-11T01:56:13+08:00" />
+<meta property="article:modified_time" content="2021-05-11T01:56:13+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+
+<meta name="twitter:title" content="用uniapp打包出一个跨端app！"/>
+<meta name="twitter:description" content="使用uniapp在macOS 10.15.6上打包安卓离线App 创建之后目录如下所示： 在hubilder离线sdk里面找到sdk/libs文件"/>
+<meta name="application-name" content="氕氘氚">
+<meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/" /><link rel="prev" href="http://cjpa.top/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/" /><link rel="next" href="http://cjpa.top/posts/%E5%90%84%E7%A7%8D%E9%94%81.../" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "用uniapp打包出一个跨端app！",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/cjpa.top\/posts\/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp\/"
+        },"genre": "posts","keywords": "uniapp","wordcount":  484 ,
+        "url": "http:\/\/cjpa.top\/posts\/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp\/","datePublished": "2021-05-11T01:56:13+08:00","dateModified": "2021-05-11T01:56:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": "氕氘氚"},"author": {
+                "@type": "Person",
+                "name": "氕氘氚"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/index.html"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="氕氘氚"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" />氕氘氚的博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/index.html" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">用uniapp打包出一个跨端app！</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"><i class="far fa-folder fa-fw"></i>移动端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-11">2021-05-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 484 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>使用uniapp在macOS 10.15.6上打包安卓离线App</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116130501880.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116130501880.png, http://cdn.cjpa.top/cdnimages/image-20210116130501880.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116130501880.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116130501880.png"
+        title="image-20210116130501880" /></p>
+<p>创建之后目录如下所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116131343894.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116131343894.png, http://cdn.cjpa.top/cdnimages/image-20210116131343894.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116131343894.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116131343894.png"
+        title="image-20210116131343894" /></p>
+<p>在hubilder离线sdk里面找到sdk/libs文件夹</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116131837447.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116131837447.png, http://cdn.cjpa.top/cdnimages/image-20210116131837447.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116131837447.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116131837447.png"
+        title="image-20210116131837447" /></p>
+<p>将lib.5plus.base-release.aar、android-gif-drawable-release@1.2.17.aar、uniapp-release.aar和miit_mdid_1.0.10.aar（HBuilderX2.8.1之后更新到msa_mdid_1.0.13.aar）拷贝到libs目录下</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116131900943.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116131900943.png, http://cdn.cjpa.top/cdnimages/image-20210116131900943.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116131900943.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116131900943.png"
+        title="image-20210116131900943" /></p>
+<p>在build.gradle里面添加资源引用</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116132010216.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116132010216.png, http://cdn.cjpa.top/cdnimages/image-20210116132010216.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116132010216.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116132010216.png"
+        title="image-20210116132010216" /></p>
+<p>同时uniapp也需要添加这个：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116132115458.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116132115458.png, http://cdn.cjpa.top/cdnimages/image-20210116132115458.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116132115458.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116132115458.png"
+        title="image-20210116132115458" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116132835736.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116132835736.png, http://cdn.cjpa.top/cdnimages/image-20210116132835736.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116132835736.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116132835736.png"
+        title="image-20210116132835736" /></p>
+<p>删掉这个mainactivity节点</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116133000984.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116133000984.png, http://cdn.cjpa.top/cdnimages/image-20210116133000984.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116133000984.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116133000984.png"
+        title="image-20210116133000984" /></p>
+<p>然后把这个给加进去</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml">  <span class="nt">&lt;activity</span>
+      <span class="na">android:name=</span><span class="s">&#34;io.dcloud.PandoraEntry&#34;</span>
+      <span class="na">android:configChanges=</span><span class="s">&#34;orientation|keyboardHidden|keyboard|navigation&#34;</span>
+      <span class="na">android:label=</span><span class="s">&#34;@string/app_name&#34;</span>
+      <span class="na">android:launchMode=</span><span class="s">&#34;singleTask&#34;</span>
+      <span class="na">android:hardwareAccelerated=</span><span class="s">&#34;true&#34;</span>
+      <span class="na">android:theme=</span><span class="s">&#34;@style/TranslucentTheme&#34;</span>
+      <span class="na">android:screenOrientation=</span><span class="s">&#34;user&#34;</span>
+      <span class="na">android:windowSoftInputMode=</span><span class="s">&#34;adjustResize&#34;</span> <span class="nt">&gt;</span>
+      <span class="nt">&lt;intent-filter&gt;</span>
+          <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.action.MAIN&#34;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.category.LAUNCHER&#34;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/intent-filter&gt;</span>
+  <span class="nt">&lt;/activity&gt;</span>
+  <span class="nt">&lt;activity</span>
+      <span class="na">android:name=</span><span class="s">&#34;io.dcloud.PandoraEntryActivity&#34;</span>
+      <span class="na">android:launchMode=</span><span class="s">&#34;singleTask&#34;</span>
+      <span class="na">android:configChanges=</span><span class="s">&#34;orientation|keyboardHidden|screenSize|mcc|mnc|fontScale|keyboard&#34;</span>
+      <span class="na">android:hardwareAccelerated=</span><span class="s">&#34;true&#34;</span>
+      <span class="na">android:permission=</span><span class="s">&#34;com.miui.securitycenter.permission.AppPermissionsEditor&#34;</span>
+      <span class="na">android:screenOrientation=</span><span class="s">&#34;user&#34;</span>
+      <span class="na">android:theme=</span><span class="s">&#34;@style/DCloudTheme&#34;</span>
+      <span class="na">android:windowSoftInputMode=</span><span class="s">&#34;adjustResize&#34;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;intent-filter&gt;</span>
+          <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.category.DEFAULT&#34;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.category.BROWSABLE&#34;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.action.VIEW&#34;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;data</span> <span class="na">android:scheme=</span><span class="s">&#34;h56131bcf&#34;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/intent-filter&gt;</span>
+  <span class="nt">&lt;/activity&gt;</span>
+  <span class="c">&lt;!--provider节点必须添加--&gt;</span>
+  <span class="nt">&lt;provider</span>
+      <span class="na">android:name=</span><span class="s">&#34;io.dcloud.common.util.DCloud_FileProvider&#34;</span>
+      <span class="na">android:authorities=</span><span class="s">&#34;${apk.applicationId}.dc.fileprovider&#34;</span>
+      <span class="na">android:exported=</span><span class="s">&#34;false&#34;</span>
+      <span class="na">android:grantUriPermissions=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;meta-data</span>
+          <span class="na">android:name=</span><span class="s">&#34;android.support.FILE_PROVIDER_PATHS&#34;</span>
+          <span class="na">android:resource=</span><span class="s">&#34;@xml/dcloud_file_provider&#34;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/provider&gt;</span>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116133236129.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116133236129.png, http://cdn.cjpa.top/cdnimages/image-20210116133236129.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116133236129.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116133236129.png"
+        title="image-20210116133236129" /></p>
+<p>创建assets</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116133648742.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116133648742.png, http://cdn.cjpa.top/cdnimages/image-20210116133648742.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116133648742.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116133648742.png"
+        title="image-20210116133648742" /></p>
+<p>把离线sdk的 assets/data 拷贝到assets中</p>
+<p>![image-20210116133803676](/Users/cjp/Library/Application Support/typora-user-images/image-20210116133803676.png)</p>
+<p>用hbuilder导出资源</p>
+<p>复制到assets/apps里面</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116134502116.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116134502116.png, http://cdn.cjpa.top/cdnimages/image-20210116134502116.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116134502116.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116134502116.png"
+        title="image-20210116134502116" /></p>
+<p>修改dcloud_control.xml文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://cdn.cjpa.top/cdnimages/image-20210116134628742.png"
+        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116134628742.png, http://cdn.cjpa.top/cdnimages/image-20210116134628742.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116134628742.png 2x"
+        data-sizes="auto"
+        alt="http://cdn.cjpa.top/cdnimages/image-20210116134628742.png"
+        title="image-20210116134628742" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">Caused by: org.gradle.internal.service.ServiceCreationException: Could not create service of <span class="nb">type</span> OutputFilesRepository using ExecutionGradleServices.createOutputFilesRepository<span class="o">()</span>.
+
+
+
+Caused by: org.gradle.cache.LockTimeoutException: Timeout waiting to lock Build Output Cleanup Cache <span class="o">(</span>/Volumes/PERSON/union_app/static-template-andorid/.gradle/buildOutputCleanup<span class="o">)</span>. It is currently in use by another Gradle instance.
+
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-05-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/uniapp/">uniapp</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/" class="prev" rel="prev" title="随便聊一聊java的注解"><i class="fas fa-angle-left fa-fw"></i>随便聊一聊java的注解</a>
+            <a href="/posts/%E5%90%84%E7%A7%8D%E9%94%81.../" class="next" rel="next" title="各种锁..">各种锁..<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">苏ICP备2020068321</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
