@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>分布式 - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
+        <link>http://chenjiapeng.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
         <description>分布式 - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
     <title>Raft详解</title>
-    <link>http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/</link>
+    <link>http://chenjiapeng.cn/posts/raft%E8%AF%A6%E8%A7%A3/</link>
     <pubDate>Sat, 16 Jan 2021 13:08:35 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/</guid>
+    <guid>http://chenjiapeng.cn/posts/raft%E8%AF%A6%E8%A7%A3/</guid>
     <description><![CDATA[Raft和Paxos 背景介绍 分布式事务 分布式事务指事务的操作位于不同的分布式系统节点上，需要保证事务的ACID特性。 解决这种分布式一致性问题]]></description>
 </item></channel>
 </rss>

@@ -1,36 +1,36 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Golang - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/golang/</link>
+        <link>http://chenjiapeng.cn/tags/golang/</link>
         <description>Golang - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 18 May 2021 01:58:36 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 18 May 2021 01:58:36 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
     <title>研究一下go语言的gc原理</title>
-    <link>http://cjpa.top/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</link>
     <pubDate>Tue, 18 May 2021 01:58:36 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</guid>
     <description><![CDATA[Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存]]></description>
 </item><item>
     <title>Golang GC</title>
-    <link>http://cjpa.top/posts/golang-gc/</link>
+    <link>http://chenjiapeng.cn/posts/golang-gc/</link>
     <pubDate>Mon, 04 Jan 2021 16:13:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/golang-gc/</guid>
+    <guid>http://chenjiapeng.cn/posts/golang-gc/</guid>
     <description><![CDATA[Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存]]></description>
 </item><item>
     <title>Golang GMP原理</title>
-    <link>http://cjpa.top/posts/golang-gmp%E5%8E%9F%E7%90%86/</link>
+    <link>http://chenjiapeng.cn/posts/golang-gmp%E5%8E%9F%E7%90%86/</link>
     <pubDate>Mon, 04 Jan 2021 00:39:53 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/golang-gmp%E5%8E%9F%E7%90%86/</guid>
+    <guid>http://chenjiapeng.cn/posts/golang-gmp%E5%8E%9F%E7%90%86/</guid>
     <description><![CDATA[GPM 多进程和多线程解决了阻塞的问题 但是面临着很多新的问题 多个线程之间切换会浪费很多的切换成本 进程/线程数量越多，切换成本也就越大，也就越浪费 多]]></description>
 </item><item>
     <title>Golang Make和new的区别</title>
-    <link>http://cjpa.top/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+    <link>http://chenjiapeng.cn/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
     <pubDate>Sun, 03 Jan 2021 13:30:03 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+    <guid>http://chenjiapeng.cn/posts/golang-make%E5%92%8Cnew%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
     <description><![CDATA[new和make new和make都是内置函数，主要用来创建分配内存类型 new new（T）可以创建一个没有任何数据的T类型的指针，并且返回该实例的]]></description>
 </item></channel>
 </rss>

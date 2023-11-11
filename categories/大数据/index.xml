@@ -1,29 +1,29 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>大数据 - 分类 - 氕氘氚</title>
-        <link>http://cjpa.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+        <link>http://chenjiapeng.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
         <description>大数据 - 分类 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="self" type="application/rss+xml" /><item>
     <title>介绍一个数据库——DHFS</title>
-    <link>http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</link>
+    <link>http://chenjiapeng.cn/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</link>
     <pubDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93dhfs/</guid>
     <description><![CDATA[HDFS hdfs是hadoop的核心 概述 介绍 在现代的企业环境中，单机容量往往无法存储大量数据，需要跨机器存储，统一管理分布在集群上的文件系统成为泡]]></description>
 </item><item>
     <title>Hello，flink</title>
-    <link>http://cjpa.top/posts/helloflink/</link>
+    <link>http://chenjiapeng.cn/posts/helloflink/</link>
     <pubDate>Sat, 20 Mar 2021 01:33:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/helloflink/</guid>
+    <guid>http://chenjiapeng.cn/posts/helloflink/</guid>
     <description><![CDATA[简介 Flink是一个框架和分布式处理引擎，用于对无界和有界数据流进行状态计算 是一个大数据的引擎，有状态的数据计算。 关键是数据流 为什么选择Fl]]></description>
 </item><item>
     <title>Hive——非常牛的一个数仓工具</title>
-    <link>http://cjpa.top/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/</link>
+    <link>http://chenjiapeng.cn/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/</link>
     <pubDate>Thu, 18 Mar 2021 01:43:30 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/</guid>
+    <guid>http://chenjiapeng.cn/posts/hive%E9%9D%9E%E5%B8%B8%E7%89%9B%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%B0%E4%BB%93%E5%B7%A5%E5%85%B7/</guid>
     <description><![CDATA[Hive Hive基本概念 什么是Hive hive：由facebook开源的用于解决海量结构化日志的数据统计 hive是基于hadoop的一个数据仓库工]]></description>
 </item></channel>
 </rss>

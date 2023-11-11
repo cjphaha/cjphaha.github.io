@@ -1,78 +1,78 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>所有文章 - 氕氘氚</title>
-        <link>http://cjpa.top/posts/</link>
+        <link>http://chenjiapeng.cn/posts/</link>
         <description>所有文章 | 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/posts/" rel="self" type="application/rss+xml" /><item>
     <title>虚拟内存是什么内存？</title>
-    <link>http://cjpa.top/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</link>
+    <link>http://chenjiapeng.cn/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</link>
     <pubDate>Fri, 21 May 2021 01:19:39 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</guid>
     <description><![CDATA[虚拟内存 可执行文件被加载到内存，就成了一个进程 在dos时期，采用的是实地址模式，进程直接使用物理地址，在这种模式下，进程可以直接修改物理内存]]></description>
 </item><item>
     <title>网站升级了https</title>
-    <link>http://cjpa.top/posts/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E4%BA%86https/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E4%BA%86https/</link>
     <pubDate>Fri, 21 May 2021 01:16:09 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E4%BA%86https/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E4%BA%86https/</guid>
     <description><![CDATA[现在支持https访问了，普通的http也会被重定向到443端口，2233]]></description>
 </item><item>
     <title>研究一下go语言的gc原理</title>
-    <link>http://cjpa.top/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</link>
     <pubDate>Tue, 18 May 2021 01:58:36 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%A0%94%E7%A9%B6%E4%B8%80%E4%B8%8Bgo%E8%AF%AD%E8%A8%80%E7%9A%84gc%E5%8E%9F%E7%90%86/</guid>
     <description><![CDATA[Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存]]></description>
 </item><item>
     <title>接上面的锁来聊一聊go的mutex</title>
-    <link>http://cjpa.top/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/</link>
+    <link>http://chenjiapeng.cn/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/</link>
     <pubDate>Mon, 17 May 2021 06:00:12 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E6%8E%A5%E4%B8%8A%E9%9D%A2%E7%9A%84%E9%94%81%E6%9D%A5%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84mutex/</guid>
     <description><![CDATA[Golang mutex mutex的由来Mutual exclusion（互斥）的前缀组合，俗称互斥体/互斥锁 mutex的数据结构 因为足够简单，因此不需要额外初始]]></description>
 </item><item>
     <title>各种锁..</title>
-    <link>http://cjpa.top/posts/%E5%90%84%E7%A7%8D%E9%94%81.../</link>
+    <link>http://chenjiapeng.cn/posts/%E5%90%84%E7%A7%8D%E9%94%81/</link>
     <pubDate>Mon, 17 May 2021 02:00:12 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E5%90%84%E7%A7%8D%E9%94%81.../</guid>
+    <guid>http://chenjiapeng.cn/posts/%E5%90%84%E7%A7%8D%E9%94%81/</guid>
     <description><![CDATA[锁 死锁 两个或者两个以上的进程或线程在执行过程中，因争夺资源而造成的一种等待的现象，没有外力作用，他们都将无法推进下去。此时称系统处于死锁状态]]></description>
 </item><item>
     <title>用uniapp打包出一个跨端app！</title>
-    <link>http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</link>
     <pubDate>Tue, 11 May 2021 01:56:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</guid>
     <description><![CDATA[使用uniapp在macOS 10.15.6上打包安卓离线App 创建之后目录如下所示： 在hubilder离线sdk里面找到sdk/libs文件]]></description>
 </item><item>
     <title>随便聊一聊java的注解</title>
-    <link>http://cjpa.top/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/</link>
+    <link>http://chenjiapeng.cn/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/</link>
     <pubDate>Mon, 10 May 2021 01:53:18 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E9%9A%8F%E4%BE%BF%E8%81%8A%E4%B8%80%E8%81%8Ajava%E7%9A%84%E6%B3%A8%E8%A7%A3/</guid>
     <description><![CDATA[java注解 Annotation 1、编译器注解 不会被编译到.class文件，在编译之后就被编译器扔掉了 @Override：让编译器检查该方法是否正确的实现了覆]]></description>
 </item><item>
     <title>20210502日记</title>
-    <link>http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/</link>
+    <link>http://chenjiapeng.cn/posts/20210502%E6%97%A5%E8%AE%B0/</link>
     <pubDate>Sun, 02 May 2021 01:43:58 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/</guid>
+    <guid>http://chenjiapeng.cn/posts/20210502%E6%97%A5%E8%AE%B0/</guid>
     <description><![CDATA[keep learning,keep modest, keep enthusiasm]]></description>
 </item><item>
     <title>简单聊一聊gRPC</title>
-    <link>http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</link>
     <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/</guid>
     <description><![CDATA[什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服]]></description>
 </item><item>
     <title>和普通的http相比gRPC有什么好处？</title>
-    <link>http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</link>
+    <link>http://chenjiapeng.cn/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</link>
     <pubDate>Sun, 04 Apr 2021 01:34:22 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/</guid>
     <description><![CDATA[RPC的全称是remote procedure call。 生态优势 rpc没有对具体的编码和解码进行规定，在rpc生态中，有很多rpc框架，google的grpc]]></description>
 </item></channel>
 </rss>

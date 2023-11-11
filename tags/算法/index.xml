@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>算法 - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/%E7%AE%97%E6%B3%95/</link>
+        <link>http://chenjiapeng.cn/tags/%E7%AE%97%E6%B3%95/</link>
         <description>算法 - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
     <title>动态规划</title>
-    <link>http://cjpa.top/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+    <link>http://chenjiapeng.cn/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
     <pubDate>Sat, 26 Sep 2020 15:38:46 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
     <description><![CDATA[动态规划 今天看到leetcode上有个求斐波那契数列的题目 （剑指offer 10-I） 刚开始使用了递归，发现超时 func fib(n int) int { if n == 0{ return 0 }else if n ==]]></description>
 </item></channel>
 </rss>

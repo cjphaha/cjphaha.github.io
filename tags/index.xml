@@ -1,78 +1,78 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/</link>
+        <link>http://chenjiapeng.cn/tags/</link>
         <description>Tags - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/" rel="self" type="application/rss+xml" /><item>
     <title>内存</title>
-    <link>http://cjpa.top/tags/%E5%86%85%E5%AD%98/</link>
+    <link>http://chenjiapeng.cn/tags/%E5%86%85%E5%AD%98/</link>
     <pubDate>Fri, 21 May 2021 01:19:39 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/%E5%86%85%E5%AD%98/</guid>
+    <guid>http://chenjiapeng.cn/tags/%E5%86%85%E5%AD%98/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Golang</title>
-    <link>http://cjpa.top/tags/golang/</link>
+    <link>http://chenjiapeng.cn/tags/golang/</link>
     <pubDate>Tue, 18 May 2021 01:58:36 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/golang/</guid>
+    <guid>http://chenjiapeng.cn/tags/golang/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Daily</title>
-    <link>http://cjpa.top/tags/daily/</link>
+    <link>http://chenjiapeng.cn/tags/daily/</link>
     <pubDate>Mon, 17 May 2021 06:00:12 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/daily/</guid>
+    <guid>http://chenjiapeng.cn/tags/daily/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>uniapp</title>
-    <link>http://cjpa.top/tags/uniapp/</link>
+    <link>http://chenjiapeng.cn/tags/uniapp/</link>
     <pubDate>Tue, 11 May 2021 01:56:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/uniapp/</guid>
+    <guid>http://chenjiapeng.cn/tags/uniapp/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Java</title>
-    <link>http://cjpa.top/tags/java/</link>
+    <link>http://chenjiapeng.cn/tags/java/</link>
     <pubDate>Mon, 10 May 2021 01:53:18 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/java/</guid>
+    <guid>http://chenjiapeng.cn/tags/java/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>gRPC</title>
-    <link>http://cjpa.top/tags/grpc/</link>
+    <link>http://chenjiapeng.cn/tags/grpc/</link>
     <pubDate>Sun, 11 Apr 2021 17:03:31 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/grpc/</guid>
+    <guid>http://chenjiapeng.cn/tags/grpc/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>kafka</title>
-    <link>http://cjpa.top/tags/kafka/</link>
+    <link>http://chenjiapeng.cn/tags/kafka/</link>
     <pubDate>Thu, 01 Apr 2021 01:46:45 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/kafka/</guid>
+    <guid>http://chenjiapeng.cn/tags/kafka/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>HDFS</title>
-    <link>http://cjpa.top/tags/hdfs/</link>
+    <link>http://chenjiapeng.cn/tags/hdfs/</link>
     <pubDate>Sun, 21 Mar 2021 01:41:20 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/hdfs/</guid>
+    <guid>http://chenjiapeng.cn/tags/hdfs/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>flink</title>
-    <link>http://cjpa.top/tags/flink/</link>
+    <link>http://chenjiapeng.cn/tags/flink/</link>
     <pubDate>Sat, 20 Mar 2021 01:33:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/flink/</guid>
+    <guid>http://chenjiapeng.cn/tags/flink/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>hive</title>
-    <link>http://cjpa.top/tags/hive/</link>
+    <link>http://chenjiapeng.cn/tags/hive/</link>
     <pubDate>Thu, 18 Mar 2021 01:43:30 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/tags/hive/</guid>
+    <guid>http://chenjiapeng.cn/tags/hive/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

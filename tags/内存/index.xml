@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>内存 - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/%E5%86%85%E5%AD%98/</link>
+        <link>http://chenjiapeng.cn/tags/%E5%86%85%E5%AD%98/</link>
         <description>内存 - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/%E5%86%85%E5%AD%98/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Fri, 21 May 2021 01:19:39 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/%E5%86%85%E5%AD%98/" rel="self" type="application/rss+xml" /><item>
     <title>虚拟内存是什么内存？</title>
-    <link>http://cjpa.top/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</link>
+    <link>http://chenjiapeng.cn/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</link>
     <pubDate>Fri, 21 May 2021 01:19:39 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98/</guid>
     <description><![CDATA[虚拟内存 可执行文件被加载到内存，就成了一个进程 在dos时期，采用的是实地址模式，进程直接使用物理地址，在这种模式下，进程可以直接修改物理内存]]></description>
 </item></channel>
 </rss>

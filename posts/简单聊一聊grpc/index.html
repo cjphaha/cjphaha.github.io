@@ -8,19 +8,19 @@
         <title>简单聊一聊gRPC - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="简单聊一聊gRPC" />
 <meta property="og:description" content="什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/" />
-<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="og:url" content="http://chenjiapeng.cn/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/" /><meta property="og:image" content="http://chenjiapeng.cn/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-04-11T17:03:31+08:00" />
 <meta property="article:modified_time" content="2021-04-11T17:03:31+08:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+<meta name="twitter:image" content="http://chenjiapeng.cn/logo.png"/>
 
 <meta name="twitter:title" content="简单聊一聊gRPC"/>
 <meta name="twitter:description" content="什么是RPC 常规的客户端和服务端传协议需要创建TCP连接，具体什么协议根据具体的应用场景可以做选择 常见的协议 HTTP RPC是远程过程调用，主要在服"/>
 <meta name="application-name" content="氕氘氚">
 <meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/" /><link rel="prev" href="http://cjpa.top/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/" /><link rel="next" href="http://cjpa.top/posts/20210502%E6%97%A5%E8%AE%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://chenjiapeng.cn/posts/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc/" /><link rel="prev" href="http://chenjiapeng.cn/posts/%E5%92%8C%E6%99%AE%E9%80%9A%E7%9A%84http%E7%9B%B8%E6%AF%94grpc%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84/" /><link rel="next" href="http://chenjiapeng.cn/posts/20210502%E6%97%A5%E8%AE%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/cjpa.top\/posts\/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc\/"
+            "@id": "http:\/\/chenjiapeng.cn\/posts\/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc\/"
         },"genre": "posts","keywords": "gRPC","wordcount":  4896 ,
-        "url": "http:\/\/cjpa.top\/posts\/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc\/","datePublished": "2021-04-11T17:03:31+08:00","dateModified": "2021-04-11T17:03:31+08:00","publisher": {
+        "url": "http:\/\/chenjiapeng.cn\/posts\/%E7%AE%80%E5%8D%95%E8%81%8A%E4%B8%80%E8%81%8Agrpc\/","datePublished": "2021-04-11T17:03:31+08:00","dateModified": "2021-04-11T17:03:31+08:00","publisher": {
             "@type": "Organization",
             "name": "氕氘氚"},"author": {
                 "@type": "Person",
@@ -218,10 +218,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png, http://cdn.cjpa.top/cdnimages/image-20210103015635075.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210103015635075.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210103015635075.png, https://cdn.cjpa.top/cdnimages/image-20210103015635075.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210103015635075.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210103015635075.png"
         title="image-20210103015635075" /></p>
 <p>然后在pbfiles目录下执行命令：</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">protoc --go_out<span class="o">=</span>../ Prod.proto
@@ -229,10 +229,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png, http://cdn.cjpa.top/cdnimages/image-20210103015905780.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210103015905780.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210103015905780.png, https://cdn.cjpa.top/cdnimages/image-20210103015905780.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210103015905780.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210103015905780.png"
         title="image-20210103015905780" /></p>
 <p>在prod.proto里面添加方法</p>
 <pre><code>syntax = &quot;proto3&quot;;
@@ -255,19 +255,19 @@ service ProdService {
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png, http://cdn.cjpa.top/cdnimages/image-20210116025654884.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116025654884.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116025654884.png, https://cdn.cjpa.top/cdnimages/image-20210116025654884.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116025654884.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116025654884.png"
         title="image-20210116025654884" /></p>
 <p>这里有一个接口，我们要在go里面去实现这个接口</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png, http://cdn.cjpa.top/cdnimages/image-20210116025748541.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116025748541.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116025748541.png, https://cdn.cjpa.top/cdnimages/image-20210116025748541.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116025748541.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116025748541.png"
         title="image-20210116025748541" /></p>
 <p>新建一个ProdService文件，用来实现services接口</p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">services</span>
@@ -359,10 +359,10 @@ service ProdService {
 </code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png, http://cdn.cjpa.top/cdnimages/image-20210116154636989.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116154636989.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116154636989.png, https://cdn.cjpa.top/cdnimages/image-20210116154636989.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116154636989.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116154636989.png"
         title="image-20210116154636989" /></p>
 <p>重新运行server，现在再运行client就报错了</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">2021/01/16 15:47:10 rpc error: <span class="nv">code</span> <span class="o">=</span> Unavailable <span class="nv">desc</span> <span class="o">=</span> connection closed
@@ -376,10 +376,10 @@ service ProdService {
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png, http://cdn.cjpa.top/cdnimages/image-20210116155354637.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116155354637.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116155354637.png, https://cdn.cjpa.top/cdnimages/image-20210116155354637.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116155354637.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116155354637.png"
         title="image-20210116155354637" /></p>
 <h2 id="热身">热身</h2>
 <p>之前服务端使用的tcp进行连接，现在尝试用一个http看看</p>
@@ -389,31 +389,31 @@ service ProdService {
 <p>因为有时候一些其他的服务可能没有用到grpc服务，而是用的http服务，为了能够让其他没有用到grpc的client也能调用到我们写的服务，需要写处理http的接口</p>
 <p>代码如下：</p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">creds</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewServerTLSFromFile</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;keys/ssl.key&#34;</span><span class="p">)</span>
-  <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">creds</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">credentials</span><span class="p">.</span><span class="nf">NewServerTLSFromFile</span><span class="p">(</span><span class="s">&#34;keys/ssl.crt&#34;</span><span class="p">,</span><span class="s">&#34;keys/ssl.key&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
       <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-  <span class="p">}</span>
-  <span class="nx">rpcServer</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">Creds</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
-  <span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceServer</span><span class="p">(</span><span class="nx">rpcServer</span><span class="p">,</span><span class="nb">new</span><span class="p">(</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdService</span><span class="p">))</span>
-  <span class="c1">//lis, _ := net.Listen(&#34;tcp&#34;,&#34;:8084&#34;)
-</span><span class="c1"></span>  <span class="c1">//rpcServer.Serve(lis)
-</span><span class="c1"></span>  <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
-  <span class="nx">mux</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="p">}</span>
+	<span class="nx">rpcServer</span> <span class="o">:=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">Creds</span><span class="p">(</span><span class="nx">creds</span><span class="p">))</span>
+	<span class="nx">services</span><span class="p">.</span><span class="nf">RegisterProdServiceServer</span><span class="p">(</span><span class="nx">rpcServer</span><span class="p">,</span><span class="nb">new</span><span class="p">(</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProdService</span><span class="p">))</span>
+	<span class="c1">//lis, _ := net.Listen(&#34;tcp&#34;,&#34;:8084&#34;)
+</span><span class="c1"></span>	<span class="c1">//rpcServer.Serve(lis)
+</span><span class="c1"></span>	<span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
+	<span class="nx">mux</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">rpcServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span><span class="nx">request</span><span class="p">)</span>
-  <span class="p">})</span>
-  <span class="nx">httpServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+	<span class="p">})</span>
+	<span class="nx">httpServer</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
       <span class="nx">Addr</span> <span class="p">:</span> <span class="s">&#34;:8084&#34;</span><span class="p">,</span>
       <span class="nx">Handler</span><span class="p">:</span> <span class="nx">mux</span><span class="p">,</span>
-  <span class="p">}</span>
-  <span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">()</span>
+	<span class="p">}</span>
+	<span class="nx">httpServer</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png, http://cdn.cjpa.top/cdnimages/image-20210116160407471.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116160407471.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116160407471.png, https://cdn.cjpa.top/cdnimages/image-20210116160407471.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116160407471.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116160407471.png"
         title="image-20210116160407471" /></p>
 </li>
 </ul>
@@ -425,10 +425,10 @@ service ProdService {
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png, http://cdn.cjpa.top/cdnimages/image-20210116161154420.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116161154420.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116161154420.png, https://cdn.cjpa.top/cdnimages/image-20210116161154420.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116161154420.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116161154420.png"
         title="image-20210116161154420" /></p>
 <p>下面检查一下看看请求过来的时候用了什么协议</p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">mux</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
@@ -439,10 +439,10 @@ service ProdService {
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png, http://cdn.cjpa.top/cdnimages/image-20210116161412141.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116161412141.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116161412141.png, https://cdn.cjpa.top/cdnimages/image-20210116161412141.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116161412141.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116161412141.png"
         title="image-20210116161412141" /></p>
 <p>总体问题不大，这个过会儿再看吧</p>
 <p>下面用客户端访问服务端，然后把所有的信息都给打印下来</p>
@@ -467,10 +467,10 @@ req -new -x509 -days <span class="m">3650</span> -key ca.key -out ca.pem
 </code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png, http://cdn.cjpa.top/cdnimages/image-20210116184649950.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116184649950.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116184649950.png, https://cdn.cjpa.top/cdnimages/image-20210116184649950.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116184649950.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116184649950.png"
         title="image-20210116184649950" /></p>
 <h3 id="重新生成服务端证书">重新生成服务端证书</h3>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">genrsa -out server.key <span class="m">2048</span>
@@ -479,18 +479,18 @@ x509 -req -sha256 -CA ca.pem -CAkey ca.key -CAcreateserial -days <span class="m"
 </code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png, http://cdn.cjpa.top/cdnimages/image-20210116170307022.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116170307022.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116170307022.png, https://cdn.cjpa.top/cdnimages/image-20210116170307022.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116170307022.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116170307022.png"
         title="image-20210116170307022" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png, http://cdn.cjpa.top/cdnimages/image-20210116185013470.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185013470.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116185013470.png, https://cdn.cjpa.top/cdnimages/image-20210116185013470.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116185013470.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116185013470.png"
         title="image-20210116185013470" /></p>
 <p>上面的过程中都会提示要输入common name，<strong>这里统一填写localhost</strong>，写成域名也可以</p>
 <h3 id="生成客户端证书">生成客户端证书</h3>
@@ -502,19 +502,19 @@ x509 -req -sha256 -CA ca.pem -CAkey ca.key -CAcreateserial -days <span class="m"
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png, http://cdn.cjpa.top/cdnimages/image-20210116185355527.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185355527.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116185355527.png, https://cdn.cjpa.top/cdnimages/image-20210116185355527.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116185355527.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116185355527.png"
         title="image-20210116185355527" /></p>
 <p>覆盖之后</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png, http://cdn.cjpa.top/cdnimages/image-20210116185543153.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185543153.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116185543153.png, https://cdn.cjpa.top/cdnimages/image-20210116185543153.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116185543153.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116185543153.png"
         title="image-20210116185543153" /></p>
 <p>服务端代码改造</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">func main<span class="o">()</span> <span class="o">{</span>
@@ -554,10 +554,10 @@ x509 -req -sha256 -CA ca.pem -CAkey ca.key -CAcreateserial -days <span class="m"
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png, http://cdn.cjpa.top/cdnimages/image-20210116185748615.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116185748615.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116185748615.png, https://cdn.cjpa.top/cdnimages/image-20210116185748615.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116185748615.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116185748615.png"
         title="image-20210116185748615" /></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 
@@ -606,27 +606,27 @@ go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png, http://cdn.cjpa.top/cdnimages/image-20210116192546770.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116192546770.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116192546770.png, https://cdn.cjpa.top/cdnimages/image-20210116192546770.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116192546770.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116192546770.png"
         title="image-20210116192546770" /></p>
 <p>拷贝过来</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png, http://cdn.cjpa.top/cdnimages/image-20210116192759563.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116192759563.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116192759563.png, https://cdn.cjpa.top/cdnimages/image-20210116192759563.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116192759563.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116192759563.png"
         title="image-20210116192759563" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png, http://cdn.cjpa.top/cdnimages/image-20210116194231640.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116194231640.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116194231640.png, https://cdn.cjpa.top/cdnimages/image-20210116194231640.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116194231640.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116194231640.png"
         title="image-20210116194231640" /></p>
 <p>一个是正常的的prod.pb，一个是网关</p>
 <p>下面开始改造代码</p>
@@ -677,10 +677,10 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png, http://cdn.cjpa.top/cdnimages/image-20210117011302915.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117011302915.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117011302915.png, https://cdn.cjpa.top/cdnimages/image-20210117011302915.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117011302915.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117011302915.png"
         title="image-20210117011302915" /></p>
 <h2 id="语法速学">语法速学</h2>
 <h3 id="repeated">repeated</h3>
@@ -744,10 +744,10 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png, http://cdn.cjpa.top/cdnimages/image-20210117015802763.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117015802763.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117015802763.png, https://cdn.cjpa.top/cdnimages/image-20210117015802763.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117015802763.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117015802763.png"
         title="image-20210117015802763" /></p>
 <h3 id="enum">enum</h3>
 <p>上一个例子中我们实现了切片和数组</p>
@@ -786,20 +786,20 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png, http://cdn.cjpa.top/cdnimages/image-20210117020822456.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117020822456.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117020822456.png, https://cdn.cjpa.top/cdnimages/image-20210117020822456.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117020822456.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117020822456.png"
         title="image-20210117020822456" /></p>
 <h3 id="导入外部proto">导入外部proto</h3>
 <p>新建一个proto文件，专门放一些实体</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png, http://cdn.cjpa.top/cdnimages/image-20210117022046672.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117022046672.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117022046672.png, https://cdn.cjpa.top/cdnimages/image-20210117022046672.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117022046672.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117022046672.png"
         title="image-20210117022046672" /></p>
 <div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
 </span><span class="err"></span><span class="kn">package</span> <span class="nn">services</span><span class="p">;</span><span class="err">
@@ -836,10 +836,10 @@ protoc --go_out<span class="o">=</span><span class="nv">plugins</span><span clas
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png, http://cdn.cjpa.top/cdnimages/image-20210117022326393.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117022326393.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117022326393.png, https://cdn.cjpa.top/cdnimages/image-20210117022326393.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117022326393.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117022326393.png"
         title="image-20210117022326393" /></p>
 <h3 id="日期类型">日期类型</h3>
 <p>创建主订单模型</p>
@@ -925,19 +925,19 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png, http://cdn.cjpa.top/cdnimages/image-20210117171021263.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117171021263.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117171021263.png, https://cdn.cjpa.top/cdnimages/image-20210117171021263.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117171021263.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117171021263.png"
         title="image-20210117171021263" /></p>
 <p>服务端</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png, http://cdn.cjpa.top/cdnimages/image-20210117171103294.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117171103294.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117171103294.png, https://cdn.cjpa.top/cdnimages/image-20210117171103294.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117171103294.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117171103294.png"
         title="image-20210117171103294" /></p>
 <h3 id="子订单模型">子订单模型</h3>
 <div class="highlight"><pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// 主订单模型
@@ -1087,10 +1087,10 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png, http://cdn.cjpa.top/cdnimages/image-20210117193056258.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117193056258.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117193056258.png, https://cdn.cjpa.top/cdnimages/image-20210117193056258.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117193056258.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117193056258.png"
         title="image-20210117193056258" /></p>
 <p>场景：</p>
 <p>客户端分批查询用户积分</p>
@@ -1161,10 +1161,10 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png, http://cdn.cjpa.top/cdnimages/image-20210117194535096.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210117194535096.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210117194535096.png, https://cdn.cjpa.top/cdnimages/image-20210117194535096.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210117194535096.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210117194535096.png"
         title="image-20210117194535096" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -1194,7 +1194,7 @@ protoc --grpc-gateway_out<span class="o">=</span><span class="nv">logtostderr</s
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">苏ICP备2020068321</span></div>
         </div>
     </footer></div>

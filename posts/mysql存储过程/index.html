@@ -8,19 +8,19 @@
         <title>Mysql存储过程 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Mysql存储过程" />
 <meta property="og:description" content="MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://cjpa.top/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" />
-<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="og:url" content="http://chenjiapeng.cn/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" /><meta property="og:image" content="http://chenjiapeng.cn/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-03T13:25:50+08:00" />
 <meta property="article:modified_time" content="2021-01-03T13:25:50+08:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+<meta name="twitter:image" content="http://chenjiapeng.cn/logo.png"/>
 
 <meta name="twitter:title" content="Mysql存储过程"/>
 <meta name="twitter:description" content="MySQL存储过程 存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。 存储过程是为了完"/>
 <meta name="application-name" content="氕氘氚">
 <meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" /><link rel="prev" href="http://cjpa.top/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/" /><link rel="next" href="http://cjpa.top/posts/redis/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://chenjiapeng.cn/posts/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" /><link rel="prev" href="http://chenjiapeng.cn/posts/%E7%89%9B%E5%AE%A2mysql%E9%A2%98%E8%A7%A3/" /><link rel="next" href="http://chenjiapeng.cn/posts/redis/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/cjpa.top\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  3144 ,
-        "url": "http:\/\/cjpa.top\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/","datePublished": "2021-01-03T13:25:50+08:00","dateModified": "2021-01-03T13:25:50+08:00","publisher": {
+            "@id": "http:\/\/chenjiapeng.cn\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/"
+        },"genre": "posts","keywords": "MySQL","wordcount":  3545 ,
+        "url": "http:\/\/chenjiapeng.cn\/posts\/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B\/","datePublished": "2021-01-03T13:25:50+08:00","dateModified": "2021-01-03T13:25:50+08:00","publisher": {
             "@type": "Organization",
             "name": "氕氘氚"},"author": {
                 "@type": "Person",
@@ -120,8 +120,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mysql存储过程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>氕氘氚</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-03">2021-01-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3144 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-03">2021-01-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3545 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -187,17 +187,17 @@
 <p>sql语句中常常以<code>;</code>结尾，但是存储过程会包括很多条sql语句，为了解决这个问题，通常使用DELIMITER命令，将sql语句的结束符临时修改为其他符号。</p>
 <h3 id="1界定符">1、界定符</h3>
 <p><strong>DELIMITER语法格式</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span> <span class="o">?</span>
-</code></pre></div><p>执行上面的语句之后，结束符号就是<code>?</code>了</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span><span class="w"> </span><span class="o">?</span><span class="w">
+</span></code></pre></div><p>执行上面的语句之后，结束符号就是<code>?</code>了</p>
 <p><code>?</code>是用户定义的结束符，通常这个符号可以是一些特殊的符号，另外应该避免使用反斜杠，因为它是转移字符，如果希望换回默认的分毫作为结束标记，只需在命令行输入下面的sql语句即可</p>
-<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span> <span class="p">;</span>
-</code></pre></div><h3 id="2存储过程创建">2、存储过程创建</h3>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="n">DELIMITER</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></code></pre></div><h3 id="2存储过程创建">2、存储过程创建</h3>
 <p>mysql中使用<code>CREATE PROCEDURE</code>语句来创建存储过程</p>
-<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">p_name</span><span class="p">([</span><span class="n">proc_parameter</span><span class="p">[...]])</span>
-<span class="n">routine_body</span>
-</code></pre></div><p>其中proc_parameter的语法格式是：</p>
-<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="p">[</span><span class="k">IN</span><span class="o">|</span><span class="k">OUT</span><span class="o">|</span><span class="k">INOUT</span><span class="p">]</span> <span class="n">parame_name</span> <span class="n">type</span>
-</code></pre></div><ul>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="nf">p_name</span><span class="p">([</span><span class="n">proc_parameter</span><span class="p">[...]])</span><span class="w">
+</span><span class="w"></span><span class="n">routine_body</span><span class="w">
+</span></code></pre></div><p>其中proc_parameter的语法格式是：</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="p">[</span><span class="k">IN</span><span class="o">|</span><span class="k">OUT</span><span class="o">|</span><span class="k">INOUT</span><span class="p">]</span><span class="w"> </span><span class="n">parame_name</span><span class="w"> </span><span class="n">type</span><span class="w">
+</span></code></pre></div><ul>
 <li>
 <p>p_name用户指定存储过程的名称</p>
 </li>
@@ -214,8 +214,8 @@
 </ul>
 <h3 id="3局部变量">3、局部变量</h3>
 <p>在存储过程体重可以声明局部变量，用来存储过程体中的临时结果。在Mysql中使用<code>DECLARE</code>语句来声明局部变量</p>
-<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">DECLARE</span> <span class="n">var_name</span> <span class="n">type</span> <span class="p">[</span><span class="k">DEFAULT</span> <span class="n">value</span><span class="p">]</span>
-</code></pre></div><p><code>var name</code>用于指定局部变量的名称 <code>type</code>用来声明变量的类型，<code>DEFAULT</code>用来指定默认值，如果没有则置为NULL</p>
+<div class="highlight"><pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">DECLARE</span><span class="w"> </span><span class="n">var_name</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="p">[</span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">value</span><span class="p">]</span><span class="w">
+</span></code></pre></div><p><code>var name</code>用于指定局部变量的名称 <code>type</code>用来声明变量的类型，<code>DEFAULT</code>用来指定默认值，如果没有则置为NULL</p>
 <blockquote>
 <p>局部变量只能在存储过程体的BEGIN&hellip;END中，局部变量必须在存储过程体的抬头出生命，局部变量的作用范围仅限于声明它的BEGIN&hellip;END语句快，其他语句块中的语句不可以使用它</p>
 </blockquote>
@@ -224,33 +224,33 @@
 <p>:warning:滥用用户变量会导致程序难以理解及管理</p>
 <h3 id="5set语句">5、SET语句</h3>
 <p>在Mysql中通过SET语句对局部变量赋值，其格式为</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">var_name</span> <span class="o">=</span> <span class="n">expr</span><span class="p">[,</span><span class="n">var_name2</span> <span class="o">=</span> <span class="n">expr</span><span class="p">]...</span>
-</code></pre></div><h3 id="6selectinto语句">6、SELECT&hellip;INTO语句</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="n">var_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="p">[,</span><span class="n">var_name2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expr</span><span class="p">]...</span><span class="w">
+</span></code></pre></div><h3 id="6selectinto语句">6、SELECT&hellip;INTO语句</h3>
 <p>在mysql中，可以使用SELECT&hellip;INTO语句把选定的值存储到局部变量中，格式为</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">col_name</span><span class="p">[,...]</span> <span class="k">INTO</span> <span class="n">var_name</span><span class="p">[,...]</span> <span class="n">table_expr</span>
-</code></pre></div><p>col_name用于指定列名，var_name用于指定要赋值的变量名<code>table_expr</code>表示SELECT语句中FROM后面的部分</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">[,...]</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">var_name</span><span class="p">[,...]</span><span class="w"> </span><span class="n">table_expr</span><span class="w">
+</span></code></pre></div><p>col_name用于指定列名，var_name用于指定要赋值的变量名<code>table_expr</code>表示SELECT语句中FROM后面的部分</p>
 <h3 id="7流程控制语句">7、流程控制语句</h3>
 <ol>
 <li>
 <p>条件判断语句
 <strong>if-then-else 语句:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">DELIMITER</span> <span class="o">&amp;&amp;</span>  
-<span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">proc2</span><span class="p">(</span><span class="k">IN</span> <span class="k">parameter</span> <span class="nb">int</span><span class="p">)</span>  
-     <span class="o">-&gt;</span> <span class="k">begin</span> 
-     <span class="o">-&gt;</span> <span class="k">declare</span> <span class="n">var</span> <span class="nb">int</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">set</span> <span class="n">var</span><span class="o">=</span><span class="k">parameter</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">if</span> <span class="n">var</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> 
-     <span class="o">-&gt;</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">t</span> <span class="k">values</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>  
-     <span class="o">-&gt;</span> <span class="k">end</span> <span class="k">if</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">if</span> <span class="k">parameter</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> 
-     <span class="o">-&gt;</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">else</span> 
-     <span class="o">-&gt;</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">2</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">end</span> <span class="k">if</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="k">end</span><span class="p">;</span>  
-     <span class="o">-&gt;</span> <span class="o">&amp;&amp;</span>  
-<span class="n">mysql</span> <span class="o">&gt;</span> <span class="k">DELIMITER</span> <span class="p">;</span> 
-</code></pre></div><p><strong>case语句:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELIMITER</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">  
+</span><span class="w"></span><span class="n">mysql</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">proc2</span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">begin</span><span class="w"> 
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">declare</span><span class="w"> </span><span class="n">var</span><span class="w"> </span><span class="nb">int</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">var</span><span class="o">=</span><span class="k">parameter</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">var</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="k">then</span><span class="w"> 
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">values</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">parameter</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="k">then</span><span class="w"> 
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">update</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">else</span><span class="w"> 
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">update</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">s1</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="mi">2</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">end</span><span class="p">;</span><span class="w">  
+</span><span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">  
+</span><span class="w"></span><span class="n">mysql</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELIMITER</span><span class="w"> </span><span class="p">;</span><span class="w"> 
+</span></code></pre></div><p><strong>case语句:</strong></p>
 <pre><code>mysql &gt; DELIMITER &amp;&amp;  
 mysql &gt; CREATE PROCEDURE proc3 (in parameter int)  
      -&gt; begin 
@@ -349,10 +349,10 @@ mysql &gt; DELIMITER ;
 </ol>
 <h3 id="8调用存储过程">8、调用存储过程</h3>
 <p>上面的流程只是创建了存储过程，真正要用的话还是得call一下</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span> <span class="n">sp_name</span><span class="p">[(</span><span class="err">传参</span><span class="p">)]</span>
-</code></pre></div><h3 id="9删除存储过程">9、删除存储过程</h3>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">PROCEDURE</span> <span class="n">sp_name</span><span class="p">;</span>
-</code></pre></div><h2 id="存储函数">存储函数</h2>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span><span class="w"> </span><span class="n">sp_name</span><span class="p">[(</span><span class="err">传参</span><span class="p">)]</span><span class="w">
+</span></code></pre></div><h3 id="9删除存储过程">9、删除存储过程</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">sp_name</span><span class="p">;</span><span class="w">
+</span></code></pre></div><h2 id="存储函数">存储函数</h2>
 <blockquote>
 <p>存储过程和存储函数一样，都是sql和语句组成的代码块</p>
 <p>存储函数不能有输入函数，可以直接调用，不需要用call语句</p>
@@ -369,26 +369,26 @@ mysql &gt; DELIMITER ;
 <li>最后关闭游标； close 游标名称</li>
 </ul>
 <p>游标使用样例</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">printName</span><span class="p">()</span>
-<span class="k">BEGIN</span>
-	<span class="c1">-- 订单名称
-</span><span class="c1"></span>    <span class="k">declare</span> <span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-    <span class="c1">-- 创建游标
-</span><span class="c1"></span>    <span class="k">declare</span> <span class="n">cur</span> <span class="k">cursor</span> <span class="k">for</span> <span class="k">select</span> <span class="n">detail_name</span> <span class="k">from</span> <span class="n">oder_detail</span> <span class="k">where</span> <span class="n">oid</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
-    <span class="c1">-- 打开游标
-</span><span class="c1"></span>    <span class="k">open</span> <span class="n">cur</span><span class="p">;</span>
-		<span class="k">fetch</span> <span class="n">cur</span> <span class="k">into</span> <span class="n">name</span><span class="p">;</span>
-		<span class="k">select</span> <span class="n">name</span><span class="p">;</span>
-    <span class="c1">-- 关闭游标
-</span><span class="c1"></span>    <span class="k">close</span> <span class="n">cur</span><span class="p">;</span>
-<span class="k">END</span><span class="p">;</span>
-</code></pre></div><p>调用存储过程</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span> <span class="n">printName</span><span class="p">;</span>
-</code></pre></div><p>输出结果</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span>
-<span class="c1">------
-</span><span class="c1"></span><span class="err">毛巾</span>
-</code></pre></div><h2 id="触发器">触发器</h2>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">printName</span><span class="p">()</span><span class="w">
+</span><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span><span class="w">	</span><span class="c1">-- 订单名称
+</span><span class="c1"></span><span class="w">    </span><span class="k">declare</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="c1">-- 创建游标
+</span><span class="c1"></span><span class="w">    </span><span class="k">declare</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="k">cursor</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">detail_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">oder_detail</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">oid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">-- 打开游标
+</span><span class="c1"></span><span class="w">    </span><span class="k">open</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span><span class="w">
+</span><span class="w">		</span><span class="k">fetch</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span><span class="w">		</span><span class="k">select</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">-- 关闭游标
+</span><span class="c1"></span><span class="w">    </span><span class="k">close</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></code></pre></div><p>调用存储过程</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">call</span><span class="w"> </span><span class="n">printName</span><span class="p">;</span><span class="w">
+</span></code></pre></div><p>输出结果</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span><span class="w">
+</span><span class="w"></span><span class="c1">------
+</span><span class="c1"></span><span class="err">毛巾</span><span class="w">
+</span></code></pre></div><h2 id="触发器">触发器</h2>
 <blockquote>
 <p>触发器是指当表发生改变的时候触发的动作</p>
 <p>例如，当A忘表中插入数据的时候此时表发生了改变，现在想要在每次插入数据之前检测所有的入参是否都是小写，此时就可以用触发器来检测；</p>
@@ -447,7 +447,7 @@ drop trigger getPrice;
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">苏ICP备2020068321</span></div>
         </div>
     </footer></div>

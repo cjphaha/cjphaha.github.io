@@ -8,19 +8,19 @@
         <title>Raft详解 - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Raft详解" />
 <meta property="og:description" content="Raft和Paxos 背景介绍 分布式事务 分布式事务指事务的操作位于不同的分布式系统节点上，需要保证事务的ACID特性。 解决这种分布式一致性问题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/" />
-<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="og:url" content="http://chenjiapeng.cn/posts/raft%E8%AF%A6%E8%A7%A3/" /><meta property="og:image" content="http://chenjiapeng.cn/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-16T13:08:35+08:00" />
 <meta property="article:modified_time" content="2021-01-16T13:08:35+08:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+<meta name="twitter:image" content="http://chenjiapeng.cn/logo.png"/>
 
 <meta name="twitter:title" content="Raft详解"/>
 <meta name="twitter:description" content="Raft和Paxos 背景介绍 分布式事务 分布式事务指事务的操作位于不同的分布式系统节点上，需要保证事务的ACID特性。 解决这种分布式一致性问题"/>
 <meta name="application-name" content="氕氘氚">
 <meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="http://cjpa.top/posts/golang-gc/" /><link rel="next" href="http://cjpa.top/posts/dubbo-go-helloword/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://chenjiapeng.cn/posts/raft%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="http://chenjiapeng.cn/posts/golang-gc/" /><link rel="next" href="http://chenjiapeng.cn/posts/dubbo-go-helloword/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/cjpa.top\/posts\/raft%E8%AF%A6%E8%A7%A3\/"
+            "@id": "http:\/\/chenjiapeng.cn\/posts\/raft%E8%AF%A6%E8%A7%A3\/"
         },"genre": "posts","keywords": "分布式, 微服务","wordcount":  2227 ,
-        "url": "http:\/\/cjpa.top\/posts\/raft%E8%AF%A6%E8%A7%A3\/","datePublished": "2021-01-16T13:08:35+08:00","dateModified": "2021-01-16T13:08:35+08:00","publisher": {
+        "url": "http:\/\/chenjiapeng.cn\/posts\/raft%E8%AF%A6%E8%A7%A3\/","datePublished": "2021-01-16T13:08:35+08:00","dateModified": "2021-01-16T13:08:35+08:00","publisher": {
             "@type": "Organization",
             "name": "氕氘氚"},"author": {
                 "@type": "Person",
@@ -250,10 +250,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210115235907815.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210115235907815.png, http://cdn.cjpa.top/cdnimages/image-20210115235907815.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210115235907815.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210115235907815.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210115235907815.png, https://cdn.cjpa.top/cdnimages/image-20210115235907815.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210115235907815.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210115235907815.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210115235907815.png"
         title="image-20210115235907815" /></p>
 <h4 id="日志复制">日志复制</h4>
 <p>每个更改都作为一个条目添加到节点的日志中。</p>
@@ -262,29 +262,29 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210115235957996.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210115235957996.png, http://cdn.cjpa.top/cdnimages/image-20210115235957996.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210115235957996.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210115235957996.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210115235957996.png, https://cdn.cjpa.top/cdnimages/image-20210115235957996.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210115235957996.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210115235957996.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210115235957996.png"
         title="image-20210115235957996" /></p>
 <p>然后领导者等待，直到大多数节点都写了该条目。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116000339442.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116000339442.png, http://cdn.cjpa.top/cdnimages/image-20210116000339442.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116000339442.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116000339442.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116000339442.png, https://cdn.cjpa.top/cdnimages/image-20210116000339442.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116000339442.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116000339442.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116000339442.png"
         title="image-20210116000339442" /></p>
 <p>现在，该条目已提交到引导者节点上，并且节点状态为“ 5”。</p>
 <p>领导者然后通知关注者该条目已提交。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116000445631.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116000445631.png, http://cdn.cjpa.top/cdnimages/image-20210116000445631.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116000445631.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116000445631.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116000445631.png, https://cdn.cjpa.top/cdnimages/image-20210116000445631.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116000445631.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116000445631.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116000445631.png"
         title="image-20210116000445631" /></p>
 <p>然后其他的也变成5了</p>
 <p>现在，集群已就系统状态达成共识。</p>
@@ -294,10 +294,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116000819174.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116000819174.png, http://cdn.cjpa.top/cdnimages/image-20210116000819174.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116000819174.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116000819174.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116000819174.png, https://cdn.cjpa.top/cdnimages/image-20210116000819174.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116000819174.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116000819174.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116000819174.png"
         title="image-20210116000819174" /></p>
 <ul>
 <li>
@@ -310,55 +310,55 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116001238981.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116001238981.png, http://cdn.cjpa.top/cdnimages/image-20210116001238981.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116001238981.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116001238981.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116001238981.png, https://cdn.cjpa.top/cdnimages/image-20210116001238981.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116001238981.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116001238981.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116001238981.png"
         title="image-20210116001237433" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116001540801.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116001540801.png, http://cdn.cjpa.top/cdnimages/image-20210116001540801.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116001540801.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116001540801.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116001540801.png, https://cdn.cjpa.top/cdnimages/image-20210116001540801.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116001540801.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116001540801.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116001540801.png"
         title="image-20210116001540801" /></p>
 <p>如果接收节点在本任期内尚未投票，则它将投票给候选人。。。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116001620636.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116001620636.png, http://cdn.cjpa.top/cdnimages/image-20210116001620636.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116001620636.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116001620636.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116001620636.png, https://cdn.cjpa.top/cdnimages/image-20210116001620636.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116001620636.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116001620636.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116001620636.png"
         title="image-20210116001620636" /></p>
 <p>在投票之后，节点的选举过期时间要被重置</p>
 <p>一旦候选节点获得了多数表，那么他将会bianchengleader</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116001752760.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116001752760.png, http://cdn.cjpa.top/cdnimages/image-20210116001752760.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116001752760.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116001752760.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116001752760.png, https://cdn.cjpa.top/cdnimages/image-20210116001752760.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116001752760.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116001752760.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116001752760.png"
         title="image-20210116001752760" /></p>
 <p>领导者开始向追随者发送附加条目消息。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116001851097.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116001851097.png, http://cdn.cjpa.top/cdnimages/image-20210116001851097.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116001851097.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116001851097.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116001851097.png, https://cdn.cjpa.top/cdnimages/image-20210116001851097.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116001851097.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116001851097.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116001851097.png"
         title="image-20210116001851097" /></p>
 <p>这些消息以心跳超时指定的间隔发送。然后跟随者响应每个附加条目消息。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116002015783.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116002015783.png, http://cdn.cjpa.top/cdnimages/image-20210116002015783.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116002015783.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116002015783.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116002015783.png, https://cdn.cjpa.top/cdnimages/image-20210116002015783.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116002015783.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116002015783.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116002015783.png"
         title="image-20210116002015783" /></p>
 <p>此选举任期将持续到追随者停止接收心跳并成为候选人为止。</p>
 <p>这个过程就是leader给所有的node发，然后node再给leader发，直到追随者停止接受心跳并且成为候选人为止</p>
@@ -366,30 +366,30 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116002732072.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116002732072.png, http://cdn.cjpa.top/cdnimages/image-20210116002732072.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116002732072.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116002732072.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116002732072.png, https://cdn.cjpa.top/cdnimages/image-20210116002732072.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116002732072.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116002732072.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116002732072.png"
         title="image-20210116002732072" /></p>
 <p>如果两个节点同时成为候选节点，则可能会发生拆分表决。</p>
 <p>像下面这种情况，b和d的票数一样</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116002842378.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116002842378.png, http://cdn.cjpa.top/cdnimages/image-20210116002842378.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116002842378.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116002842378.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116002842378.png, https://cdn.cjpa.top/cdnimages/image-20210116002842378.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116002842378.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116002842378.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116002842378.png"
         title="image-20210116002842378" /></p>
 <p>这个时候就会重新开始计时，然后重新投票（肯定不可能每次都有两个同时到期）</p>
 <p>一旦有了新的leader，需要将系统所有的更改复制到所有的节点</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116013641136.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116013641136.png, http://cdn.cjpa.top/cdnimages/image-20210116013641136.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116013641136.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116013641136.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116013641136.png, https://cdn.cjpa.top/cdnimages/image-20210116013641136.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116013641136.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116013641136.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116013641136.png"
         title="image-20210116013641136" /></p>
 <p>这个的实现也是用的和心跳检测一样的</p>
 <p><strong>下面是具体的实现</strong></p>
@@ -397,112 +397,112 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116013827266.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116013827266.png, http://cdn.cjpa.top/cdnimages/image-20210116013827266.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116013827266.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116013827266.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116013827266.png, https://cdn.cjpa.top/cdnimages/image-20210116013827266.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116013827266.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116013827266.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116013827266.png"
         title="image-20210116013827266" /></p>
 <p>然后再下一次心跳检测的时候把消息发给其他的节点（follower）</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116013930530.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116013930530.png, http://cdn.cjpa.top/cdnimages/image-20210116013930530.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116013930530.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116013930530.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116013930530.png, https://cdn.cjpa.top/cdnimages/image-20210116013930530.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116013930530.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116013930530.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116013930530.png"
         title="image-20210116013930530" /></p>
 <p>一旦大多数的follower认同了这个条目，就会提交该条目</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014042085.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014042085.png, http://cdn.cjpa.top/cdnimages/image-20210116014042085.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014042085.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014042085.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014042085.png, https://cdn.cjpa.top/cdnimages/image-20210116014042085.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014042085.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014042085.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014042085.png"
         title="image-20210116014042085" /></p>
 <p>然后leader就会把响应发送给客户端</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014118814.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014118814.png, http://cdn.cjpa.top/cdnimages/image-20210116014118814.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014118814.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014118814.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014118814.png, https://cdn.cjpa.top/cdnimages/image-20210116014118814.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014118814.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014118814.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014118814.png"
         title="image-20210116014118814" /></p>
 <p>下面再尝试一个例子，将值增加2</p>
 <p>流程就是leader把加2的消息发给follower，然后大多数follower都加了2之后，leader这边也会加2，然后相应给client</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014303367.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014303367.png, http://cdn.cjpa.top/cdnimages/image-20210116014303367.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014303367.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014303367.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014303367.png, https://cdn.cjpa.top/cdnimages/image-20210116014303367.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014303367.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014303367.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014303367.png"
         title="image-20210116014303367" /></p>
 <p>Raft算法很强，在复杂的集群环境下也同样适用</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014348407.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014348407.png, http://cdn.cjpa.top/cdnimages/image-20210116014348407.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014348407.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014348407.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014348407.png, https://cdn.cjpa.top/cdnimages/image-20210116014348407.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014348407.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014348407.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014348407.png"
         title="image-20210116014348407" /></p>
 <p>让我们添加一个分区，将a&amp;B与C、D&amp;E分开。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014424283.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014424283.png, http://cdn.cjpa.top/cdnimages/image-20210116014424283.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014424283.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014424283.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014424283.png, https://cdn.cjpa.top/cdnimages/image-20210116014424283.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014424283.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014424283.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014424283.png"
         title="image-20210116014424283" /></p>
 <p>让我们添加另一个客户端，并尝试更新两个领导者。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014444716.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014444716.png, http://cdn.cjpa.top/cdnimages/image-20210116014444716.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014444716.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014444716.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014444716.png, https://cdn.cjpa.top/cdnimages/image-20210116014444716.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014444716.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014444716.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014444716.png"
         title="image-20210116014444716" /></p>
 <p>一个客户端将尝试将节点B的值设置为“ 3”。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014503811.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014503811.png, http://cdn.cjpa.top/cdnimages/image-20210116014503811.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014503811.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014503811.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014503811.png, https://cdn.cjpa.top/cdnimages/image-20210116014503811.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014503811.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014503811.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014503811.png"
         title="image-20210116014503811" /></p>
 <p>节点B无法复制为多数，因此其日志条目保持未提交状态。</p>
 <p>另一个客户端将尝试将节点C的值设置为“ 8”。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014551418.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014551418.png, http://cdn.cjpa.top/cdnimages/image-20210116014551418.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014551418.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014551418.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014551418.png, https://cdn.cjpa.top/cdnimages/image-20210116014551418.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014551418.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014551418.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014551418.png"
         title="image-20210116014551418" /></p>
 <p>这将成功，因为它可以复制到大多数。</p>
 <p>现在让我们修复网络分区。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014639160.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014639160.png, http://cdn.cjpa.top/cdnimages/image-20210116014639160.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014639160.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014639160.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014639160.png, https://cdn.cjpa.top/cdnimages/image-20210116014639160.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014639160.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014639160.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014639160.png"
         title="image-20210116014639160" /></p>
 <p>节点A和B都将回滚其未提交的条目并匹配新领导者的日志。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20210116014737753.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20210116014737753.png, http://cdn.cjpa.top/cdnimages/image-20210116014737753.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20210116014737753.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20210116014737753.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20210116014737753.png, https://cdn.cjpa.top/cdnimages/image-20210116014737753.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20210116014737753.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20210116014737753.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20210116014737753.png"
         title="image-20210116014737753" /></p>
 <p>现在，我们的日志在整个集群中是一致的。</p>
 </div><div class="post-footer" id="post-footer">
@@ -533,7 +533,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">苏ICP备2020068321</span></div>
         </div>
     </footer></div>

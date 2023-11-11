@@ -8,19 +8,19 @@
         <title>Golang GC - 氕氘氚</title><meta name="Description" content=""><meta property="og:title" content="Golang GC" />
 <meta property="og:description" content="Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://cjpa.top/posts/golang-gc/" />
-<meta property="og:image" content="http://cjpa.top/logo.png"/>
+<meta property="og:url" content="http://chenjiapeng.cn/posts/golang-gc/" /><meta property="og:image" content="http://chenjiapeng.cn/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-04T16:13:04+08:00" />
 <meta property="article:modified_time" content="2021-01-04T16:13:04+08:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="http://cjpa.top/logo.png"/>
+<meta name="twitter:image" content="http://chenjiapeng.cn/logo.png"/>
 
 <meta name="twitter:title" content="Golang GC"/>
 <meta name="twitter:description" content="Garbage Collection GC就是垃圾回收机制，对于高级语言来说是必须的，因为需要高度关注业务，而不是把精力放在管理垃圾上面 Gc 自动释放、垃圾回收、三色标记法、内存"/>
 <meta name="application-name" content="氕氘氚">
 <meta name="apple-mobile-web-app-title" content="氕氘氚"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://cjpa.top/posts/golang-gc/" /><link rel="prev" href="http://cjpa.top/posts/golang-gmp%E5%8E%9F%E7%90%86/" /><link rel="next" href="http://cjpa.top/posts/raft%E8%AF%A6%E8%A7%A3/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://chenjiapeng.cn/posts/golang-gc/" /><link rel="prev" href="http://chenjiapeng.cn/posts/golang-gmp%E5%8E%9F%E7%90%86/" /><link rel="next" href="http://chenjiapeng.cn/posts/raft%E8%AF%A6%E8%A7%A3/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/cjpa.top\/posts\/golang-gc\/"
+            "@id": "http:\/\/chenjiapeng.cn\/posts\/golang-gc\/"
         },"genre": "posts","keywords": "Golang","wordcount":  2839 ,
-        "url": "http:\/\/cjpa.top\/posts\/golang-gc\/","datePublished": "2021-01-04T16:13:04+08:00","dateModified": "2021-01-04T16:13:04+08:00","publisher": {
+        "url": "http:\/\/chenjiapeng.cn\/posts\/golang-gc\/","datePublished": "2021-01-04T16:13:04+08:00","dateModified": "2021-01-04T16:13:04+08:00","publisher": {
             "@type": "Organization",
             "name": "氕氘氚"},"author": {
                 "@type": "Person",
@@ -165,10 +165,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220181051980.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220181051980.png, http://cdn.cjpa.top/cdnimages/image-20201220181051980.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220181051980.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220181051980.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220181051980.png, https://cdn.cjpa.top/cdnimages/image-20201220181051980.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220181051980.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220181051980.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220181051980.png"
         title="image-20201220181051980" /></p>
 <p>假设是这样的场景</p>
 <p>那么程序和对象的可达对象由1-2-3，4-7</p>
@@ -176,10 +176,10 @@
 <p>（2）对所有的对象做标记<img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220181212569.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220181212569.png, http://cdn.cjpa.top/cdnimages/image-20201220181212569.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220181212569.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220181212569.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220181212569.png, https://cdn.cjpa.top/cdnimages/image-20201220181212569.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220181212569.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220181212569.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220181212569.png"
         title="image-20201220181212569" /></p>
 <p>5 6就会被回收，</p>
 <p>这个时候stw就停止了</p>
@@ -192,10 +192,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220181540121.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220181540121.png, http://cdn.cjpa.top/cdnimages/image-20201220181540121.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220181540121.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220181540121.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220181540121.png, https://cdn.cjpa.top/cdnimages/image-20201220181540121.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220181540121.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220181540121.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220181540121.png"
         title="image-20201220181540121" /></p>
 <h2 id="go-v15-三色标记法">Go v1.5 三色标记法</h2>
 <p>传统的清除会暂停所有的程序，会使程序卡顿，等等很多缺点，因此go开发了新的内存管理的方法</p>
@@ -205,44 +205,44 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220181909726.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220181909726.png, http://cdn.cjpa.top/cdnimages/image-20201220181909726.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220181909726.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220181909726.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220181909726.png, https://cdn.cjpa.top/cdnimages/image-20201220181909726.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220181909726.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220181909726.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220181909726.png"
         title="image-20201220181909726" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220181919216.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220181919216.png, http://cdn.cjpa.top/cdnimages/image-20201220181919216.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220181919216.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220181919216.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220181919216.png, https://cdn.cjpa.top/cdnimages/image-20201220181919216.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220181919216.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220181919216.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220181919216.png"
         title="image-20201220181919216" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220182001321.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220182001321.png, http://cdn.cjpa.top/cdnimages/image-20201220182001321.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220182001321.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220182001321.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220182001321.png, https://cdn.cjpa.top/cdnimages/image-20201220182001321.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220182001321.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220182001321.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220182001321.png"
         title="image-20201220182001321" /></p>
 <p>只往下走一层，会把根节点保存到灰色中</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220182025764.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220182025764.png, http://cdn.cjpa.top/cdnimages/image-20201220182025764.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220182025764.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220182025764.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220182025764.png, https://cdn.cjpa.top/cdnimages/image-20201220182025764.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220182025764.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220182025764.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220182025764.png"
         title="image-20201220182025764" /></p>
 <p>然后让那个灰色标记表中的对象往下走，看看能找到哪些节点，把这些找到的节点放到灰色标记表中，然后再把对象1和4标记为黑色</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220182220447.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220182220447.png, http://cdn.cjpa.top/cdnimages/image-20201220182220447.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220182220447.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220182220447.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220182220447.png, https://cdn.cjpa.top/cdnimages/image-20201220182220447.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220182220447.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220182220447.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220182220447.png"
         title="image-20201220182220447" /></p>
 <p><strong>这是一次循环</strong></p>
 <p>最终的目标是把灰色的搞没，然后把白色的回收</p>
@@ -257,10 +257,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220182925244.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220182925244.png, http://cdn.cjpa.top/cdnimages/image-20201220182925244.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220182925244.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220182925244.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220182925244.png, https://cdn.cjpa.top/cdnimages/image-20201220182925244.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220182925244.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220182925244.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220182925244.png"
         title="image-20201220182925244" /></p>
 <p>（3余与此同时，对象2将指针p移除，对象3就被挂在了已经扫描完成的黑色的对象4下）</p>
 <p>（4）正常执行算法逻辑，对象2，3，标记为黑色，而对象3，因为对象4已经不回再扫描，而是等待被回收清除</p>
@@ -275,10 +275,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220183526895.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220183526895.png, http://cdn.cjpa.top/cdnimages/image-20201220183526895.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220183526895.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220183526895.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220183526895.png, https://cdn.cjpa.top/cdnimages/image-20201220183526895.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220183526895.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220183526895.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220183526895.png"
         title="image-20201220183526895" /></p>
 <p>谷歌开发了两种不变式子</p>
 <p><strong>强三色不变式</strong></p>
@@ -289,10 +289,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220183704505.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220183704505.png, http://cdn.cjpa.top/cdnimages/image-20201220183704505.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220183704505.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220183704505.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220183704505.png, https://cdn.cjpa.top/cdnimages/image-20201220183704505.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220183704505.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220183704505.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220183704505.png"
         title="image-20201220183704505" /></p>
 <p><strong>弱三色不变式</strong></p>
 <blockquote>
@@ -302,10 +302,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220183953630.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220183953630.png, http://cdn.cjpa.top/cdnimages/image-20201220183953630.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220183953630.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220183953630.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220183953630.png, https://cdn.cjpa.top/cdnimages/image-20201220183953630.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220183953630.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220183953630.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220183953630.png"
         title="image-20201220183953630" /></p>
 <p>在三色标记中如果满足强/弱之一，即可保证对象不丢失，</p>
 <p>通过屏障机制可以来完成强弱三色不变式</p>
@@ -315,10 +315,10 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220184445882.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220184445882.png, http://cdn.cjpa.top/cdnimages/image-20201220184445882.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220184445882.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220184445882.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220184445882.png, https://cdn.cjpa.top/cdnimages/image-20201220184445882.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220184445882.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220184445882.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220184445882.png"
         title="image-20201220184445882" /></p>
 <p>类似于Hook钩子函数，回调，handler</p>
 </blockquote>
@@ -353,19 +353,19 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220185230263.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220185230263.png, http://cdn.cjpa.top/cdnimages/image-20201220185230263.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220185230263.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220185230263.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220185230263.png, https://cdn.cjpa.top/cdnimages/image-20201220185230263.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220185230263.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220185230263.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220185230263.png"
         title="image-20201220185230263" /></p>
 <p>对象8就会被变成灰色</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201220185518117.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201220185518117.png, http://cdn.cjpa.top/cdnimages/image-20201220185518117.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201220185518117.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201220185518117.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201220185518117.png, https://cdn.cjpa.top/cdnimages/image-20201220185518117.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201220185518117.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201220185518117.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201220185518117.png"
         title="image-20201220185518117" /></p>
 <p>循环上述流程直到没有灰色节点</p>
 <p>在准备回收白色之前，重新扫描一次栈空间（把栈上的黑色的全部置白，STW暂停保护栈区，然后stw开始清除），此时STW暂停保护栈，防止外界干扰（有新的白色被黑色添加）</p>
@@ -390,45 +390,45 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221173235679.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221173235679.png, http://cdn.cjpa.top/cdnimages/image-20201221173235679.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221173235679.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221173235679.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221173235679.png, https://cdn.cjpa.top/cdnimages/image-20201221173235679.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221173235679.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221173235679.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221173235679.png"
         title="image-20201221173235679" /></p>
 <p>先遍历第一层</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221173536969.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221173536969.png, http://cdn.cjpa.top/cdnimages/image-20201221173536969.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221173536969.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221173536969.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221173536969.png, https://cdn.cjpa.top/cdnimages/image-20201221173536969.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221173536969.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221173536969.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221173536969.png"
         title="image-20201221173536969" /></p>
 <p>这个时候触发一个操作</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221173558195.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221173558195.png, http://cdn.cjpa.top/cdnimages/image-20201221173558195.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221173558195.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221173558195.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221173558195.png, https://cdn.cjpa.top/cdnimages/image-20201221173558195.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221173558195.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221173558195.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221173558195.png"
         title="image-20201221173558195" /></p>
 <p>触发删除写屏障</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221173614053.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221173614053.png, http://cdn.cjpa.top/cdnimages/image-20201221173614053.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221173614053.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221173614053.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221173614053.png, https://cdn.cjpa.top/cdnimages/image-20201221173614053.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221173614053.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221173614053.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221173614053.png"
         title="image-20201221173614053" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221173627925.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221173627925.png, http://cdn.cjpa.top/cdnimages/image-20201221173627925.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221173627925.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221173627925.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221173627925.png, https://cdn.cjpa.top/cdnimages/image-20201221173627925.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221173627925.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221173627925.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221173627925.png"
         title="image-20201221173627925" /></p>
 <p>删除写屏障的不足</p>
 <p>回收精度低：</p>
@@ -458,10 +458,10 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221175942217.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221175942217.png, http://cdn.cjpa.top/cdnimages/image-20201221175942217.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221175942217.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221175942217.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221175942217.png, https://cdn.cjpa.top/cdnimages/image-20201221175942217.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221175942217.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221175942217.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221175942217.png"
         title="image-20201221175942217" /></p>
 <p>（2）将栈里面的全部变为黑</p>
 <h2 id="混合写屏障的使用场景">混合写屏障的使用场景</h2>
@@ -475,35 +475,35 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191010120.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191010120.png, http://cdn.cjpa.top/cdnimages/image-20201221191010120.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191010120.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191010120.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191010120.png, https://cdn.cjpa.top/cdnimages/image-20201221191010120.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191010120.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191010120.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191010120.png"
         title="image-20201221191010120" /></p>
 <p>扫描堆中的对象</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191123896.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191123896.png, http://cdn.cjpa.top/cdnimages/image-20201221191123896.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191123896.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191123896.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191123896.png, https://cdn.cjpa.top/cdnimages/image-20201221191123896.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191123896.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191123896.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191123896.png"
         title="image-20201221191123896" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191143551.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191143551.png, http://cdn.cjpa.top/cdnimages/image-20201221191143551.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191143551.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191143551.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191143551.png, https://cdn.cjpa.top/cdnimages/image-20201221191143551.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191143551.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191143551.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191143551.png"
         title="image-20201221191143551" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191217786.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191217786.png, http://cdn.cjpa.top/cdnimages/image-20201221191217786.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191217786.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191217786.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191217786.png, https://cdn.cjpa.top/cdnimages/image-20201221191217786.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191217786.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191217786.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191217786.png"
         title="image-20201221191217786" /></p>
 <h3 id="场景2-对象被一个栈对象删除引用成为另一个栈对象的下游">场景2 对象被一个栈对象删除引用，成为另一个栈对象的下游</h3>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 伪码
@@ -513,36 +513,36 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 </span></code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191753127.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191753127.png, http://cdn.cjpa.top/cdnimages/image-20201221191753127.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191753127.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191753127.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191753127.png, https://cdn.cjpa.top/cdnimages/image-20201221191753127.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191753127.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191753127.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191753127.png"
         title="image-20201221191753127" /></p>
 <p><strong>回收和程序执行的过程中是并行的</strong></p>
 <p>混合写屏障的目的就是为了不出发STW</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191846669.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191846669.png, http://cdn.cjpa.top/cdnimages/image-20201221191846669.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191846669.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191846669.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191846669.png, https://cdn.cjpa.top/cdnimages/image-20201221191846669.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191846669.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191846669.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191846669.png"
         title="image-20201221191846669" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191907507.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191907507.png, http://cdn.cjpa.top/cdnimages/image-20201221191907507.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191907507.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191907507.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191907507.png, https://cdn.cjpa.top/cdnimages/image-20201221191907507.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191907507.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191907507.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191907507.png"
         title="image-20201221191907507" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221191922433.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221191922433.png, http://cdn.cjpa.top/cdnimages/image-20201221191922433.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221191922433.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221191922433.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221191922433.png, https://cdn.cjpa.top/cdnimages/image-20201221191922433.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221191922433.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221191922433.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221191922433.png"
         title="image-20201221191922433" /></p>
 <h3 id="场景3-对象被一个堆对象删除引用成为另一个堆对象的下游">场景3 对象被一个堆对象删除引用，成为另一个堆对象的下游</h3>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 伪码
@@ -551,28 +551,28 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 </span></code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221192340487.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221192340487.png, http://cdn.cjpa.top/cdnimages/image-20201221192340487.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221192340487.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221192340487.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221192340487.png, https://cdn.cjpa.top/cdnimages/image-20201221192340487.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221192340487.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221192340487.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221192340487.png"
         title="image-20201221192340487" /></p>
 <p>![image-20201221192408345](/Users/cjp/Library/Application Support/typora-user-images/image-20201221192408345.png)</p>
 <p>一开始就会把栈上的对象变成黑色</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221192536388.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221192536388.png, http://cdn.cjpa.top/cdnimages/image-20201221192536388.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221192536388.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221192536388.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221192536388.png, https://cdn.cjpa.top/cdnimages/image-20201221192536388.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221192536388.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221192536388.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221192536388.png"
         title="image-20201221192536388" /></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221192558479.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221192558479.png, http://cdn.cjpa.top/cdnimages/image-20201221192558479.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221192558479.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221192558479.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221192558479.png, https://cdn.cjpa.top/cdnimages/image-20201221192558479.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221192558479.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221192558479.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221192558479.png"
         title="image-20201221192558479" /></p>
 <p>接下来再去扫描对象4和对象7</p>
 <p>对象6和7可达，对象4是根对象，因此删除对象11，对象5，对象8</p>
@@ -584,19 +584,19 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 </span></code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221193428687.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221193428687.png, http://cdn.cjpa.top/cdnimages/image-20201221193428687.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221193428687.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221193428687.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221193428687.png, https://cdn.cjpa.top/cdnimages/image-20201221193428687.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221193428687.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221193428687.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221193428687.png"
         title="image-20201221193428687" /></p>
 <p>栈区不启用屏障，所以直接删</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="http://cdn.cjpa.top/cdnimages/image-20201221193518337.png"
-        data-srcset="http://cdn.cjpa.top/cdnimages/image-20201221193518337.png, http://cdn.cjpa.top/cdnimages/image-20201221193518337.png 1.5x, http://cdn.cjpa.top/cdnimages/image-20201221193518337.png 2x"
+        data-src="https://cdn.cjpa.top/cdnimages/image-20201221193518337.png"
+        data-srcset="https://cdn.cjpa.top/cdnimages/image-20201221193518337.png, https://cdn.cjpa.top/cdnimages/image-20201221193518337.png 1.5x, https://cdn.cjpa.top/cdnimages/image-20201221193518337.png 2x"
         data-sizes="auto"
-        alt="http://cdn.cjpa.top/cdnimages/image-20201221193518337.png"
+        alt="https://cdn.cjpa.top/cdnimages/image-20201221193518337.png"
         title="image-20201221193518337" /></p>
 <p>对象4是在堆里面</p>
 <blockquote>
@@ -630,7 +630,7 @@ A.添加下游对象（C，B）			//A将下游对象C更换为B，B被标记为�
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">氕氘氚</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">苏ICP备2020068321</span></div>
         </div>
     </footer></div>

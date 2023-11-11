@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>uniapp - 标签 - 氕氘氚</title>
-        <link>http://cjpa.top/tags/uniapp/</link>
+        <link>http://chenjiapeng.cn/tags/uniapp/</link>
         <description>uniapp - 标签 - 氕氘氚</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>caorcjp@gmail.com (氕氘氚)</managingEditor>
-            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 11 May 2021 01:56:13 &#43;0800</lastBuildDate><atom:link href="http://cjpa.top/tags/uniapp/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>caorcjp@gmail.com (氕氘氚)</webMaster><lastBuildDate>Tue, 11 May 2021 01:56:13 &#43;0800</lastBuildDate><atom:link href="http://chenjiapeng.cn/tags/uniapp/" rel="self" type="application/rss+xml" /><item>
     <title>用uniapp打包出一个跨端app！</title>
-    <link>http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</link>
+    <link>http://chenjiapeng.cn/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</link>
     <pubDate>Tue, 11 May 2021 01:56:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://cjpa.top/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</guid>
+    <guid>http://chenjiapeng.cn/posts/%E7%94%A8uniapp%E6%89%93%E5%8C%85%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B7%A8%E7%AB%AFapp/</guid>
     <description><![CDATA[使用uniapp在macOS 10.15.6上打包安卓离线App 创建之后目录如下所示： 在hubilder离线sdk里面找到sdk/libs文件]]></description>
 </item></channel>
 </rss>
